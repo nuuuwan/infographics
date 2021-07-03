@@ -1,5 +1,2 @@
-bs4
-selenium
-tweepy
 utils-nuuuwan
 matplotlib

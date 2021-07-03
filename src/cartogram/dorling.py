@@ -35,12 +35,8 @@ def _compress(points):
                 sx += s * math.cos(theta)
                 sy += s * math.sin(theta)
 
-            points[i_a] = {
-                'x': x_a + sx,
-                'y': y_a + sy,
-                'r': r_a,
-                'color': color_a,
-            }
+            points[i_a]['x'] += sx
+            points[i_a]['y'] += sy
             no_moves = False
         if no_moves:
             break
