@@ -22,5 +22,7 @@ pip install -i https://test.pypi.org/simple/ cartogram-nuuuwan
 
 ### 1.0.0 (PRE-RELEASE ONLY)
 
+* Added Dorling Cartogram
+
 
 ### WISHLIST
