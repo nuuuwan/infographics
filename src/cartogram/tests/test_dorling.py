@@ -16,7 +16,7 @@ class TestCase(unittest.TestCase):
             {'x': 0.75, 'y': 0.25, 'r': 0.04, 'color': 'b'},
             {'x': 0.75, 'y': 0.75, 'r': 0.03, 'color': 'orange'},
         ]
-        compressed_points = dorling._compress(points)
+        compressed_points = dorling._compress(points, [0, 0, 1, 1])
         self.assertEqual(points, compressed_points)
 
 

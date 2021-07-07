@@ -4,117 +4,88 @@ import matplotlib.pyplot as plt
 from geo import geodata
 
 from cartogram import dorling
-from elections_lk import presidential
-
-year = 2019
-election_data = presidential.get_election_data(year)
-
-pd_to_result = dict(zip(
-    list(map(lambda result: result['pd_id'], election_data)),
-    election_data,
-))
+from cartogram import _utils
 
 
-def _func_get_color(row):
-    pd_id = row.id
-    result = pd_to_result[pd_id]
-    by_party = result['by_party']
-    winning_party_id = by_party[0]['party_id']
-    winning_party_p = by_party[0]['votes'] / result['summary']['valid']
+def _plot_winning_party(year, region_id):
+    pd_to_result = _utils.get_election_data_index(year)
 
-    a = winning_party_p
-    if winning_party_id == 'SLPP':
-        return (0.5, 0, 0, a)
-    if winning_party_id in ['UPFA', 'PA', 'SLFP']:
-        return (0, 0, 0.8, a)
-    if winning_party_id in ['NDF', 'UNP']:
-        return (0, 0.5, 0, a)
-    if winning_party_id in ['JVP']:
-        return (0.8, 0, 0, a)
-    if winning_party_id in ['ACTC']:
-        return (0.8, 0.8, 0, a)
-    return (0, 0, 0, a)
+    winning_party_set = set()
+    for result in pd_to_result.values():
+        winning_party = _utils.get_winning_party_info(result)['party_id']
+        winning_party_set.add(winning_party)
 
+    def _func_get_color(row):
+        result = pd_to_result[row.id]
+        win_party = _utils.get_winning_party_info(result)
+        p_votes = win_party['votes'] / result['summary']['valid']
+        return _utils.party_to_rgba_color(win_party['party_id'], p_votes)
 
-def _func_get_radius_value(row):
-    pd_id = row.id
-    result = pd_to_result[pd_id]
-    return result['summary']['valid']
+    def _func_get_radius_value(row):
+        result = pd_to_result[row.id]
+        return result['summary']['valid']
 
-def _func_render_label(ax, x, y, span_y, row):
-    return
-    pd_id = row.id
-    result = pd_to_result[pd_id]
-    by_party = result['by_party']
-    winning_party_id = by_party[0]['party_id']
-    valid = result['summary']['valid']
-    winning_party_p = by_party[0]['votes'] / valid
+    def _func_render_label(ax, x, y, span_y, row):
+        result = pd_to_result[row.id]
+        win_party = _utils.get_winning_party_info(result)
+        p_votes = win_party['votes'] / result['summary']['valid']
 
-    r2 = span_y / 40
-    ax.text(
-        x,
-        y + r2,
-        winning_party_id,
-        verticalalignment='center',
-        horizontalalignment='center',
-        fontsize=8,
-    )
-    ax.text(
-        x,
-        y,
-        '{:.0%}'.format(winning_party_p),
-        verticalalignment='center',
-        horizontalalignment='center',
-        fontsize=9,
-    )
-    ax.text(
-        x,
-        y - r2,
-        row['name'],
-        verticalalignment='center',
-        horizontalalignment='center',
-        fontsize=5,
-    )
-
-def _func_render_legend(ax, x0, y0, span_y, anchor_radius):
-    x, y = x0, y0
-    for label, color in [
-        ['SLPP 75%', (0.5, 0, 0, 0.75)],
-        ['SLPP 50%', (0.5, 0, 0, 0.5)],
-
-        ['NDF 75%', (0, 0.5, 0, 0.75)],
-        ['NDF 50%', (0, 0.5, 0, 0.5)],
-    ]:
-        r = span_y * 0.01
-        y -= r
-        ax.add_patch(plt.Circle(
-            (x, y),
-            r,
-            color=color,
-        ))
+        r2 = span_y / 35
         ax.text(
-            x + span_y * 0.01 * 2, y,
-            label,
+            x,
+            y + r2,
+            win_party['party_id'],
             verticalalignment='center',
+            horizontalalignment='center',
+            fontsize=10,
         )
-        y -= span_y * 0.01 * 3
+        ax.text(
+            x,
+            y,
+            '{:.0%}'.format(p_votes),
+            verticalalignment='center',
+            horizontalalignment='center',
+            fontsize=15,
+        )
+        ax.text(
+            x,
+            y - r2 * 0.8,
+            row['name'],
+            verticalalignment='center',
+            horizontalalignment='center',
+            fontsize=5,
+        )
+
+    gpd_df = geodata.get_region_geodata(region_id, 'pd')
+    dorling.plot(
+        gpd_df,
+        func_get_radius_value=_func_get_radius_value,
+        func_get_color=_func_get_color,
+        func_render_label=_func_render_label,
+    )
+
+    plt.suptitle('Data Source: https://elections.gov.lk', fontsize=8)
+    plt.title(
+        f'{year} Sri Lankan Presidential Election '
+        + '- By Winning Party',
+    )
+    image_file = f'/tmp/cartogram.presidential.{year}.png'
+
+    labels_and_colors = []
+    for winning_party in winning_party_set:
+        for p_votes in [0.8, 0.65, 0.5]:
+            labels_and_colors.append((
+                '{winning_party} {p_votes:.0%}'.format(
+                    winning_party=winning_party,
+                    p_votes=p_votes,
+                ),
+                _utils.party_to_rgba_color(winning_party, p_votes),
+            ))
+    _utils.draw_color_legend(plt, labels_and_colors)
+
+    plt.savefig(image_file)
+    os.system(f'open {image_file}')
 
 
-
-gpd_df = geodata.get_region_geodata('LK', 'pd')
-dorling.plot(
-    gpd_df,
-    func_get_radius_value=_func_get_radius_value,
-    func_get_color=_func_get_color,
-    func_render_label=_func_render_label,
-    func_render_legend=_func_render_legend,
-    anchor_radius=0.1,
-    anchor_radius_value=200_000,
-)
-
-plt.suptitle('Data Source: https://elections.gov.lk', fontsize=8)
-plt.title(f'{year} Sri Lankan Presidential Election')
-
-image_file = f'/tmp/cartogram.presidential.{year}.png'
-plt.savefig(image_file)
-os.system(f'open {image_file}')
+if __name__ == '__main__':
+    _plot_winning_party(1999, 'EC-02')
