@@ -2,13 +2,14 @@
 import os
 
 import matplotlib.pyplot as plt
+from elections_lk import presidential
 from geo import geodata
 
 from cartogram import _utils, dorling
 
 
 def _plot_rejected_votes(year, region_id):
-    pd_to_result = _utils.get_election_data_index(year)
+    pd_to_result = presidential.get_election_data_index(year)
 
     def _func_get_color(row):
         summary = pd_to_result[row.id]['summary']

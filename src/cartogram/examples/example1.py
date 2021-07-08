@@ -2,6 +2,7 @@
 import os
 
 import matplotlib.pyplot as plt
+from elections_lk import party_color, presidential
 from geo import geodata
 
 from cartogram import _utils, dorling
@@ -12,13 +13,13 @@ def _plot_single_party(
     selected_party_id,
     region_id,
 ):
-    pd_to_result = _utils.get_election_data_index(year)
+    pd_to_result = presidential.get_election_data_index(year)
 
     def _func_get_color(row):
         result = pd_to_result[row.id]
-        for_party = _utils.get_party_result(result, selected_party_id)
+        for_party = presidential.get_party_result(result, selected_party_id)
         p_votes = for_party['votes'] / result['summary']['valid']
-        return _utils.party_to_rgba_color(
+        return party_color.get_rgba_color(
             selected_party_id,
             p_votes,
             p_to_a=lambda a: a,
@@ -26,12 +27,12 @@ def _plot_single_party(
 
     def _func_get_radius_value(row):
         result = pd_to_result[row.id]
-        for_party = _utils.get_party_result(result, selected_party_id)
+        for_party = presidential.get_party_result(result, selected_party_id)
         return for_party['votes']
 
     def _func_render_label(ax, x, y, span_y, row):
         result = pd_to_result[row.id]
-        party_info = _utils.get_party_result(result, selected_party_id)
+        party_info = presidential.get_party_result(result, selected_party_id)
         party_p = party_info['votes'] / result['summary']['valid']
 
         r2 = span_y / 80
@@ -89,7 +90,7 @@ def _plot_single_party(
                     selected_party_id=selected_party_id,
                     p_votes=p_votes,
                 ),
-                _utils.party_to_rgba_color(
+                party_color.get_rgba_color(
                     selected_party_id,
                     p_votes,
                     p_to_a=lambda a: a,

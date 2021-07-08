@@ -2,24 +2,25 @@
 import os
 
 import matplotlib.pyplot as plt
+from elections_lk import party_color, presidential
 from geo import geodata
 
 from cartogram import _utils, dorling
 
 
 def _plot_winning_party(year, region_id):
-    pd_to_result = _utils.get_election_data_index(year)
+    pd_to_result = presidential.get_election_data_index(year)
 
     winning_party_set = set()
     for result in pd_to_result.values():
-        winning_party = _utils.get_winning_party_info(result)['party_id']
+        winning_party = presidential.get_winning_party_info(result)['party_id']
         winning_party_set.add(winning_party)
 
     def _func_get_color(row):
         result = pd_to_result[row.id]
-        win_party = _utils.get_winning_party_info(result)
+        win_party = presidential.get_winning_party_info(result)
         p_votes = win_party['votes'] / result['summary']['valid']
-        return _utils.party_to_rgba_color(win_party['party_id'], p_votes)
+        return party_color.get_rgba_color(win_party['party_id'], p_votes)
 
     def _func_get_radius_value(row):
         result = pd_to_result[row.id]
@@ -27,7 +28,7 @@ def _plot_winning_party(year, region_id):
 
     def _func_render_label(ax, x, y, span_y, row):
         result = pd_to_result[row.id]
-        win_party = _utils.get_winning_party_info(result)
+        win_party = presidential.get_winning_party_info(result)
         p_votes = win_party['votes'] / result['summary']['valid']
 
         r2 = span_y / 35
@@ -79,7 +80,7 @@ def _plot_winning_party(year, region_id):
                         winning_party=winning_party,
                         p_votes=p_votes,
                     ),
-                    _utils.party_to_rgba_color(winning_party, p_votes),
+                    party_color.get_rgba_color(winning_party, p_votes),
                 )
             )
     _utils.draw_color_legend(plt, labels_and_colors)

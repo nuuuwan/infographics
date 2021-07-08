@@ -2,6 +2,7 @@
 import os
 
 import matplotlib.pyplot as plt
+from elections_lk import presidential
 from geo import geodata
 
 from cartogram import _utils, dorling
@@ -15,17 +16,17 @@ def _plot_vote_diff(
     region_id,
     p_max,
 ):
-    pd_to_result1 = _utils.get_election_data_index(year1)
-    pd_to_result2 = _utils.get_election_data_index(year2)
+    pd_to_result1 = presidential.get_election_data_index(year1)
+    pd_to_result2 = presidential.get_election_data_index(year2)
 
     def _func_get_color(row):
         result1 = pd_to_result1[row.id]
-        party_year1 = _utils.get_party_result(
+        party_year1 = presidential.get_party_result(
             result1,
             year1_party_id,
         )
         result2 = pd_to_result2[row.id]
-        party_year2 = _utils.get_party_result(
+        party_year2 = presidential.get_party_result(
             result2,
             year2_party_id,
         )
@@ -40,12 +41,12 @@ def _plot_vote_diff(
 
     def _func_get_radius_value(row):
         result1 = pd_to_result1[row.id]
-        party_year1 = _utils.get_party_result(
+        party_year1 = presidential.get_party_result(
             result1,
             year1_party_id,
         )
         result2 = pd_to_result2[row.id]
-        party_year2 = _utils.get_party_result(
+        party_year2 = presidential.get_party_result(
             result2,
             year2_party_id,
         )
@@ -57,12 +58,12 @@ def _plot_vote_diff(
 
     def _func_render_label(ax, x, y, span_y, row):
         result1 = pd_to_result1[row.id]
-        party_year1 = _utils.get_party_result(
+        party_year1 = presidential.get_party_result(
             result1,
             year1_party_id,
         )
         result2 = pd_to_result2[row.id]
-        party_year2 = _utils.get_party_result(
+        party_year2 = presidential.get_party_result(
             result2,
             year2_party_id,
         )

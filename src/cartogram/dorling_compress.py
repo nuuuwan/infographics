@@ -1,7 +1,8 @@
 """Implements dorling."""
 import math
 
-from cartogram import _utils
+from utils import ds
+
 from cartogram._utils import log
 
 
@@ -16,7 +17,7 @@ def _compress(points, bounds):
             log.info('i_epochs = {:,}'.format(i_epochs))
         no_moves = True
         for i_a in range(0, n_points):
-            x_a, y_a, r_a = _utils.dict_get(
+            x_a, y_a, r_a = ds.dict_get(
                 points[i_a],
                 ['x', 'y', 'r'],
             )
@@ -46,7 +47,7 @@ def _compress(points, bounds):
                 if i_a == i_b:
                     continue
 
-                x_b, y_b, r_b = _utils.dict_get(
+                x_b, y_b, r_b = ds.dict_get(
                     points[i_b],
                     ['x', 'y', 'r'],
                 )
