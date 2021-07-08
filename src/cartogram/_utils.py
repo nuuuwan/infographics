@@ -2,9 +2,8 @@
 
 import logging
 
-from matplotlib.patches import Patch
-
 from elections_lk import presidential
+from matplotlib.patches import Patch
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger('cartogram')

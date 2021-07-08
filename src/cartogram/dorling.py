@@ -1,5 +1,6 @@
 """Implements dorling."""
 import math
+
 import matplotlib.pyplot as plt
 
 from cartogram.dorling_compress import _compress

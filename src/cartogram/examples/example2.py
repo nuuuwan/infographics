@@ -1,10 +1,10 @@
 """Example."""
 import os
+
 import matplotlib.pyplot as plt
 from geo import geodata
 
-from cartogram import dorling
-from cartogram import _utils
+from cartogram import _utils, dorling
 
 
 def _plot_winning_party(year, region_id):
