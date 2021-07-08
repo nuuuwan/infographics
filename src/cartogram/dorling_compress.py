@@ -14,7 +14,7 @@ def _compress(points, bounds):
     n_epochs = 100
     for i_epochs in range(0, n_epochs):
         if i_epochs % (n_epochs / 10) == 0:
-            log.info('i_epochs = {:,}'.format(i_epochs))
+            log.debug('i_epochs = {:,}'.format(i_epochs))
         no_moves = True
         for i_a in range(0, n_points):
             x_a, y_a, r_a = ds.dict_get(
