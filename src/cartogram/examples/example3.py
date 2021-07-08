@@ -60,7 +60,7 @@ def _plot_rejected_votes(year, region_id):
                 (1, 1 - p_reject / 0.05, 1 - p_reject / 0.05, 0.8),
             )
         )
-    _utils.draw_color_legend(plt, labels_and_colors)
+    _utils.draw_color_legend(labels_and_colors)
 
     plt.suptitle('Data Source: https://elections.gov.lk', fontsize=8)
     plt.title(

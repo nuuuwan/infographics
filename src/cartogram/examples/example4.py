@@ -124,7 +124,7 @@ def _plot_vote_diff(
                 color,
             )
         )
-    _utils.draw_color_legend(plt, labels_and_colors)
+    _utils.draw_color_legend(labels_and_colors)
 
     plt.suptitle('Data Source: https://elections.gov.lk', fontsize=8)
     plt.title(
@@ -143,7 +143,7 @@ if __name__ == '__main__':
     _plot_vote_diff(
         1999,
         'UNP',
-        2019,
+        2015,
         'NDF',
         'EC-02',
         p_max=0.6,

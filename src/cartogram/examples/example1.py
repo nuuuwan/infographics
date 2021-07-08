@@ -97,7 +97,7 @@ def _plot_single_party(
                 ),
             )
         )
-    _utils.draw_color_legend(plt, labels_and_colors)
+    _utils.draw_color_legend(labels_and_colors)
 
     image_file = (
         '/tmp/cartogram.presidential' + f'.{year}.{selected_party_id}.png'

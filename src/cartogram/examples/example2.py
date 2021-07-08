@@ -83,7 +83,7 @@ def _plot_winning_party(year, region_id):
                     party_color.get_rgba_color(winning_party, p_votes),
                 )
             )
-    _utils.draw_color_legend(plt, labels_and_colors)
+    _utils.draw_color_legend(labels_and_colors)
 
     plt.savefig(image_file)
     os.system(f'open {image_file}')
