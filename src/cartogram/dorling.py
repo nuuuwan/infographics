@@ -17,7 +17,7 @@ def _default_func_get_color(row):
 def _default_func_render_label(ax, x, y, r, row):
     ax.text(
         x,
-        y + r/3,
+        y + r / 3,
         row.id,
         verticalalignment='center',
         horizontalalignment='center',
@@ -25,7 +25,7 @@ def _default_func_render_label(ax, x, y, r, row):
     )
     ax.text(
         x,
-        y - r/3,
+        y - r / 3,
         '{:,}'.format(_default_func_get_radius_value(row)),
         verticalalignment='center',
         horizontalalignment='center',
@@ -77,12 +77,14 @@ def plot(
     for i_row, row in gpd_df.iterrows():
         radius_value = func_get_radius_value(row)
         r = math.sqrt(radius_value * beta)
-        points.append({
-            'x': row.geometry.centroid.x,
-            'y': row.geometry.centroid.y,
-            'r': r,
-            'row': row,
-        })
+        points.append(
+            {
+                'x': row.geometry.centroid.x,
+                'y': row.geometry.centroid.y,
+                'r': r,
+                'row': row,
+            }
+        )
 
     points = _compress(
         points,
@@ -97,17 +99,19 @@ def plot(
         color=color_background,
         edgecolor=color_border,
     )
-    span_y = (maxy - miny)
+    span_y = maxy - miny
     for point in points:
         x, y, r, row = point['x'], point['y'], point['r'], point['row']
         color = func_get_color(row)
-        ax.add_patch(plt.Circle(
-            (x, y),
-            r,
-            facecolor=color,
-            edgecolor='gray',
-            linewidth=0.3,
-        ))
+        ax.add_patch(
+            plt.Circle(
+                (x, y),
+                r,
+                facecolor=color,
+                edgecolor='gray',
+                linewidth=0.3,
+            )
+        )
         if n_regions < 20:
             func_render_label(ax, x, y, span_y, row)
 
@@ -121,18 +125,21 @@ def plot(
     for pr in [1]:
         r = anchor_radius * pr
         ax.text(
-            x, y,
+            x,
+            y,
             '{:,}'.format((int)(pr ** 2 * anchor_radius_value)),
             verticalalignment='center',
             horizontalalignment='center',
         )
-        ax.add_patch(plt.Circle(
-            (x, y),
-            r,
-            color='gray',
-            fill=False,
-            linewidth=1,
-        ))
+        ax.add_patch(
+            plt.Circle(
+                (x, y),
+                r,
+                color='gray',
+                fill=False,
+                linewidth=1,
+            )
+        )
 
     y -= r
 

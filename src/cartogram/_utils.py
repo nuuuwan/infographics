@@ -44,10 +44,12 @@ def party_to_rgba_color(
 
 def get_party_result(result, party_id):
     """Get party result."""
-    for_partys = list(filter(
-        lambda d: d['party_id'] == party_id,
-        result['by_party'],
-    ))
+    for_partys = list(
+        filter(
+            lambda d: d['party_id'] == party_id,
+            result['by_party'],
+        )
+    )
     return for_partys[0] if len(for_partys) == 1 else None
 
 
@@ -72,17 +74,21 @@ def draw_color_legend(plt, labels_and_colors):
     """Draw color legend."""
     patches = []
     for label, color in labels_and_colors:
-        patches.append(Patch(
-            color=color,
-            label=label,
-        ))
+        patches.append(
+            Patch(
+                color=color,
+                label=label,
+            )
+        )
     plt.legend(handles=patches)
 
 
 def get_election_data_index(year):
     """Get election data, indexed by PD."""
     election_data = presidential.get_election_data(year)
-    return dict(zip(
-        list(map(lambda result: result['pd_id'], election_data)),
-        election_data,
-    ))
+    return dict(
+        zip(
+            list(map(lambda result: result['pd_id'], election_data)),
+            election_data,
+        )
+    )

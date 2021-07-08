@@ -78,27 +78,29 @@ def _plot_single_party(
     )
     plt.suptitle('Data Source: https://elections.gov.lk', fontsize=8)
     plt.title(
-        f'{year} Sri Lankan Presidential Election'
-        + f'- {selected_party_id}',
+        f'{year} Sri Lankan Presidential Election' + f'- {selected_party_id}',
     )
 
     labels_and_colors = []
     for p_votes in [0.8, 0.5, 0.2]:
-        labels_and_colors.append((
-            '{selected_party_id} {p_votes:.0%}'.format(
-                selected_party_id=selected_party_id,
-                p_votes=p_votes,
-            ),
-            _utils.party_to_rgba_color(
-                selected_party_id,
-                p_votes,
-                p_to_a=lambda a: a,
-            ),
-        ))
+        labels_and_colors.append(
+            (
+                '{selected_party_id} {p_votes:.0%}'.format(
+                    selected_party_id=selected_party_id,
+                    p_votes=p_votes,
+                ),
+                _utils.party_to_rgba_color(
+                    selected_party_id,
+                    p_votes,
+                    p_to_a=lambda a: a,
+                ),
+            )
+        )
     _utils.draw_color_legend(plt, labels_and_colors)
 
-    image_file = '/tmp/cartogram.presidential' \
-        + f'.{year}.{selected_party_id}.png'
+    image_file = (
+        '/tmp/cartogram.presidential' + f'.{year}.{selected_party_id}.png'
+    )
     plt.savefig(image_file)
     os.system(f'open {image_file}')
 

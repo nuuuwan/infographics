@@ -115,12 +115,14 @@ def _plot_vote_diff(
         a = min(1, abs(p_diff) / p_max)
         color = (1, 0, 0, a) if (p_diff < 0) else (0, 0, 1, a)
 
-        labels_and_colors.append((
-            '{p_diff:+.0%}'.format(
-                p_diff=p_diff,
-            ),
-            color,
-        ))
+        labels_and_colors.append(
+            (
+                '{p_diff:+.0%}'.format(
+                    p_diff=p_diff,
+                ),
+                color,
+            )
+        )
     _utils.draw_color_legend(plt, labels_and_colors)
 
     plt.suptitle('Data Source: https://elections.gov.lk', fontsize=8)
@@ -128,16 +130,20 @@ def _plot_vote_diff(
         'Sri Lankan Presidential Election - '
         + f'{year1_party_id} in {year1} vs {year2_party_id} in {year2}'
     )
-    image_file = '/tmp/cartogram.presidential.' \
+    image_file = (
+        '/tmp/cartogram.presidential.'
         + f'{year1}.{year1_party_id}.vs.{year2}.{year2_party_id}.png'
+    )
     plt.savefig(image_file)
     os.system(f'open {image_file}')
 
 
 if __name__ == '__main__':
     _plot_vote_diff(
-        1999, 'UNP',
-        2019, 'NDF',
+        1999,
+        'UNP',
+        2019,
+        'NDF',
         'EC-02',
         p_max=0.6,
     )

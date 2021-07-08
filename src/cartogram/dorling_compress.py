@@ -56,7 +56,7 @@ def _compress(points, bounds):
                 if d > r_a + r_b:
                     continue
 
-                f_b_a = -r_b ** 2 / d2
+                f_b_a = -(r_b ** 2) / d2
                 s = dt * f_b_a
                 theta = math.atan2(dy, dx)
                 sx += s * math.cos(theta)

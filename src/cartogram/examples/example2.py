@@ -66,21 +66,22 @@ def _plot_winning_party(year, region_id):
 
     plt.suptitle('Data Source: https://elections.gov.lk', fontsize=8)
     plt.title(
-        f'{year} Sri Lankan Presidential Election '
-        + '- By Winning Party',
+        f'{year} Sri Lankan Presidential Election ' + '- By Winning Party',
     )
     image_file = f'/tmp/cartogram.presidential.{year}.png'
 
     labels_and_colors = []
     for winning_party in winning_party_set:
         for p_votes in [0.8, 0.65, 0.5]:
-            labels_and_colors.append((
-                '{winning_party} {p_votes:.0%}'.format(
-                    winning_party=winning_party,
-                    p_votes=p_votes,
-                ),
-                _utils.party_to_rgba_color(winning_party, p_votes),
-            ))
+            labels_and_colors.append(
+                (
+                    '{winning_party} {p_votes:.0%}'.format(
+                        winning_party=winning_party,
+                        p_votes=p_votes,
+                    ),
+                    _utils.party_to_rgba_color(winning_party, p_votes),
+                )
+            )
     _utils.draw_color_legend(plt, labels_and_colors)
 
     plt.savefig(image_file)
