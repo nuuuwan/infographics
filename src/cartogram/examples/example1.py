@@ -2,52 +2,24 @@
 import os
 
 import matplotlib.pyplot as plt
-from elections_lk import party_color, presidential
 from geo import geodata
 
-from cartogram import _utils, dorling
+from cartogram import dorling
 
 
-def _plot_single_party(
-    year,
-    selected_party_id,
-    region_id,
-):
-    pd_to_result = presidential.get_election_data_index(year)
-
+def _plot_population(region_id, sub_region_type):
     def _func_get_color(row):
-        result = pd_to_result[row.id]
-        for_party = presidential.get_party_result(result, selected_party_id)
-        p_votes = for_party['votes'] / result['summary']['valid']
-        return party_color.get_rgba_color(
-            selected_party_id,
-            p_votes,
-            p_to_a=lambda a: a,
-        )
+        return 'gray'
 
     def _func_get_radius_value(row):
-        result = pd_to_result[row.id]
-        for_party = presidential.get_party_result(result, selected_party_id)
-        return for_party['votes']
+        return row['population']
 
     def _func_render_label(ax, x, y, span_y, row):
-        result = pd_to_result[row.id]
-        party_info = presidential.get_party_result(result, selected_party_id)
-        party_p = party_info['votes'] / result['summary']['valid']
-
         r2 = span_y / 80
         ax.text(
             x,
-            y + 3 * r2,
-            party_info['party_id'],
-            verticalalignment='center',
-            horizontalalignment='center',
-            fontsize=10,
-        )
-        ax.text(
-            x,
-            y + r2 * 0.5,
-            '{:.0%}'.format(party_p),
+            y + r2,
+            row['name'],
             verticalalignment='center',
             horizontalalignment='center',
             fontsize=15,
@@ -55,21 +27,13 @@ def _plot_single_party(
         ax.text(
             x,
             y - r2,
-            row['name'],
+            '{:.,}'.format(row.population),
             verticalalignment='center',
             horizontalalignment='center',
             fontsize=5,
         )
-        ax.text(
-            x,
-            y - 3 * r2,
-            '{:,}'.format(party_info['votes']),
-            verticalalignment='center',
-            horizontalalignment='center',
-            fontsize=10,
-        )
 
-    gpd_df = geodata.get_region_geodata(region_id, 'pd')
+    gpd_df = geodata.get_region_geodata(region_id, sub_region_type)
 
     dorling.plot(
         gpd_df,
@@ -77,34 +41,13 @@ def _plot_single_party(
         func_get_color=_func_get_color,
         func_render_label=_func_render_label,
     )
-    plt.suptitle('Data Source: https://elections.gov.lk', fontsize=8)
-    plt.title(
-        f'{year} Sri Lankan Presidential Election' + f'- {selected_party_id}',
-    )
+    plt.suptitle('Data Source: statistics.gov.lk/', fontsize=8)
+    plt.title('Population in Sri Lanka')
 
-    labels_and_colors = []
-    for p_votes in [0.8, 0.5, 0.2]:
-        labels_and_colors.append(
-            (
-                '{selected_party_id} {p_votes:.0%}'.format(
-                    selected_party_id=selected_party_id,
-                    p_votes=p_votes,
-                ),
-                party_color.get_rgba_color(
-                    selected_party_id,
-                    p_votes,
-                    p_to_a=lambda a: a,
-                ),
-            )
-        )
-    _utils.draw_color_legend(labels_and_colors)
-
-    image_file = (
-        '/tmp/cartogram.presidential' + f'.{year}.{selected_party_id}.png'
-    )
+    image_file = '/tmp/cartogram.example1.png'
     plt.savefig(image_file)
     os.system(f'open {image_file}')
 
 
 if __name__ == '__main__':
-    _plot_single_party(2019, 'NDF', 'LK')
+    _plot_population('LK', 'province')
