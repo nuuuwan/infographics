@@ -28,4 +28,4 @@ def _plot_population(region_id, sub_region_type):
 
 
 if __name__ == '__main__':
-    _plot_population('LK', 'district')
+    _plot_population('EC-01', 'pd')

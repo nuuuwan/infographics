@@ -3,7 +3,6 @@ import colorsys
 import math
 
 import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
 
 from cartogram import _utils, dorling_compress
 
@@ -15,7 +14,7 @@ def _default_func_get_radius_value(row):
 
 
 def _default_func_format_radius_value(radius_value):
-    return '{:,.0f}'.format(radius_value)
+    return '{:,.0f}\npeople'.format(radius_value)
 
 
 def _default_func_get_color_value(row):
@@ -100,7 +99,8 @@ def plot(
         edgecolor=_utils.DEFAULTS.COLOR_STROKE,
         linewidth=_utils.DEFAULTS.STROKE_WIDTH,
     )
-    span_y = maxy - miny
+    span_x, span_y = maxx - minx, maxy - miny
+
     for point in compressed_points:
         x, y, r, row = point['x'], point['y'], point['r'], point['row']
         color_value = func_get_color_value(row)
@@ -109,30 +109,18 @@ def plot(
         if n_regions <= 30:
             func_render_label(ax, x, y, span_y, row)
 
-    labels = []
-    handles = []
     # radius legend
-    for p in [1, 0.5, 0.25]:
-        radius_value = p * math.pow(10, round(math.log10(max_radius_value)))
-        radius = math.sqrt(radius_value * beta)
-        formatted_radius_value = func_format_radius_value(radius_value)
-
-        labels.append(formatted_radius_value)
-        markersize = radius * 1600 / span_y / 2
-        red_circle = (
-            Line2D(
-                [0],
-                [0],
-                marker='o',
-                color=_utils.DEFAULTS.COLOR_STROKE,
-                markerfacecolor=_utils.DEFAULTS.COLOR_FILL,
-                markersize=markersize,
-                label='',
-            ),
-        )
-        handles.append(red_circle)
+    x, y = (minx + span_x * 0.9), (miny + span_y * 0.75)
+    radius_value = math.pow(10, round(math.log10(max_radius_value)))
+    radius = math.sqrt(radius_value * beta)
+    formatted_radius_value = func_format_radius_value(radius_value)
+    _utils.draw_text((x, y), 'SCALE\n%s' % formatted_radius_value)
+    _utils.draw_circle((x, y), radius)
 
     # color legend
+    labels = []
+    handles = []
+
     n_color_values = len(color_values)
     sorted_color_values = sorted(color_values, reverse=True)
     for i in range(0, N_LEGEND_VALUES):
