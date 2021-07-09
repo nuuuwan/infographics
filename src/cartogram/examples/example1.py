@@ -2,8 +2,9 @@
 import os
 
 from geo import geodata
+from utils import plotx
 
-from cartogram import _utils, dorling
+from cartogram import dorling
 
 
 def _plot_population(region_id, sub_region_type):
@@ -16,7 +17,7 @@ def _plot_population(region_id, sub_region_type):
         region_id,
         sub_region_type,
     )
-    _utils.draw_infographic(
+    plotx.draw_infographic(
         title='Population in %s' % (region_id),
         subtitle='By %s' % sub_region_type.upper(),
         footer_text='Data Source: '
