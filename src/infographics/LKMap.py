@@ -1,14 +1,12 @@
 import colorsys
-import json
 import math
 
 import matplotlib.pyplot as plt
 from geo import geodata
-from utils import ds
 
 from infographics import plotx
 
-N_LEGEND_VALUES = 5
+MAX_LEGEND_ITEMS = 7
 
 
 def _default_func_get_color_value(row):
@@ -46,6 +44,8 @@ class LKMap:
         func_format_color_value=_default_func_format_color_value,
         func_render_label=_default_func_render_label,
         func_render_overlay=None,
+        left_bottom=(0.1, 0.1),
+        width_height=(0.8, 0.8),
     ):
         self.region_id = region_id
         self.sub_region_type = sub_region_type
@@ -62,6 +62,9 @@ class LKMap:
             if func_value_to_color_surface
             else self.func_value_to_color
         )
+
+        self.left_bottom = left_bottom
+        self.width_height = width_height
 
     def draw(self):
         gpd_df = geodata.get_region_geodata(
@@ -88,7 +91,7 @@ class LKMap:
             color = self.func_value_to_color_surface(color_value)
             gpd_df.at[i_row, 'color'] = color
 
-        ax = plt.axes([0.1, 0.1, 0.8, 0.8])
+        ax = plt.axes(self.left_bottom + self.width_height)
         gpd_df.plot(
             ax=ax,
             color=gpd_df['color'],
@@ -108,20 +111,23 @@ class LKMap:
         labels = []
         handles = []
 
-        sorted_color_values = sorted(
-            ds.unique(color_values),
-            key=lambda d: json.dumps(d),
-        )
-        n_color_values = len(sorted_color_values)
-        n_legend_values = min(N_LEGEND_VALUES, n_color_values)
-
-        for i in range(0, n_legend_values):
-            i_color_value = (int)(
-                i * (n_color_values - 1) / (n_legend_values - 1)
-            )
-            color_value = sorted_color_values[i_color_value]
+        formatted_value_to_color = {}
+        for color_value in color_values:
             color = self.func_value_to_color(color_value)
-            labels.append(self.func_format_color_value(color_value))
+            formatted_value = self.func_format_color_value(color_value)
+            formatted_value_to_color[formatted_value] = color
+
+        formatted_value_and_color = sorted(
+            formatted_value_to_color.items(),
+            key=lambda x: x[0],
+        )
+        n_actual = len(formatted_value_and_color)
+        n_legend_items = min(n_actual, MAX_LEGEND_ITEMS)
+
+        for i in range(0, n_legend_items):
+            j = (int)(i * (n_actual - 1) / (n_legend_items - 1))
+            formatted_value, color = formatted_value_and_color[j]
+            labels.append(formatted_value)
             handles.append(plotx.get_color_patch(color))
 
         plt.legend(handles=handles, labels=labels)

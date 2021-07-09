@@ -31,6 +31,8 @@ class DorlingCartogram:
         func_get_radius_value=_default_func_get_radius_value,
         func_format_radius_value=_default_func_format_radius_value,
         compactness=0.3,
+        left_bottom=(0.1, 0.1),
+        width_height=(0.8, 0.8),
     ):
         self.region_id = region_id
         self.sub_region_type = sub_region_type
@@ -44,6 +46,8 @@ class DorlingCartogram:
         self.func_format_radius_value = func_format_radius_value
 
         self.compactness = compactness
+        self.left_bottom = left_bottom
+        self.width_height = width_height
 
     def draw(self):
         def _func_render_overlay_dorling(
@@ -93,7 +97,7 @@ class DorlingCartogram:
                     self.func_render_label(row, x, y, spany)
 
             # radius legend
-            x, y = (minx + spanx * 0.9), (miny + spany * 0.75)
+            x, y = (minx + spanx * 0.9), (miny + spany * 0.6)
             radius_value = math.pow(10, round(math.log10(max_radius_value)))
             radius = math.sqrt(radius_value * beta)
             formatted_radius_value = self.func_format_radius_value(radius_value)
@@ -109,6 +113,8 @@ class DorlingCartogram:
             func_format_color_value=self.func_format_color_value,
             func_render_label=_func_render_label_blank,
             func_render_overlay=_func_render_overlay_dorling,
+            left_bottom=self.left_bottom,
+            width_height=self.width_height,
         ).draw()
 
 
