@@ -19,7 +19,8 @@ def _plot_population(region_id, sub_region_type):
     _utils.draw_infographic(
         title='Population in %s' % (region_id),
         subtitle='By %s' % sub_region_type.upper(),
-        footer_text='Data Source: statistics.gov.lk/',
+        footer_text='Data Source: '
+        + 'Department of Census and Statistics, Sri Lanka',
         image_file=image_file,
         func_plot_inner=_func_plot_inner,
     )

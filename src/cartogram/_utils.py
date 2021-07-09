@@ -9,13 +9,25 @@ logging.basicConfig(level=logging.INFO)
 log = logging.getLogger('cartogram')
 
 
+class DEFAULTS:
+    FONT_FAMILY = 'Futura'
+    FONT_SIZE = 12
+    FONT_COLOR = 'black'
+    FONT_COLOR_STROKE = 'gray'
+    FONT_COLOR_FILL = 'lightgray'
+    VERTICAL_ALIGNMENT = 'center'
+    HORIZONTAL_ALIGNMENT = 'center'
+    STRKOE_WIDTH = 0.1
+
+
 def draw_text(
     xy,
     text,
-    verticalalignment='center',
-    horizontalalignment='center',
-    fontname='Futura',
-    fontsize=12,
+    verticalalignment=DEFAULTS.VERTICAL_ALIGNMENT,
+    horizontalalignment=DEFAULTS.HORIZONTAL_ALIGNMENT,
+    fontname=DEFAULTS.FONT_FAMILY,
+    fontsize=DEFAULTS.FONT_SIZE,
+    fontcolor=DEFAULTS.FONT_COLOR,
 ):
     """Draw text."""
     x, y = xy
@@ -27,15 +39,16 @@ def draw_text(
         horizontalalignment=horizontalalignment,
         fontsize=fontsize,
         fontname=fontname,
+        color=fontcolor,
     )
 
 
 def draw_circle(
     cxy,
     r,
-    fill='lightgray',
-    stroke='gray',
-    stroke_width=0.2,
+    fill=DEFAULTS.FONT_COLOR_FILL,
+    stroke=DEFAULTS.FONT_COLOR_STROKE,
+    stroke_width=DEFAULTS.STRKOE_WIDTH,
 ):
     """Draw circle."""
     ax = plt.gca()
@@ -76,7 +89,7 @@ def draw_infographic(
     plt.axes([0, 0, 1, 1])
     draw_text((0.5, 0.95), title, fontsize=24)
     draw_text((0.5, 0.9), subtitle, fontsize=12)
-    draw_text((0.5, 0.05), footer_text, fontsize=8)
+    draw_text((0.5, 0.05), footer_text, fontsize=8, fontcolor='gray')
 
     ax_inner = plt.axes([0.1, 0.1, 0.8, 0.8])
     func_plot_inner(ax_inner)

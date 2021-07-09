@@ -13,6 +13,10 @@ def _default_func_get_radius_value(row):
     return row.population
 
 
+def _default_func_format_radius_value(radius_value):
+    return '{:,.0f}'.format(radius_value)
+
+
 def _default_func_get_color_value(row):
     return row.population / row.area
 
@@ -30,32 +34,15 @@ def _default_func_format_color_value(color_value):
 
 def _default_func_render_label(ax, x, y, span_y, row):
     r2 = span_y / 40
-    ax.text(
-        x,
-        y + r2,
-        row['name'],
-        verticalalignment='center',
-        horizontalalignment='center',
-        fontsize=6,
-    )
+    _utils.draw_text((x, y + r2), row['name'], fontsize=6)
 
-    ax.text(
-        x,
-        y + r2 * 0.1,
-        '{:,.0f}/km²'.format(row.population / row.area),
-        verticalalignment='center',
-        horizontalalignment='center',
-        fontsize=9,
-    )
+    color_value = _default_func_get_color_value(row)
+    rendered_color_value = _default_func_format_color_value(color_value)
+    _utils.draw_text((x, y + r2 * 0.1), rendered_color_value, fontsize=9)
 
-    ax.text(
-        x,
-        y - r2,
-        '{:,}'.format(row.population),
-        verticalalignment='center',
-        horizontalalignment='center',
-        fontsize=6,
-    )
+    radius_value = _default_func_get_radius_value(row)
+    formatted_radius_value = _default_func_format_radius_value(radius_value)
+    _utils.draw_text((x, y - r2), formatted_radius_value, fontsize=6)
 
 
 def _default_func_render_legend(ax, x, y, span_y, anchor_radius):
@@ -66,13 +53,14 @@ def plot(
     geopandas_dataframe,
     ax,
     func_get_radius_value=_default_func_get_radius_value,
+    func_format_radius_value=_default_func_format_radius_value,
     func_get_color_value=_default_func_get_color_value,
     func_value_to_color=_default_func_value_to_color,
     func_format_color_value=_default_func_format_color_value,
     func_render_label=_default_func_render_label,
     color_background=(0.8, 0.8, 0.8, 0.25),
     color_border=(0.8, 0.8, 0.8, 0.5),
-    compactness=0.333,
+    compactness=0.3,
 ):
     """Plot Dorling Cartogram."""
     n_regions = 0
@@ -131,7 +119,7 @@ def plot(
     anchor_radius = math.sqrt(anchor_radius_value * beta)
     for pr in [1]:
         r = anchor_radius * pr
-        text = '{:,}'.format((int)(pr ** 2 * anchor_radius_value))
+        text = func_format_radius_value(anchor_radius_value)
         _utils.draw_text((x, y), text)
         _utils.draw_circle((x, y), r, fill=None)
 
