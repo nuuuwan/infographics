@@ -3,6 +3,7 @@ import colorsys
 import math
 
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 
 from cartogram import _utils, dorling_compress
 
@@ -45,10 +46,6 @@ def _default_func_render_label(ax, x, y, span_y, row):
     _utils.draw_text((x, y - r2), formatted_radius_value, fontsize=6)
 
 
-def _default_func_render_legend(ax, x, y, span_y, anchor_radius):
-    pass
-
-
 def plot(
     geopandas_dataframe,
     ax,
@@ -58,8 +55,6 @@ def plot(
     func_value_to_color=_default_func_value_to_color,
     func_format_color_value=_default_func_format_color_value,
     func_render_label=_default_func_render_label,
-    color_background=(0.8, 0.8, 0.8, 0.25),
-    color_border=(0.8, 0.8, 0.8, 0.5),
     compactness=0.3,
 ):
     """Plot Dorling Cartogram."""
@@ -101,8 +96,9 @@ def plot(
 
     geopandas_dataframe.plot(
         ax=ax,
-        color=color_background,
-        edgecolor=color_border,
+        color=_utils.DEFAULTS.COLOR_FILL,
+        edgecolor=_utils.DEFAULTS.COLOR_STROKE,
+        linewidth=_utils.DEFAULTS.STROKE_WIDTH,
     )
     span_y = maxy - miny
     for point in compressed_points:
@@ -113,30 +109,43 @@ def plot(
         if n_regions <= 30:
             func_render_label(ax, x, y, span_y, row)
 
-    x = maxx - (maxx - minx) * 0.1
-    y = maxy - (maxy - miny) * 0.25
-    anchor_radius_value = math.pow(10, round(math.log10(max_radius_value)))
-    anchor_radius = math.sqrt(anchor_radius_value * beta)
-    for pr in [1]:
-        r = anchor_radius * pr
-        text = func_format_radius_value(anchor_radius_value)
-        _utils.draw_text((x, y), text)
-        _utils.draw_circle((x, y), r, fill=None)
+    labels = []
+    handles = []
+    # radius legend
+    for p in [1, 0.5, 0.25]:
+        radius_value = p * math.pow(10, round(math.log10(max_radius_value)))
+        radius = math.sqrt(radius_value * beta)
+        formatted_radius_value = func_format_radius_value(radius_value)
 
-    labels_and_colors = []
+        labels.append(formatted_radius_value)
+        markersize = radius * 1600 / span_y / 2
+        red_circle = (
+            Line2D(
+                [0],
+                [0],
+                marker='o',
+                color=_utils.DEFAULTS.COLOR_STROKE,
+                markerfacecolor=_utils.DEFAULTS.COLOR_FILL,
+                markersize=markersize,
+                label='',
+            ),
+        )
+        handles.append(red_circle)
+
+    # color legend
     n_color_values = len(color_values)
     sorted_color_values = sorted(color_values, reverse=True)
-
     for i in range(0, N_LEGEND_VALUES):
         i_color_value = (int)(i * (n_color_values - 1) / (N_LEGEND_VALUES - 1))
         color_value = sorted_color_values[i_color_value]
-        labels_and_colors.append(
-            (
-                func_format_color_value(color_value),
-                func_value_to_color(color_value),
-            )
-        )
-    _utils.draw_color_legend(labels_and_colors)
+        color = _default_func_value_to_color(color_value)
+        labels.append(func_format_color_value(color_value))
+        handles.append(_utils.get_color_patch(color))
+
+    plt.legend(
+        handles=handles,
+        labels=labels,
+    )
 
     plt.axis('off')
     return plt

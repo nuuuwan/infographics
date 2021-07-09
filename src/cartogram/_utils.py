@@ -12,12 +12,35 @@ log = logging.getLogger('cartogram')
 class DEFAULTS:
     FONT_FAMILY = 'Futura'
     FONT_SIZE = 12
-    FONT_COLOR = 'black'
-    FONT_COLOR_STROKE = 'gray'
-    FONT_COLOR_FILL = 'lightgray'
+    COLOR = 'black'
+    COLOR_STROKE = 'lightgray'
+    COLOR_FILL = (0.9, 0.9, 0.9, 0.5)
     VERTICAL_ALIGNMENT = 'center'
     HORIZONTAL_ALIGNMENT = 'center'
-    STRKOE_WIDTH = 0.1
+    STROKE_WIDTH = 0.3
+
+
+def get_circle(
+    cxy,
+    r,
+    fill=DEFAULTS.COLOR_FILL,
+    stroke=DEFAULTS.COLOR_STROKE,
+    stroke_width=DEFAULTS.STROKE_WIDTH,
+):
+    do_fill = fill is not None
+    return plt.Circle(
+        cxy,
+        r,
+        edgecolor=stroke,
+        facecolor=fill,
+        linewidth=stroke_width,
+        fill=do_fill,
+    )
+
+
+def get_color_patch(color):
+    """Draw color patch."""
+    return Patch(color=color)
 
 
 def draw_text(
@@ -27,7 +50,7 @@ def draw_text(
     horizontalalignment=DEFAULTS.HORIZONTAL_ALIGNMENT,
     fontname=DEFAULTS.FONT_FAMILY,
     fontsize=DEFAULTS.FONT_SIZE,
-    fontcolor=DEFAULTS.FONT_COLOR,
+    fontcolor=DEFAULTS.COLOR,
 ):
     """Draw text."""
     x, y = xy
@@ -46,36 +69,21 @@ def draw_text(
 def draw_circle(
     cxy,
     r,
-    fill=DEFAULTS.FONT_COLOR_FILL,
-    stroke=DEFAULTS.FONT_COLOR_STROKE,
-    stroke_width=DEFAULTS.STRKOE_WIDTH,
+    fill=DEFAULTS.COLOR_FILL,
+    stroke=DEFAULTS.COLOR_STROKE,
+    stroke_width=DEFAULTS.STROKE_WIDTH,
 ):
     """Draw circle."""
     ax = plt.gca()
-    do_fill = fill is not None
     ax.add_patch(
-        plt.Circle(
+        get_circle(
             cxy,
             r,
-            edgecolor=stroke,
-            facecolor=fill,
-            linewidth=stroke_width,
-            fill=do_fill,
+            stroke=stroke,
+            fill=fill,
+            stroke_width=stroke_width,
         )
     )
-
-
-def draw_color_legend(labels_and_colors):
-    """Draw color legend."""
-    patches = []
-    for label, color in labels_and_colors:
-        patches.append(
-            Patch(
-                color=color,
-                label=label,
-            )
-        )
-    plt.legend(handles=patches)
 
 
 def draw_infographic(
