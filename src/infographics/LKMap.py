@@ -1,8 +1,10 @@
 import colorsys
+import json
 import math
 
 import matplotlib.pyplot as plt
 from geo import geodata
+from utils import ds
 
 from infographics import plotx
 
@@ -40,6 +42,7 @@ class LKMap:
         sub_region_type='province',
         func_get_color_value=_default_func_get_color_value,
         func_value_to_color=_default_func_value_to_color,
+        func_value_to_color_surface=None,
         func_format_color_value=_default_func_format_color_value,
         func_render_label=_default_func_render_label,
         func_render_overlay=None,
@@ -53,6 +56,12 @@ class LKMap:
         self.func_render_label = func_render_label
 
         self.func_render_overlay = func_render_overlay
+
+        self.func_value_to_color_surface = (
+            func_value_to_color_surface
+            if func_value_to_color_surface
+            else self.func_value_to_color
+        )
 
     def draw(self):
         gpd_df = geodata.get_region_geodata(
@@ -76,7 +85,7 @@ class LKMap:
         for i_row, row in gpd_df.iterrows():
             color_value = self.func_get_color_value(row)
             color_values.append(color_value)
-            color = self.func_value_to_color(color_value)
+            color = self.func_value_to_color_surface(color_value)
             gpd_df.at[i_row, 'color'] = color
 
         ax = plt.axes([0.1, 0.1, 0.8, 0.8])
@@ -99,14 +108,19 @@ class LKMap:
         labels = []
         handles = []
 
-        n_color_values = len(color_values)
-        sorted_color_values = sorted(color_values, reverse=True)
-        for i in range(0, N_LEGEND_VALUES):
+        sorted_color_values = sorted(
+            ds.unique(color_values),
+            key=lambda d: json.dumps(d),
+        )
+        n_color_values = len(sorted_color_values)
+        n_legend_values = min(N_LEGEND_VALUES, n_color_values)
+
+        for i in range(0, n_legend_values):
             i_color_value = (int)(
-                i * (n_color_values - 1) / (N_LEGEND_VALUES - 1)
+                i * (n_color_values - 1) / (n_legend_values - 1)
             )
             color_value = sorted_color_values[i_color_value]
-            color = _default_func_value_to_color(color_value)
+            color = self.func_value_to_color(color_value)
             labels.append(self.func_format_color_value(color_value))
             handles.append(plotx.get_color_patch(color))
 
@@ -126,14 +140,3 @@ class LKMap:
             )
 
         plt.axis('off')
-
-
-if __name__ == '__main__':
-    from Infographic import Infographic
-
-    Infographic(
-        title='Sri Lanka',
-        children=[
-            LKMap(region_id='LK', sub_region_type='district'),
-        ],
-    ).save('/tmp/infographics.lkmap.png').close()

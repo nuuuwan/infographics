@@ -3,8 +3,9 @@
 import os
 
 import matplotlib.pyplot as plt
-import plotx
-from _utils import log
+
+from infographics import plotx
+from infographics._utils import log
 
 
 class Infographic:
@@ -41,7 +42,3 @@ class Infographic:
     def close(self):
         plt.close()
         return self
-
-
-if __name__ == '__main__':
-    Infographic().save('/tmp/infographics.infographic.png').close()

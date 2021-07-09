@@ -103,7 +103,10 @@ class DorlingCartogram:
         LKMap.LKMap(
             region_id=self.region_id,
             sub_region_type=self.sub_region_type,
-            func_value_to_color=_func_value_to_color_blank,
+            func_get_color_value=self.func_get_color_value,
+            func_value_to_color=self.func_value_to_color,
+            func_value_to_color_surface=_func_value_to_color_blank,
+            func_format_color_value=self.func_format_color_value,
             func_render_label=_func_render_label_blank,
             func_render_overlay=_func_render_overlay_dorling,
         ).draw()
