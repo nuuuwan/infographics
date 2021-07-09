@@ -3,8 +3,9 @@ import colorsys
 import math
 
 import matplotlib.pyplot as plt
+from utils import plotx
 
-from cartogram import _utils, dorling_compress
+from cartogram import dorling_compress
 
 N_LEGEND_VALUES = 5
 
@@ -34,15 +35,15 @@ def _default_func_format_color_value(color_value):
 
 def _default_func_render_label(ax, x, y, span_y, row):
     r2 = span_y / 40
-    _utils.draw_text((x, y + r2), row['name'], fontsize=6)
+    plotx.draw_text((x, y + r2), row['name'], fontsize=6)
 
     color_value = _default_func_get_color_value(row)
     rendered_color_value = _default_func_format_color_value(color_value)
-    _utils.draw_text((x, y + r2 * 0.1), rendered_color_value, fontsize=8)
+    plotx.draw_text((x, y + r2 * 0.1), rendered_color_value, fontsize=8)
 
     radius_value = _default_func_get_radius_value(row)
     formatted_radius_value = _default_func_format_radius_value(radius_value)
-    _utils.draw_text((x, y - r2), formatted_radius_value, fontsize=6)
+    plotx.draw_text((x, y - r2), formatted_radius_value, fontsize=6)
 
 
 def plot(
@@ -98,9 +99,9 @@ def plot(
 
     geopandas_dataframe.plot(
         ax=ax,
-        color=_utils.DEFAULTS.COLOR_FILL,
-        edgecolor=_utils.DEFAULTS.COLOR_STROKE,
-        linewidth=_utils.DEFAULTS.STROKE_WIDTH,
+        color=plotx.DEFAULTS.COLOR_FILL,
+        edgecolor=plotx.DEFAULTS.COLOR_STROKE,
+        linewidth=plotx.DEFAULTS.STROKE_WIDTH,
     )
     span_x, span_y = maxx - minx, maxy - miny
 
@@ -108,7 +109,7 @@ def plot(
         x, y, r, row = point['x'], point['y'], point['r'], point['row']
         color_value = func_get_color_value(row)
         color = func_value_to_color(color_value)
-        _utils.draw_circle((x, y), r, fill=color)
+        plotx.draw_circle((x, y), r, fill=color)
         if n_regions <= 30:
             func_render_label(ax, x, y, span_y, row)
 
@@ -117,8 +118,8 @@ def plot(
     radius_value = math.pow(10, round(math.log10(max_radius_value)))
     radius = math.sqrt(radius_value * beta)
     formatted_radius_value = func_format_radius_value(radius_value)
-    _utils.draw_text((x, y), 'SCALE\n%s' % formatted_radius_value)
-    _utils.draw_circle((x, y), radius)
+    plotx.draw_text((x, y), 'SCALE\n%s' % formatted_radius_value)
+    plotx.draw_circle((x, y), radius)
 
     # color legend
     labels = []
@@ -131,7 +132,7 @@ def plot(
         color_value = sorted_color_values[i_color_value]
         color = _default_func_value_to_color(color_value)
         labels.append(func_format_color_value(color_value))
-        handles.append(_utils.get_color_patch(color))
+        handles.append(plotx.get_color_patch(color))
 
     plt.legend(
         handles=handles,
