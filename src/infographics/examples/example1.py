@@ -2,9 +2,8 @@
 import os
 
 from geo import geodata
-from utils import plotx
 
-from infographics import dorling
+from infographics import dorling, plotx
 
 
 def _plot_population(region_id, sub_region_type):
