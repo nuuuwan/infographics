@@ -5,7 +5,7 @@ import math
 import matplotlib.pyplot as plt
 from utils import plotx
 
-from cartogram import dorling_compress
+from infographics import dorling_compress
 
 N_LEGEND_VALUES = 5
 

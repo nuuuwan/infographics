@@ -1,4 +1,4 @@
 """Constants."""
 
-CACHE_NAME = 'cartogram'
+CACHE_NAME = 'infographics'
 CACHE_TIMEOUT = 3600

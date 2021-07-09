@@ -4,7 +4,7 @@ import time
 
 import setuptools
 
-DIST_NAME = 'cartogram'
+DIST_NAME = 'infographics'
 with open('README.md', 'r') as fh:
     long_description = fh.read()
 

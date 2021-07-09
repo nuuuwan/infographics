@@ -3,7 +3,7 @@ import math
 
 from utils import ds
 
-from cartogram._utils import log
+from infographics._utils import log
 
 
 def _compress(points, bounds):

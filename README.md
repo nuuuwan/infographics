@@ -1,6 +1,6 @@
-# Cartogram
+# Infographics
 
-Draw cartograms with MatPlotLib and GeoPandas
+Draw infographics with MatPlotLib and GeoPandas
 
 ## Release History
 
@@ -11,7 +11,7 @@ Draw cartograms with MatPlotLib and GeoPandas
 ## Setup and Install
 
 ```
-pip install cartogram-nuuuwan
+pip install infographics-nuuuwan
 ```
 
-*The source code for this library can be found at https://github.com/nuuuwan/cartogram.*
+*The source code for this library can be found at https://github.com/nuuuwan/infographics.*

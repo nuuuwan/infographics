@@ -4,7 +4,7 @@ import os
 from geo import geodata
 from utils import plotx
 
-from cartogram import dorling
+from infographics import dorling
 
 
 def _plot_population(region_id, sub_region_type):
@@ -13,7 +13,7 @@ def _plot_population(region_id, sub_region_type):
     def _func_plot_inner():
         dorling.plot(gpd_df)
 
-    image_file = '/tmp/cartogram.example1.%s.%s.png' % (
+    image_file = '/tmp/infographics.example1.%s.%s.png' % (
         region_id,
         sub_region_type,
     )

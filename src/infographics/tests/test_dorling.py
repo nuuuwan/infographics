@@ -1,8 +1,8 @@
-"""Tests for cartogram."""
+"""Tests for infographics."""
 
 import unittest
 
-from cartogram import dorling_compress
+from infographics import dorling_compress
 
 
 class TestCase(unittest.TestCase):
