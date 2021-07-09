@@ -2,6 +2,7 @@
 
 import logging
 
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 
@@ -18,6 +19,9 @@ class DEFAULTS:
     VERTICAL_ALIGNMENT = 'center'
     HORIZONTAL_ALIGNMENT = 'center'
     STROKE_WIDTH = 0.3
+
+
+mpl.rc('font', family=DEFAULTS.FONT_FAMILY)
 
 
 def get_circle(
@@ -99,9 +103,10 @@ def draw_infographic(
     draw_text((0.5, 0.9), subtitle, fontsize=12)
     draw_text((0.5, 0.05), footer_text, fontsize=8, fontcolor='gray')
 
-    ax_inner = plt.axes([0.1, 0.1, 0.8, 0.8])
-    func_plot_inner(ax_inner)
+    func_plot_inner()
 
     fig = plt.gcf()
     fig.set_size_inches(16, 9)
+
     plt.savefig(image_file)
+    log.info('Saved infographic to %s', image_file)

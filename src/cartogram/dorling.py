@@ -29,7 +29,7 @@ def _default_func_value_to_color(density):
 
 
 def _default_func_format_color_value(color_value):
-    return '{:,.0f}/km²'.format(color_value)
+    return '{:,.0f} per km²'.format(color_value)
 
 
 def _default_func_render_label(ax, x, y, span_y, row):
@@ -38,7 +38,7 @@ def _default_func_render_label(ax, x, y, span_y, row):
 
     color_value = _default_func_get_color_value(row)
     rendered_color_value = _default_func_format_color_value(color_value)
-    _utils.draw_text((x, y + r2 * 0.1), rendered_color_value, fontsize=9)
+    _utils.draw_text((x, y + r2 * 0.1), rendered_color_value, fontsize=8)
 
     radius_value = _default_func_get_radius_value(row)
     formatted_radius_value = _default_func_format_radius_value(radius_value)
@@ -47,7 +47,8 @@ def _default_func_render_label(ax, x, y, span_y, row):
 
 def plot(
     geopandas_dataframe,
-    ax,
+    left_bottom=(0.1, 0.1),
+    width_height=(0.8, 0.8),
     func_get_radius_value=_default_func_get_radius_value,
     func_format_radius_value=_default_func_format_radius_value,
     func_get_color_value=_default_func_get_color_value,
@@ -57,6 +58,8 @@ def plot(
     compactness=0.3,
 ):
     """Plot Dorling Cartogram."""
+    ax = plt.axes(left_bottom + width_height)
+
     n_regions = 0
     color_values = []
     radius_values = []
@@ -134,6 +137,5 @@ def plot(
         handles=handles,
         labels=labels,
     )
-
     plt.axis('off')
     return plt

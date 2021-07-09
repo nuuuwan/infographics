@@ -9,8 +9,8 @@ from cartogram import _utils, dorling
 def _plot_population(region_id, sub_region_type):
     gpd_df = geodata.get_region_geodata(region_id, sub_region_type)
 
-    def _func_plot_inner(ax):
-        dorling.plot(gpd_df, ax)
+    def _func_plot_inner():
+        dorling.plot(gpd_df)
 
     image_file = '/tmp/cartogram.example1.%s.%s.png' % (
         region_id,
