@@ -1,28 +1,22 @@
-from elections_lk import party_color, presidential
+from elections_lk import presidential
 
 from infographics.DorlingCartogram import DorlingCartogram
+from infographics.examples import example3
 from infographics.Infographic import Infographic
 from infographics.LKMap import LKMap
 
-year = 2019
+year = example3.year
+
 pd_to_result = presidential.get_election_data_index(year)
 
 
-def _func_get_color_value(row):
+def _func_get_radius_value(row):
     result = pd_to_result[row.id]
-    return presidential.get_winning_party_info(result)
+    return result['summary']['valid']
 
 
-def _func_value_to_color(party_info):
-    return party_color.get_rgb_color(party_info['party_id'])
-
-
-def _func_format_color_value(party_info):
-    return party_info['party_id']
-
-
-def _func_render_label(row, x, y, spany):
-    pass
+def _func_format_radius_value(radius_value):
+    return '{:,.0f}\nvalid votes'.format(radius_value)
 
 
 if __name__ == '__main__':
@@ -37,22 +31,26 @@ if __name__ == '__main__':
         ),
         children=[
             LKMap(
-                region_id='LK',
+                region_id=example3.region_id,
                 sub_region_type='pd',
-                func_get_color_value=_func_get_color_value,
-                func_value_to_color=_func_value_to_color,
-                func_format_color_value=_func_format_color_value,
-                func_render_label=_func_render_label,
+                figure_text='a) True-Area Map',
+                func_get_color_value=example3._func_get_color_value,
+                func_value_to_color=example3._func_value_to_color,
+                func_format_color_value=example3._func_format_color_value,
+                func_render_label=example3._func_render_label,
                 left_bottom=(0.05, 0.1),
                 width_height=(0.4, 0.8),
             ),
             DorlingCartogram(
-                region_id='LK',
+                region_id=example3.region_id,
                 sub_region_type='pd',
-                func_get_color_value=_func_get_color_value,
-                func_value_to_color=_func_value_to_color,
-                func_format_color_value=_func_format_color_value,
-                func_render_label=_func_render_label,
+                figure_text='b) Dorling Cartogram',
+                func_get_color_value=example3._func_get_color_value,
+                func_value_to_color=example3._func_value_to_color,
+                func_format_color_value=example3._func_format_color_value,
+                func_render_label=example3._func_render_label,
+                func_get_radius_value=_func_get_radius_value,
+                func_format_radius_value=_func_format_radius_value,
                 left_bottom=(0.55, 0.1),
                 width_height=(0.4, 0.8),
             ),

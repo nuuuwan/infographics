@@ -24,6 +24,7 @@ class DorlingCartogram:
         self,
         region_id='LK',
         sub_region_type='province',
+        figure_text='',
         func_get_color_value=LKMap._default_func_get_color_value,
         func_value_to_color=LKMap._default_func_value_to_color,
         func_format_color_value=LKMap._default_func_format_color_value,
@@ -36,6 +37,7 @@ class DorlingCartogram:
     ):
         self.region_id = region_id
         self.sub_region_type = sub_region_type
+        self.figure_text = figure_text
 
         self.func_get_color_value = func_get_color_value
         self.func_value_to_color = func_value_to_color
@@ -107,6 +109,7 @@ class DorlingCartogram:
         LKMap.LKMap(
             region_id=self.region_id,
             sub_region_type=self.sub_region_type,
+            figure_text=self.figure_text,
             func_get_color_value=self.func_get_color_value,
             func_value_to_color=self.func_value_to_color,
             func_value_to_color_surface=_func_value_to_color_blank,
@@ -116,14 +119,3 @@ class DorlingCartogram:
             left_bottom=self.left_bottom,
             width_height=self.width_height,
         ).draw()
-
-
-if __name__ == '__main__':
-    from Infographic import Infographic
-
-    Infographic(
-        title='Sri Lanka',
-        children=[
-            DorlingCartogram(region_id='LK', sub_region_type='district'),
-        ],
-    ).save('/tmp/infographics.lkmap.png').close()

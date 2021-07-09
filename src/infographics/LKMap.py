@@ -38,6 +38,7 @@ class LKMap:
         self,
         region_id='LK',
         sub_region_type='province',
+        figure_text='',
         func_get_color_value=_default_func_get_color_value,
         func_value_to_color=_default_func_value_to_color,
         func_value_to_color_surface=None,
@@ -49,6 +50,7 @@ class LKMap:
     ):
         self.region_id = region_id
         self.sub_region_type = sub_region_type
+        self.figure_text = figure_text
 
         self.func_get_color_value = func_get_color_value
         self.func_value_to_color = func_value_to_color
@@ -97,6 +99,12 @@ class LKMap:
             color=gpd_df['color'],
             edgecolor=plotx.DEFAULTS.COLOR_STROKE,
             linewidth=plotx.DEFAULTS.STROKE_WIDTH,
+        )
+
+        plotx.draw_text(
+            (minx + spanx * 0.5, miny - spany * 0.05),
+            self.figure_text,
+            fontsize=6,
         )
 
         for i_row, row in gpd_df.iterrows():

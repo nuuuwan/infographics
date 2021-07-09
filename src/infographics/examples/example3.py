@@ -3,7 +3,8 @@ from elections_lk import party_color, presidential
 from infographics.Infographic import Infographic
 from infographics.LKMap import LKMap
 
-year = 2019
+year = 2010
+region_id = 'LK'
 pd_to_result = presidential.get_election_data_index(year)
 
 
@@ -31,13 +32,14 @@ if __name__ == '__main__':
         footer_text='\n'.join(
             [
                 'data from https://elections.gov.lk',
-                'visualizaiton by @nuuuwan',
+                'visualization by @nuuuwan',
             ]
         ),
         children=[
             LKMap(
-                region_id='LK',
+                region_id=region_id,
                 sub_region_type='pd',
+                figure_text='True-Area Map',
                 func_get_color_value=_func_get_color_value,
                 func_value_to_color=_func_value_to_color,
                 func_format_color_value=_func_format_color_value,
