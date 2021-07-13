@@ -34,8 +34,8 @@ dorling_prog = LKDorlingCartogram(
     func_value_to_color=example5._func_value_to_color,
     func_format_color_value=example5._func_format_color_value,
     func_render_label=example5._func_render_label,
-    func_get_radius_value=example4._func_get_radius_value,
-    func_format_radius_value=example4._func_format_radius_value,
+    func_get_area_value=example4._func_get_area_value,
+    func_format_area_value=example4._func_format_area_value,
     left_bottom=(0.775, 0.1),
     width_height=(0.2, 0.8),
 )

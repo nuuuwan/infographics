@@ -3,12 +3,12 @@ import math
 from infographics import LKMap, dorling_compress, plotx
 
 
-def _default_func_get_radius_value(row):
+def _default_func_get_area_value(row):
     return row.population
 
 
-def _default_func_format_radius_value(radius_value):
-    return '{:,.0f}\npeople'.format(radius_value)
+def _default_func_format_area_value(area_value):
+    return '{:,.0f}\npeople'.format(area_value)
 
 
 def _func_value_to_color_blank(_):
@@ -31,8 +31,8 @@ class LKDorlingCartogram(LKMap.LKMap):
         func_value_to_color=LKMap._default_func_value_to_color,
         func_format_color_value=LKMap._default_func_format_color_value,
         func_render_label=LKMap._default_func_render_label,
-        func_get_radius_value=_default_func_get_radius_value,
-        func_format_radius_value=_default_func_format_radius_value,
+        func_get_area_value=_default_func_get_area_value,
+        func_format_area_value=_default_func_format_area_value,
         compactness=0.3,
     ):
         super().__init__(
@@ -55,8 +55,8 @@ class LKDorlingCartogram(LKMap.LKMap):
         self.func_format_color_value = func_format_color_value
         self.func_render_label = func_render_label
 
-        self.func_get_radius_value = func_get_radius_value
-        self.func_format_radius_value = func_format_radius_value
+        self.func_get_area_value = func_get_area_value
+        self.func_format_area_value = func_format_area_value
 
         self.compactness = compactness
 
@@ -77,15 +77,15 @@ class LKDorlingCartogram(LKMap.LKMap):
         ) = self.__data__
 
         n_regions = 0
-        radius_values = []
+        area_values = []
         for _, row in gpd_df.iterrows():
             n_regions += 1
-            radius_values.append(self.func_get_radius_value(row))
-        sum_radius_value = sum(radius_values)
-        max_radius_value = max(radius_values)
+            area_values.append(self.func_get_area_value(row))
+        sum_area_value = sum(area_values)
+        max_area_value = max(area_values)
 
         alpha = self.compactness * math.pi / 4
-        beta = alpha * area / math.pi / sum_radius_value
+        beta = alpha * area / math.pi / sum_area_value
 
         points = []
         for i_row, row in gpd_df.iterrows():
@@ -93,7 +93,7 @@ class LKDorlingCartogram(LKMap.LKMap):
                 {
                     'x': row.geometry.centroid.x,
                     'y': row.geometry.centroid.y,
-                    'r': math.sqrt(self.func_get_radius_value(row) * beta),
+                    'r': math.sqrt(self.func_get_area_value(row) * beta),
                     'row': row,
                 }
             )
@@ -104,7 +104,7 @@ class LKDorlingCartogram(LKMap.LKMap):
         )
 
         return self.__data__ + (
-            max_radius_value,
+            max_area_value,
             beta,
             compressed_points,
         )
@@ -122,7 +122,7 @@ class LKDorlingCartogram(LKMap.LKMap):
             area,
             gpd_df,
             color_values,
-            max_radius_value,
+            max_area_value,
             beta,
             compressed_points,
         ) = self.__data__
@@ -135,10 +135,10 @@ class LKDorlingCartogram(LKMap.LKMap):
             if n_regions <= 30:
                 self.func_render_label(row, x, y, spany)
 
-        # radius legend
+        # area legend
         x, y = (minx + spanx * 0.9), (miny + spany * 0.6)
-        radius_value = math.pow(10, round(math.log10(max_radius_value)))
-        radius = math.sqrt(radius_value * beta)
-        formatted_radius_value = self.func_format_radius_value(radius_value)
-        plotx.draw_text((x, y), 'SCALE\n%s' % formatted_radius_value)
-        plotx.draw_circle((x, y), radius)
+        area_value = math.pow(10, round(math.log10(max_area_value)))
+        area = math.sqrt(area_value * beta)
+        formatted_area_value = self.func_format_area_value(area_value)
+        plotx.draw_text((x, y), 'SCALE\n%s' % formatted_area_value)
+        plotx.draw_circle((x, y), area)

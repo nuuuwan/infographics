@@ -25,6 +25,19 @@ def _func_render_label(row, x, y, spany):
     pass
 
 
+true_map = LKMap(
+    region_id=region_id,
+    sub_region_type='pd',
+    figure_text='a) True-Area Map',
+    func_get_color_value=_func_get_color_value,
+    func_value_to_color=_func_value_to_color,
+    func_format_color_value=_func_format_color_value,
+    func_render_label=_func_render_label,
+    left_bottom=(0.1, 0.1),
+    width_height=(0.8, 0.8),
+)
+
+
 if __name__ == '__main__':
     Infographic(
         title='%d Sri Lankan Presidential Election' % year,
@@ -36,14 +49,6 @@ if __name__ == '__main__':
             ]
         ),
         children=[
-            LKMap(
-                region_id=region_id,
-                sub_region_type='pd',
-                figure_text='True-Area Map',
-                func_get_color_value=_func_get_color_value,
-                func_value_to_color=_func_value_to_color,
-                func_format_color_value=_func_format_color_value,
-                func_render_label=_func_render_label,
-            ),
+            true_map,
         ],
-    ).save('/tmp/infographics.example3.%d.png' % year)
+    ).save('/tmp/infographics.%d.png' % year)
