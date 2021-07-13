@@ -4,6 +4,10 @@ Draw infographics with MatPlotLib and GeoPandas
 
 ## Release History
 
+### 1.0.3
+
+* Removed figure text
+
 ### 1.0.2
 
 * Fixed legend bug
