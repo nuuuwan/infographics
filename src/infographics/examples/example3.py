@@ -4,7 +4,7 @@ from infographics.Infographic import Infographic
 from infographics.LKMap import LKMap
 
 year = 2019
-region_id = 'EC-04'
+region_id = 'LK'
 pd_to_result = presidential.get_election_data_index(year)
 
 

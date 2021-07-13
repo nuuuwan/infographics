@@ -18,8 +18,8 @@ class Figure:
         ax = plt.axes(self.left_bottom + self.width_height)
         plotx.draw_text(
             (0.5, 0),
-            'Figure: ' + self.figure_text,
-            fontsize=6,
+            self.figure_text,
+            fontsize=12,
         )
         ax.axis('off')
 

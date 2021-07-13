@@ -1,6 +1,5 @@
 """Infographic."""
 
-import os
 
 import matplotlib.pyplot as plt
 
@@ -23,7 +22,7 @@ class Infographic:
         plotx.draw_text(
             (0.5, 0.05),
             footer_text,
-            fontsize=8,
+            fontsize=12,
             fontcolor='gray',
         )
 
@@ -36,7 +35,6 @@ class Infographic:
     def save(self, image_file):
         plt.savefig(image_file)
         log.info('Saved infographic to %s', image_file)
-        os.system('open %s' % image_file)
         return self
 
     def close(self):
