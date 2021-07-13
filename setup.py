@@ -8,7 +8,7 @@ DIST_NAME = 'infographics'
 with open('README.md', 'r') as fh:
     long_description = fh.read()
 
-IS_RELEASE = False
+IS_RELEASE = True
 MAJOR, MINOR, PATCH = 1, 0, 2
 if IS_RELEASE:
     version = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
