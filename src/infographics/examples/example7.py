@@ -1,8 +1,8 @@
 from elections_lk import party_color, presidential
 
-from infographics.DorlingCartogram import DorlingCartogram
 from infographics.examples import example3, example4
 from infographics.Infographic import Infographic
+from infographics.LKDorlingCartogram import LKDorlingCartogram
 
 year = example3.year
 pd_to_result = presidential.get_election_data_index(year)
@@ -44,7 +44,7 @@ if __name__ == '__main__':
             ]
         ),
         children=[
-            DorlingCartogram(
+            LKDorlingCartogram(
                 region_id=example3.region_id,
                 sub_region_type='pd',
                 figure_text='{:.0%} Compactness'.format(x[1]),

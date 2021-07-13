@@ -4,7 +4,7 @@ import math
 import matplotlib.pyplot as plt
 from geo import geodata
 
-from infographics import plotx
+from infographics import Figure, plotx
 
 MAX_LEGEND_ITEMS = 7
 
@@ -33,7 +33,7 @@ def _default_func_render_label(row, x, y, spany):
     plotx.draw_text((x, y + r2 * 0.1), rendered_color_value, fontsize=8)
 
 
-class LKMap:
+class LKMap(Figure.Figure):
     def __init__(
         self,
         region_id='LK',
@@ -44,10 +44,15 @@ class LKMap:
         func_value_to_color_surface=None,
         func_format_color_value=_default_func_format_color_value,
         func_render_label=_default_func_render_label,
-        func_render_overlay=None,
         left_bottom=(0.1, 0.1),
         width_height=(0.8, 0.8),
     ):
+        super().__init__(
+            left_bottom=left_bottom,
+            width_height=width_height,
+            figure_text=figure_text,
+        )
+
         self.region_id = region_id
         self.sub_region_type = sub_region_type
         self.figure_text = figure_text
@@ -57,18 +62,15 @@ class LKMap:
         self.func_format_color_value = func_format_color_value
         self.func_render_label = func_render_label
 
-        self.func_render_overlay = func_render_overlay
-
         self.func_value_to_color_surface = (
             func_value_to_color_surface
             if func_value_to_color_surface
             else self.func_value_to_color
         )
 
-        self.left_bottom = left_bottom
-        self.width_height = width_height
+        self.__data__ = LKMap.__prep_data__(self)
 
-    def draw(self):
+    def __prep_data__(self):
         gpd_df = geodata.get_region_geodata(
             self.region_id,
             self.sub_region_type,
@@ -93,18 +95,42 @@ class LKMap:
             color = self.func_value_to_color_surface(color_value)
             gpd_df.at[i_row, 'color'] = color
 
+        return (
+            n_regions,
+            minx,
+            miny,
+            maxx,
+            maxy,
+            spanx,
+            spany,
+            area,
+            gpd_df,
+            color_values,
+        )
+
+    def draw(self):
+        super().draw()
+
+        (
+            n_regions,
+            minx,
+            miny,
+            maxx,
+            maxy,
+            spanx,
+            spany,
+            area,
+            gpd_df,
+            color_values,
+            *child_params,
+        ) = self.__data__
+
         ax = plt.axes(self.left_bottom + self.width_height)
         gpd_df.plot(
             ax=ax,
             color=gpd_df['color'],
             edgecolor=plotx.DEFAULTS.COLOR_STROKE,
             linewidth=plotx.DEFAULTS.STROKE_WIDTH,
-        )
-
-        plotx.draw_text(
-            (minx + spanx * 0.5, miny - spany * 0.05),
-            self.figure_text,
-            fontsize=6,
         )
 
         for i_row, row in gpd_df.iterrows():
@@ -116,9 +142,6 @@ class LKMap:
             )
 
         # color legend
-        labels = []
-        handles = []
-
         formatted_value_to_color = {}
         for color_value in color_values:
             color = self.func_value_to_color(color_value)
@@ -132,6 +155,8 @@ class LKMap:
         n_actual = len(formatted_value_and_color)
         n_legend_items = min(n_actual, MAX_LEGEND_ITEMS)
 
+        labels = []
+        handles = []
         for i in range(0, n_legend_items):
             j = (int)(i * (n_actual - 1) / (n_legend_items - 1))
             formatted_value, color = formatted_value_and_color[j]
@@ -140,17 +165,4 @@ class LKMap:
 
         plt.legend(handles=handles, labels=labels)
 
-        if self.func_render_overlay:
-            self.func_render_overlay(
-                gpd_df,
-                n_regions,
-                minx,
-                miny,
-                maxx,
-                maxy,
-                spanx,
-                spany,
-                area,
-            )
-
-        plt.axis('off')
+        ax.axis('off')
