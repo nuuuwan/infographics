@@ -8,7 +8,7 @@ year = example3.year
 pd_to_result = presidential.get_election_data_index(year)
 
 
-true_map = example4.true_map
+true_map = example3.true_map
 true_map.set_position(
     left_bottom=(0.025, 0.1),
     width_height=(0.2, 0.8),

@@ -11,7 +11,7 @@ def _compress(points, bounds):
     dt = 0.01
     n_points = len(points)
 
-    n_epochs = 300
+    n_epochs = 200
     for i_epochs in range(0, n_epochs):
         if i_epochs % (n_epochs / 10) == 0:
             log.debug('i_epochs = {:,}'.format(i_epochs))

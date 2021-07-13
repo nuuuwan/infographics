@@ -158,7 +158,11 @@ class LKMap(Figure.Figure):
         labels = []
         handles = []
         for i in range(0, n_legend_items):
-            j = (int)(i * (n_actual - 1) / (n_legend_items - 1))
+            if n_actual == 1:
+                j = 0
+            else:
+                j = (int)(i * (n_actual - 1) / (n_legend_items - 1))
+
             formatted_value, color = formatted_value_and_color[j]
             labels.append(formatted_value)
             handles.append(plotx.get_color_patch(color))
