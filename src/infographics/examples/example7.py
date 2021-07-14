@@ -5,6 +5,7 @@ from infographics.Infographic import Infographic
 from infographics.LKDorlingCartogram import LKDorlingCartogram
 
 year = example3.year
+region_id = example3.region_id
 pd_to_result = presidential.get_election_data_index(year)
 
 
@@ -45,7 +46,7 @@ if __name__ == '__main__':
         ),
         children=[
             LKDorlingCartogram(
-                region_id=example3.region_id,
+                region_id=region_id,
                 sub_region_type='pd',
                 figure_text='{:.0%} Compactness'.format(x[1]),
                 func_get_color_value=example3._func_get_color_value,
@@ -60,4 +61,4 @@ if __name__ == '__main__':
             )
             for x in enumerate([0.1, 0.2, 0.3, 0.4, 0.5])
         ],
-    ).save('/tmp/infographics.example7.%d.png' % year)
+    ).save('/tmp/infographics.example7.%s.%d.png' % (region_id, year))

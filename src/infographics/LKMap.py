@@ -36,16 +36,16 @@ def _default_func_render_label(row, x, y, spany):
 class LKMap(Figure.Figure):
     def __init__(
         self,
-        region_id='LK',
-        sub_region_type='province',
-        figure_text='',
-        func_get_color_value=_default_func_get_color_value,
-        func_value_to_color=_default_func_value_to_color,
-        func_value_to_color_surface=None,
-        func_format_color_value=_default_func_format_color_value,
-        func_render_label=_default_func_render_label,
         left_bottom=(0.1, 0.1),
         width_height=(0.8, 0.8),
+        figure_text='',
+        region_id='LK',
+        sub_region_type='province',
+        func_get_color_value=_default_func_get_color_value,
+        func_value_to_color=_default_func_value_to_color,
+        func_format_color_value=_default_func_format_color_value,
+        func_render_label=_default_func_render_label,
+        func_value_to_color_surface=None,
     ):
         super().__init__(
             left_bottom=left_bottom,
@@ -55,7 +55,6 @@ class LKMap(Figure.Figure):
 
         self.region_id = region_id
         self.sub_region_type = sub_region_type
-        self.figure_text = figure_text
 
         self.func_get_color_value = func_get_color_value
         self.func_value_to_color = func_value_to_color
@@ -68,7 +67,7 @@ class LKMap(Figure.Figure):
             else self.func_value_to_color
         )
 
-        self.__data__ = LKMap.__prep_data__(self)
+        LKMap.__prep_data__(self)
 
     def __prep_data__(self):
         gpd_df = geodata.get_region_geodata(
@@ -95,7 +94,7 @@ class LKMap(Figure.Figure):
             color = self.func_value_to_color_surface(color_value)
             gpd_df.at[i_row, 'color'] = color
 
-        return (
+        self.__data__ = (
             n_regions,
             minx,
             miny,
@@ -110,7 +109,6 @@ class LKMap(Figure.Figure):
 
     def draw(self):
         super().draw()
-
         (
             n_regions,
             minx,
@@ -141,7 +139,6 @@ class LKMap(Figure.Figure):
                 spany,
             )
 
-        # color legend
         formatted_value_to_color = {}
         for color_value in color_values:
             color = self.func_value_to_color(color_value)

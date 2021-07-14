@@ -47,20 +47,12 @@ class LKDorlingCartogram(LKMap.LKMap):
             func_render_label=_func_render_label_blank,
             func_value_to_color_surface=_func_value_to_color_blank,
         )
-        self.region_id = region_id
-        self.sub_region_type = sub_region_type
-
-        self.func_get_color_value = func_get_color_value
-        self.func_value_to_color = func_value_to_color
-        self.func_format_color_value = func_format_color_value
-        self.func_render_label = func_render_label
 
         self.func_get_area_value = func_get_area_value
         self.func_format_area_value = func_format_area_value
-
         self.compactness = compactness
 
-        self.__data__ = LKDorlingCartogram.__prep_data__(self)
+        LKDorlingCartogram.__prep_data__(self)
 
     def __prep_data__(self):
         (
@@ -103,7 +95,7 @@ class LKDorlingCartogram(LKMap.LKMap):
             (minx, miny, maxx, maxy),
         )
 
-        return self.__data__ + (
+        self.__data__ += (
             max_area_value,
             beta,
             compressed_points,
@@ -135,7 +127,6 @@ class LKDorlingCartogram(LKMap.LKMap):
             if n_regions <= 30:
                 self.func_render_label(row, x, y, spany)
 
-        # area legend
         x, y = (minx + spanx * 0.9), (miny + spany * 0.6)
         area_value = math.pow(10, round(math.log10(max_area_value)))
         area = math.sqrt(area_value * beta)

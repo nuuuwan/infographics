@@ -5,6 +5,7 @@ from infographics.Infographic import Infographic
 from infographics.LKDorlingCartogram import LKDorlingCartogram
 
 year = example3.year
+region_id = example3.region_id
 pd_to_result = presidential.get_election_data_index(year)
 
 
@@ -27,7 +28,7 @@ true_map_prog.set_position(
 )
 
 dorling_prog = LKDorlingCartogram(
-    region_id=example3.region_id,
+    region_id=region_id,
     sub_region_type='pd',
     figure_text='d) Dorling Cartogram with Progressive Coloring',
     func_get_color_value=example5._func_get_color_value,
@@ -56,4 +57,4 @@ if __name__ == '__main__':
             true_map_prog,
             dorling_prog,
         ],
-    ).save('/tmp/infographics.example6.%d.png' % year)
+    ).save('/tmp/infographics.example6.%s.%d.png' % (region_id, year))

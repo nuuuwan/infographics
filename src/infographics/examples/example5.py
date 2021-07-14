@@ -5,6 +5,7 @@ from infographics.Infographic import Infographic
 from infographics.LKMap import LKMap
 
 year = example3.year
+region_id = example3.region_id
 pd_to_result = presidential.get_election_data_index(year)
 
 
@@ -35,7 +36,7 @@ def _func_render_label(*_):
 
 
 true_map_prog = LKMap(
-    region_id=example3.region_id,
+    region_id=region_id,
     sub_region_type='pd',
     figure_text='b) True Area Map with Progressive Coloring',
     func_get_color_value=_func_get_color_value,
@@ -60,4 +61,4 @@ if __name__ == '__main__':
             example4.true_map,
             true_map_prog,
         ],
-    ).save('/tmp/infographics.example5.%d.png' % year)
+    ).save('/tmp/infographics.example5.%s.%d.png' % (region_id, year))

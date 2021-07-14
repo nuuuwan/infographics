@@ -51,4 +51,4 @@ if __name__ == '__main__':
         children=[
             true_map,
         ],
-    ).save('/tmp/infographics.%d.png' % year)
+    ).save('/tmp/infographics.example3.%s.%d.png' % (region_id, year))

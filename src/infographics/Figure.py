@@ -30,3 +30,6 @@ class Figure:
     ):
         self.left_bottom = left_bottom
         self.width_height = width_height
+
+    def get_data(self):
+        return self.__data__
