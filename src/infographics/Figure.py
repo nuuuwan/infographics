@@ -10,9 +10,9 @@ class Figure:
         width_height=(0.8, 0.8),
         figure_text='',
     ):
-        self.figure_text = figure_text
         self.left_bottom = left_bottom
         self.width_height = width_height
+        self.figure_text = figure_text
 
     def draw(self):
         ax = plt.axes(self.left_bottom + self.width_height)
