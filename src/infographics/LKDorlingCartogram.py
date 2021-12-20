@@ -30,7 +30,7 @@ class LKDorlingCartogram(LKMap.LKMap):
         func_get_color_value=LKMap._default_func_get_color_value,
         func_value_to_color=LKMap._default_func_value_to_color,
         func_format_color_value=LKMap._default_func_format_color_value,
-        func_render_label=LKMap._default_func_render_label,
+        func_render_label=_func_render_label_blank,
         func_get_area_value=_default_func_get_area_value,
         func_format_area_value=_default_func_format_area_value,
         compactness=0.3,
