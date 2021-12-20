@@ -1,6 +1,8 @@
-from elections_lk import party_color, presidential
-from elections_lk.presidential.presidential import get_election_data_index, get_winning_party_info
-from infographics.Infographic import Infographic
+from elections_lk import party_color
+from elections_lk.presidential.presidential import (get_election_data_index,
+                                                    get_winning_party_info)
+
+from infographics.Infographic import Infographic, plotx
 from infographics.LKMap import LKMap
 
 year = 2019
@@ -22,7 +24,7 @@ def _func_format_color_value(party_id):
 
 
 def _func_render_label(row, x, y, spany):
-    pass
+    plotx.draw_text([x, y], row.id)
 
 
 true_map = LKMap(

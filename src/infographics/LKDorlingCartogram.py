@@ -2,6 +2,8 @@ import math
 
 from infographics import LKMap, dorling_compress, plotx
 
+MAX_REGIONS_FOR_LABEL = 200
+
 
 def _default_func_get_area_value(row):
     return row.population
@@ -30,7 +32,7 @@ class LKDorlingCartogram(LKMap.LKMap):
         func_get_color_value=LKMap._default_func_get_color_value,
         func_value_to_color=LKMap._default_func_value_to_color,
         func_format_color_value=LKMap._default_func_format_color_value,
-        func_render_label=_func_render_label_blank,
+        func_render_label=LKMap._default_func_render_label,
         func_get_area_value=_default_func_get_area_value,
         func_format_area_value=_default_func_format_area_value,
         compactness=0.3,
@@ -50,7 +52,7 @@ class LKDorlingCartogram(LKMap.LKMap):
 
         self.func_get_area_value = func_get_area_value
         self.func_format_area_value = func_format_area_value
-        self.func_render_label = func_render_label
+        self.func_render_label_cartogram = func_render_label
         self.compactness = compactness
 
         LKDorlingCartogram.__prep_data__(self)
@@ -125,8 +127,8 @@ class LKDorlingCartogram(LKMap.LKMap):
             color_value = self.func_get_color_value(row)
             color = self.func_value_to_color(color_value)
             plotx.draw_circle((x, y), r, fill=color)
-            if n_regions <= 30:
-                self.func_render_label(row, x, y, spany)
+            if n_regions <= MAX_REGIONS_FOR_LABEL:
+                self.func_render_label_cartogram(row, x, y, spany)
 
         x, y = (minx + spanx * 0.9), (miny + spany * 0.6)
         area_value = math.pow(10, round(math.log10(max_area_value)))

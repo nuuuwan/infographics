@@ -37,3 +37,4 @@ pip install infographics-nuuuwan
   *  [2021-12-20 01:38PM] Fixed another bug
   *  [2021-12-20 01:42PM] 
   *  [2021-12-20 02:44PM] Fixed examples
+  *  [2021-12-20 03:12PM] Fixed labelling issue

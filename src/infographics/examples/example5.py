@@ -1,5 +1,6 @@
 from elections_lk import party_color
-from elections_lk.presidential.presidential import get_election_data_index, get_winning_party_info
+from elections_lk.presidential.presidential import (get_election_data_index,
+                                                    get_winning_party_info)
 
 from infographics.examples import example3, example4
 from infographics.Infographic import Infographic
