@@ -44,7 +44,7 @@ class LKDorlingCartogram(LKMap.LKMap):
             func_get_color_value=func_get_color_value,
             func_value_to_color=func_value_to_color,
             func_format_color_value=func_format_color_value,
-            func_render_label=_func_render_label_blank,
+            func_render_label=func_render_label,
             func_value_to_color_surface=_func_value_to_color_blank,
         )
 

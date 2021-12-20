@@ -33,3 +33,4 @@ pip install infographics-nuuuwan
 
 *The source code for this library can be found at https://github.com/nuuuwan/infographics.*
   *  [2021-12-11 11:36AM] 
+  *  [2021-12-20 01:32PM] Fixed dorling blank bug
