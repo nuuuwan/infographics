@@ -36,3 +36,4 @@ pip install infographics-nuuuwan
   *  [2021-12-20 01:32PM] Fixed dorling blank bug
   *  [2021-12-20 01:38PM] Fixed another bug
   *  [2021-12-20 01:42PM] 
+  *  [2021-12-20 02:44PM] Fixed examples

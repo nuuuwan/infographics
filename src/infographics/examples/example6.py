@@ -1,4 +1,4 @@
-from elections_lk import presidential
+from elections_lk.presidential.presidential import get_election_data_index
 
 from infographics.examples import example3, example4, example5
 from infographics.Infographic import Infographic
@@ -6,7 +6,7 @@ from infographics.LKDorlingCartogram import LKDorlingCartogram
 
 year = example3.year
 region_id = example3.region_id
-pd_to_result = presidential.get_election_data_index(year)
+pd_to_result = get_election_data_index(year)
 
 
 true_map = example3.true_map

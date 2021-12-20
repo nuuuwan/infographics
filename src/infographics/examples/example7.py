@@ -1,4 +1,5 @@
 from elections_lk import party_color, presidential
+from elections_lk.presidential.presidential import get_election_data_index
 
 from infographics.examples import example3, example4
 from infographics.Infographic import Infographic
@@ -6,7 +7,7 @@ from infographics.LKDorlingCartogram import LKDorlingCartogram
 
 year = example3.year
 region_id = example3.region_id
-pd_to_result = presidential.get_election_data_index(year)
+pd_to_result = get_election_data_index(year)
 
 
 def _func_get_color_value(row):

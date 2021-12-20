@@ -1,4 +1,5 @@
-from elections_lk import party_color, presidential
+from elections_lk import party_color
+from elections_lk.presidential.presidential import get_election_data_index, get_winning_party_info
 
 from infographics.examples import example3, example4
 from infographics.Infographic import Infographic
@@ -6,12 +7,12 @@ from infographics.LKMap import LKMap
 
 year = example3.year
 region_id = example3.region_id
-pd_to_result = presidential.get_election_data_index(year)
+pd_to_result = get_election_data_index(year)
 
 
 def _func_get_color_value(row):
     result = pd_to_result[row.id]
-    party_info = presidential.get_winning_party_info(result)
+    party_info = get_winning_party_info(result)
     party_info['p_votes'] = party_info['votes'] / result['summary']['valid']
     return party_info
 
