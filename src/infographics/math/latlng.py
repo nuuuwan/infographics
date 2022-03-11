@@ -52,7 +52,12 @@ def df_to_latlng_list_list(df):
     return latlng_list_list_list
 
 
-def norm_latlng_list_list_list(latlng_list_list_list, map_r=0.8, size=(1600,900)):
+def norm_latlng_list_list_list(
+    latlng_list_list_list,
+    map_r=0.8,
+    size=(
+        1600,
+        900)):
     latlng_list = ds.flatten(ds.flatten(latlng_list_list_list))
     ((min_lat, min_lng), (max_lat, max_lng)) = get_bounds(latlng_list)
     lat_span = max_lat - min_lat
