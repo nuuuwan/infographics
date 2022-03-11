@@ -27,8 +27,8 @@ class SVG_STYLES:
     }
 
     PATH = {
-        'fill': 'yellow',
-        'stroke': 'red',
+        'fill': 'white',
+        'stroke': 'lightgray',
         'stroke-width': 1,
         'fill-opacity': 0.5,
     }
