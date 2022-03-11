@@ -5,12 +5,16 @@ from infographics.math import latlng
 
 
 class LKMap():
+    def __init__(self, region_id='LK', subregion_type='province'):
+        self.region_id = region_id
+        self.subregion_type = subregion_type
+
     @property
     def xml(self):
         palette = SVGPalette()
         df = geodata.get_region_geodata(
-            'LK-11',
-            'dsd',
+            self.region_id,
+            self.subregion_type,
         )
         latlng_list_list_list = latlng.df_to_latlng_list_list(df)
         p_list_list_list = latlng.norm_latlng_list_list_list(
