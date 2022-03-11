@@ -1,6 +1,5 @@
 """Utils."""
 
-import logging
+from utils import logx
 
-logging.basicConfig(level=logging.INFO)
-log = logging.getLogger('infographics')
+log = logx.get_logger('infographics')
