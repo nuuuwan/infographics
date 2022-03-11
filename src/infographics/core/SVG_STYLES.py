@@ -25,3 +25,10 @@ class SVG_STYLES:
         'stroke': 'lightgray',
         'stroke-width': 1,
     }
+
+    PATH = {
+        'fill': 'yellow',
+        'stroke': 'red',
+        'stroke-width': 1,
+        'fill-opacity': 0.5,
+    }
