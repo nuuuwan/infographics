@@ -1,6 +1,7 @@
 from geo import geodata
-from utils import ds
+
 from infographics.core import SVGPalette
+from infographics.math import latlng
 
 
 class LKMap():
@@ -8,11 +9,12 @@ class LKMap():
     def xml(self):
         palette = SVGPalette()
         df = geodata.get_region_geodata(
-            'LK',
-            'district',
+            'LK-11',
+            'dsd',
         )
-        latlng_list_list_list = []
-        for row in df.itertuples():
-            multi_polygon_list.append(row.geometry)
-
-        return palette.draw_text('TODO')
+        latlng_list_list_list = latlng.df_to_latlng_list_list(df)
+        p_list_list_list = latlng.norm_latlng_list_list_list(
+            latlng_list_list_list,
+            size=palette.size,
+        )
+        return palette.draw_p_list_list_list(p_list_list_list)
