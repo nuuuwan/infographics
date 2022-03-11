@@ -1,7 +1,7 @@
 from abc import ABC
 
 
-class SizeSpace(ABC):
+class SVGPaletteSize(ABC):
     @property
     def width(self):
         return self.size[0]

@@ -1,14 +1,21 @@
-from abc import ABC, abstractmethod
 
 from utils.xmlx import _
 
 from infographics.core.SVG_STYLES import SVG_STYLES
+from infographics.core.SVGPaletteSize import SVGPaletteSize
+
+DEFAULT_WIDTH, DEFAULT_HEIGHT, PADDING = 1200, 675, 20
+DEFAULT_BASE_FONT_SIZE = 16
 
 
-class SVGPalette(ABC):
-    @abstractmethod
-    def __xml__(self):
-        pass
+class SVGPalette(SVGPaletteSize):
+    def __init__(
+        self,
+        size=(DEFAULT_WIDTH, DEFAULT_HEIGHT, PADDING),
+        base_font_size=DEFAULT_BASE_FONT_SIZE,
+    ):
+        self.size = size
+        self.base_font_size = base_font_size
 
     def get_font_size(self, relative_font_size):
         return self.base_font_size * relative_font_size
