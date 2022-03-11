@@ -17,3 +17,28 @@ def polygon_to_point_list(polygon):
 
 def point_to_latlng(point):
     return (point[1], point[0])
+def df_to_latlng_list_list(df):
+    latlng_list_list_list = []
+    for row in df.itertuples():
+        shape = row.geometry
+        if isinstance(shape, MultiPolygon):
+            polygon_list = multipolygon_to_polygon_list(shape)
+        elif isinstance(shape, Polygon):
+            polygon_list = [shape]
+        else:
+            polygon_list = []
+
+        point_list_list = list(map(
+            polygon_to_point_list,
+            polygon_list,
+        ))
+
+        latlng_list_list = list(map(
+            lambda point_list: list(map(
+                point_to_latlng,
+                point_list,
+            )),
+            point_list_list,
+        ))
+        latlng_list_list_list.append(latlng_list_list)
+    return latlng_list_list_list
