@@ -27,5 +27,4 @@ class SVGPaletteSize(ABC):
         qx, qy = (px + 1) / 2, (py + 1) / 2
         x = self.padding + qx * self.actual_width
         y = self.padding + (1 - qy) * self.actual_height
-        print(p, (x, y))
         return (x, y)
