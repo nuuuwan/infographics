@@ -8,18 +8,12 @@ DIST_NAME = 'infographics'
 with open('README.md', 'r') as fh:
     long_description = fh.read()
 
-IS_RELEASE = True
-MAJOR, MINOR, PATCH = 1, 0, 8
-if IS_RELEASE:
-    version = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
-else:
-    # PRE-RELEASE
-    ts = time.strftime('%Y%m%d%H%M%S0000', time.localtime())
-    version = '%d.%d.%d.%s' % (MAJOR, MINOR, PATCH, ts)
+MAJOR, MINOR, PATCH = 2, 0, 0
+VERSION = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
 
 setuptools.setup(
     name='%s-nuuuwan' % DIST_NAME,
-    version=version,
+    version=VERSION,
     author='Nuwan I. Senaratna',
     author_email='nuuuwan@gmail.com',
     description='',
