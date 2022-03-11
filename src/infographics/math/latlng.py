@@ -7,3 +7,13 @@ def get_bounds(latlng_list):
         max_lat = max(max_lat, lat)
         max_lng = max(max_lng, lng)
     return ((min_lat, min_lng), (max_lat, max_lng))
+def multipolygon_to_polygon_list(multipolygon):
+    return list(multipolygon)
+
+
+def polygon_to_point_list(polygon):
+    return list(polygon.exterior.coords)
+
+
+def point_to_latlng(point):
+    return (point[1], point[0])
