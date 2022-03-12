@@ -30,6 +30,12 @@ def get_midlatlng(multipolygon):
     return (mid_lat, mid_lng)
 
 
+def get_spans(multipolygon):
+    polygon = ds.flatten(multipolygon)
+    ((min_lat, min_lng), (max_lat, max_lng)) = get_bounds(polygon)
+    return (max_lat - min_lat), (max_lng - min_lng)
+
+
 def shapely_multipolygon_to_polygon_list(multipolygon):
     return list(multipolygon)
 
