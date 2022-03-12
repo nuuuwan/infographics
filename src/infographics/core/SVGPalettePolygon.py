@@ -2,12 +2,17 @@
 from utils.xmlx import _
 
 from infographics.core.SVG_STYLES import SVG_STYLES
+from infographics.math import latlng
 
 DEFAULT_WIDTH, DEFAULT_HEIGHT, PADDING = 1200, 675, 20
 DEFAULT_BASE_FONT_SIZE = 16
 
 
 class SVGPalettePolygon:
+    def get_relative_font_width(self, multipolygon):
+        x_span, ___ = latlng.get_spans(multipolygon)
+        return self.actual_width * x_span / 2 / DEFAULT_BASE_FONT_SIZE
+
     def draw_multi2polygon(self, multi2polygon, child_list=[], attribs={}):
         return self.draw_g(
             list(map(
