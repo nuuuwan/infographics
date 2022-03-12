@@ -1,6 +1,6 @@
 from geo import geodata
 
-from infographics.base import xy, pandax
+from infographics.base import pandax
 
 
 class LKGeoData:
