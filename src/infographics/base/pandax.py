@@ -33,4 +33,9 @@ def df_to_geodata_index(df):
         geodata_index[d['id']] = d | {
             'multipolygon': multipolygon,
         }
+
+    geodata_index = dict(sorted(
+        geodata_index.items(),
+        key=lambda item: item[0],
+    ))
     return geodata_index
