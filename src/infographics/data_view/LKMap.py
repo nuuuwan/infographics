@@ -12,7 +12,11 @@ class LKMap(LKGeoData, PolygonView):
         subregion_type='district',
         color_palette=ColorPaletteVaryHue(),
     ):
+        # LKGeoData.__init__
         LKGeoData.__init__(self, region_id, subregion_type)
+
+        # geodata_index
+        self.geodata_index = self.get_geodata_index()
         multi2polygon = xy.norm_multi2polygon(
             list(map(
                 lambda geodata: geodata['multipolygon'],
@@ -29,12 +33,14 @@ class LKMap(LKGeoData, PolygonView):
             self.geodata_index.items(),
         )))
 
+        # PolygonView.__init__
         PolygonView.__init__(
             self,
             id_to_multipolygon,
             self.func_id_to_color,
         )
 
+        # other
         self.color_palette = color_palette
 
     def render_legend(self):
