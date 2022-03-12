@@ -2,7 +2,7 @@ from utils import colorx
 
 from infographics.base import xy
 from infographics.data import LKGeoData
-from infographics.view import PolygonView
+from infographics.view import PolygonView, format
 
 
 class LKMap(LKGeoData, PolygonView):
@@ -42,14 +42,23 @@ class LKMap(LKGeoData, PolygonView):
         d = self.geodata_index[id]
         multipolygon = d['norm_multipolygon']
         name = d['name']
+        population = d['population']
 
         relative_font_width = self.palette.get_relative_font_width(
             multipolygon)
-        relative_font_size = min(1, relative_font_width / len(name))
+        relative_font_size = min(0.8, relative_font_width / len(name))
 
         (x, y) = xy.get_midxy(multipolygon)
-        return [self.palette.draw_text(
-            name,
-            (x, y),
-            relative_font_size,
-        )]
+        return [
+            self.palette.draw_text(
+                format.format_population(population),
+                (x, y + 0.025 * relative_font_size),
+                relative_font_size,
+            ),
+            self.palette.draw_text(
+                name,
+                (x, y - 0.025 * relative_font_size),
+                relative_font_size * 0.8,
+            ),
+
+        ]
