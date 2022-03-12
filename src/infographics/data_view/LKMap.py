@@ -21,18 +21,6 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
         # AbstractLabelledPolygonView.__init__
         AbstractLabelledPolygonView.__init__(self, legend_title, color_palette)
 
-    # Implement AbstractColoredView
-    def get_color_value(self, id):
-        d = self[id]
-        return d['population'] / d['area']
-
-    # Implement AbstractLabelledView
-    def get_label(self, id):
-        return self[id]['name']
-
-    def get_label_value(self, id):
-        return self[id]['population']
-
     # Implement AbstractPolygonView
     @cached_property
     def id_to_multipolygon(self):
@@ -46,3 +34,15 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
         for i, id in enumerate(self.keys()):
             id_to_multipolygon[id] = multi2polygon[i]
         return id_to_multipolygon
+
+    # Implement AbstractColoredView
+    def get_color_value(self, id):
+        d = self[id]
+        return d['population'] / d['area']
+
+    # Implement AbstractLabelledView
+    def get_label(self, id):
+        return self[id]['name']
+
+    def get_label_value(self, id):
+        return self[id]['population']
