@@ -8,22 +8,23 @@ DEFAULT_BASE_FONT_SIZE = 16
 
 
 class SVGPalettePolygon:
-    def draw_multi2polygon(self, multi2polygon, attribs={}):
+    def draw_multi2polygon(self, multi2polygon, child_list=[], attribs={}):
         return self.draw_g(list(map(
             lambda multipolygon: self.draw_multipolygon(
                 multipolygon,
+                child_list,
                 attribs,
             ),
             multi2polygon,
         )), attribs)
 
-    def draw_multipolygon(self, multipolygon, attribs={}):
+    def draw_multipolygon(self, multipolygon, child_list=[], attribs={}):
         return self.draw_g(list(map(
-            lambda polygon: self.draw_polygon(polygon, attribs),
+            lambda polygon: self.draw_polygon(polygon, child_list, attribs),
             multipolygon,
         )), attribs)
 
-    def draw_polygon(self, polygon, attribs={}):
+    def draw_polygon(self, polygon, child_list, attribs={}):
         d_list = []
         for p in polygon:
             x, y = self.t(p)
@@ -31,4 +32,4 @@ class SVGPalettePolygon:
             d_list.append('%s%d,%d' % (prefix, x, y))
         d_list.append('z')
         d = ' '.join(d_list)
-        return _('path', None, SVG_STYLES.PATH | {'d': d} | attribs)
+        return _('path', child_list, SVG_STYLES.PATH | {'d': d} | attribs)
