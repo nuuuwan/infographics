@@ -52,8 +52,8 @@ class AbstractLabelledView(ABC):
 
     @abstractmethod
     def get_label(self, id):
-        self.geodata_index[id]
+        pass
 
     @abstractmethod
     def get_label_value(self, id):
-        self.geodata_index[id]
+        pass
