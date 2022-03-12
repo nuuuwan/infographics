@@ -44,33 +44,35 @@ class LKMap(LKGeoData, PolygonView):
             density_list.append(density0)
         density_list.sort()
 
-        x0, y0 = 0.5, 0.5
+        x0, y0 = 0.8, 0.5
         inner_list = [
             self.palette.draw_text(
-                'Population Density',
+                'Density (people per km²)',
                 (x0, y0),
                 1,
             ),
         ]
 
         n = len(density_list)
-        for i in range(0, n, (int)(n / 7)):
+        N_LEGEND = 7
+        for j in range(0, N_LEGEND):
+            i = (int)(j * (n - 1) / (N_LEGEND - 1))
             density = density_list[i]
-            y = y0 - ((i + 3.5) * 0.02)
+            y = y0 - ((i + 3.5) * 0.015)
             hue = (int)(240 * (1 - (i / n)))
             color = colorx.random_hsl(hue=hue)
 
             inner_list.append(self.palette.draw_g([
-                self.palette.draw_cirle(
-                    (x0 - 0.035, y),
-                    0.01,
-                    {'fill': color},
-                ),
                 self.palette.draw_text(
-                    f'{density:0.0f}',
-                    (x0 + 0.035, y),
+                    format.format_population(density),
+                    (x0 - 0.01, y),
                     1,
                     {'text-anchor': 'end'}
+                ),
+                self.palette.draw_cirle(
+                    (x0 + 0.01, y),
+                    0.01,
+                    {'fill': color},
                 ),
             ]))
 
