@@ -38,13 +38,10 @@ class LKMap(LKGeoData, PolygonView):
         self.color_palette = color_palette
 
     def render_legend(self):
-        density_list = []
-        for d0 in self.geodata_index.values():
-            population0 = d0['population']
-            area0 = d0['area']
-            density0 = population0 / area0
-            density_list.append(density0)
-        density_list.sort()
+        color_value_list = sorted(list(map(
+            self.func_id_to_color_value,
+            self.geodata_index.keys(),
+        )))
 
         x0, y0 = 0.8, 0.5
         inner_list = [
@@ -55,18 +52,18 @@ class LKMap(LKGeoData, PolygonView):
             ),
         ]
 
-        n = len(density_list)
+        n = len(color_value_list)
         N_LEGEND = 7
         for j in range(0, N_LEGEND):
             i = (int)(j * (n - 1) / (N_LEGEND - 1))
-            density = density_list[i]
+            color_value = color_value_list[i]
             y = y0 - ((j + 1.5) * 0.05)
             color = self.color_palette.color(i / n)
 
             r = 0.01
             inner_list.append(self.palette.draw_g([
                 self.palette.draw_text(
-                    format.format_population(density),
+                    format.format_population(color_value),
                     (x0 - 0.01, y),
                     1,
                     {'text-anchor': 'end'}
