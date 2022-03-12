@@ -15,7 +15,6 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
         LKGeoData.__init__(self, region_id, subregion_type)
 
         # geodata_index
-        self.geodata_index = self.get_geodata_index()
         multi2polygon = xy.norm_multi2polygon(
             list(map(
                 lambda geodata: geodata['multipolygon'],

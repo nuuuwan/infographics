@@ -1,3 +1,5 @@
+from functools import cached_property
+
 from geo import geodata
 
 from infographics.base import pandax
@@ -8,7 +10,8 @@ class LKGeoData:
         self.region_id = region_id
         self.subregion_type = subregion_type
 
-    def get_geodata_index(self):
+    @cached_property
+    def geodata_index(self):
         df = geodata.get_region_geodata(
             self.region_id,
             self.subregion_type,
