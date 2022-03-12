@@ -20,4 +20,7 @@ def as_number(num):
         num_x = num / 10
         return f'{num_x:2.0f}0'
 
-    return f'{num:2.0f}'
+    if num > 1:
+        return f'{num:2.0f}'
+
+    return f'{num:.0%}'    
