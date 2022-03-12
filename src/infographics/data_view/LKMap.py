@@ -36,7 +36,27 @@ class LKMap(LKGeoData, PolygonView):
         )
 
     def func_id_to_color(self, id):
-        return colorx.random_hex()
+        density_list = []
+        for d0 in self.geodata_index.values():
+            population0 = d0['population']
+            area0 = d0['area']
+            density0 = population0 / area0
+            density_list.append(density0)
+        density_list.sort()
+
+        n = len(density_list)
+        density_to_i = dict(list(map(
+            lambda x: (x[1], x[0]),
+            enumerate(density_list),
+        )))
+
+        d = self.geodata_index[id]
+        population = d['population']
+        area = d['area']
+        density = population / area
+
+        hue = (int)(240 * (1 - (density_to_i[density] / n)))
+        return colorx.random_hsl(hue=hue)
 
     def func_id_to_child_list(self, id):
         d = self.geodata_index[id]
