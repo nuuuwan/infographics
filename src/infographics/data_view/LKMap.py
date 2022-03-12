@@ -1,6 +1,6 @@
-from utils import colorx
 
 from infographics.base import xy
+from infographics.core import ColorPaletteVaryHue
 from infographics.data import LKGeoData
 from infographics.view import PolygonView, format
 
@@ -10,6 +10,7 @@ class LKMap(LKGeoData, PolygonView):
         self,
         region_id='LK',
         subregion_type='district',
+        color_palette=ColorPaletteVaryHue(),
     ):
         LKGeoData.__init__(self, region_id, subregion_type)
         multi2polygon = xy.norm_multi2polygon(
@@ -33,6 +34,8 @@ class LKMap(LKGeoData, PolygonView):
             id_to_multipolygon,
             self.func_id_to_color,
         )
+
+        self.color_palette = color_palette
 
     def get_child_list(self):
         density_list = []
@@ -58,9 +61,9 @@ class LKMap(LKGeoData, PolygonView):
             i = (int)(j * (n - 1) / (N_LEGEND - 1))
             density = density_list[i]
             y = y0 - ((j + 1.5) * 0.05)
-            hue = (int)(240 * (1 - (i / n)))
-            color = colorx.random_hsl(hue=hue)
+            color = self.color_palette.color(i / n)
 
+            r = 0.01
             inner_list.append(self.palette.draw_g([
                 self.palette.draw_text(
                     format.format_population(density),
@@ -69,8 +72,8 @@ class LKMap(LKGeoData, PolygonView):
                     {'text-anchor': 'end'}
                 ),
                 self.palette.draw_cirle(
-                    (x0 + 0.01, y),
-                    0.01,
+                    (x0 + 0.01, y + r /2),
+                    r,
                     {'fill': color},
                 ),
             ]))
@@ -108,8 +111,8 @@ class LKMap(LKGeoData, PolygonView):
         )))
 
         color_value = self.func_id_to_color_value(id)
-        hue = (int)(240 * (1 - (color_value_to_i[color_value] / n)))
-        return colorx.random_hsl(hue=hue)
+        return self.color_palette.color(
+            (color_value_to_i[color_value] / n))
 
     def func_id_to_polygon(self, id):
         d = self.geodata_index[id]
