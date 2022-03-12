@@ -31,13 +31,50 @@ class LKMap(LKGeoData, PolygonView):
         PolygonView.__init__(
             self,
             id_to_multipolygon,
-            self.get_child_list(),
             self.func_id_to_color,
             self.func_id_to_child_list,
         )
 
     def get_child_list(self):
-        return []
+        density_list = []
+        for d0 in self.geodata_index.values():
+            population0 = d0['population']
+            area0 = d0['area']
+            density0 = population0 / area0
+            density_list.append(density0)
+        density_list.sort()
+
+        x0, y0 = 0.5, 0.5
+        inner_list = [
+            self.palette.draw_text(
+                'Population Density',
+                (x0, y0),
+                1,
+            ),
+        ]
+
+        n = len(density_list)
+        for i in range(0, n, (int)(n / 7)):
+            density = density_list[i]
+            y = y0 - ((i + 3.5) * 0.02)
+            hue = (int)(240 * (1 - (i / n)))
+            color = colorx.random_hsl(hue=hue)
+
+            inner_list.append(self.palette.draw_g([
+                self.palette.draw_cirle(
+                    (x0 - 0.035, y),
+                    0.01,
+                    {'fill': color},
+                ),
+                self.palette.draw_text(
+                    f'{density:0.0f}',
+                    (x0 + 0.035, y),
+                    1,
+                    {'text-anchor': 'end'}
+                ),
+            ]))
+
+        return inner_list
 
     def func_id_to_color(self, id):
         density_list = []
