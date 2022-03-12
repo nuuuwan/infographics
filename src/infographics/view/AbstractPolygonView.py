@@ -8,9 +8,9 @@ from infographics.view.AbstractColoredView import AbstractColoredView
 
 
 class AbstractPolygonView(AbstractColoredView, ABC):
-    def __init__(self):
+    def __init__(self, legend_title=''):
         # AbstractColoredView.__init__
-        AbstractColoredView.__init__(self)
+        AbstractColoredView.__init__(self, legend_title)
 
         # other
         self.palette = SVGPalette()

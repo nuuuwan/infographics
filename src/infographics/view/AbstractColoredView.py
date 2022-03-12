@@ -9,9 +9,10 @@ CIRCLE_R_LEGEND = 0.01
 
 
 class AbstractColoredView(ABC):
-    def __init__(self):
+    def __init__(self, legend_title=''):
         self.color_palette = ColorPaletteVaryHue()
         self.palette = SVGPalette()
+        self.legend_title = legend_title
 
     @cached_property
     def color_value_to_i(self):
@@ -49,7 +50,7 @@ class AbstractColoredView(ABC):
     def __xml__(self):
         x0, y0 = 0.8, 0.5
         inner_list = [
-            self.palette.draw_text(self.get_legend_title(), (x0, y0))
+            self.palette.draw_text(self.legend_title, (x0, y0))
         ]
 
         color_value_list = list(self.color_value_to_i.keys())
@@ -64,14 +65,11 @@ class AbstractColoredView(ABC):
         return self.palette.draw_g(inner_list)
 
     # abstract methods
+
     @abstractproperty
     def ids(self):
         pass
 
     @abstractmethod
     def get_color_value(self, id):
-        pass
-
-    @abstractmethod
-    def get_legend_title(self):
         pass

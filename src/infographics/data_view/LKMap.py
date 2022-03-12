@@ -17,19 +17,15 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
         LKGeoData.__init__(self, region_id, subregion_type)
 
         # AbstractLabelledPolygonView.__init__
-        AbstractLabelledPolygonView.__init__(self)
+        AbstractLabelledPolygonView.__init__(self, legend_title)
 
         # other
-        self.legend_title = legend_title
         self.color_palette = ColorPaletteVaryHue()
 
     # Implement AbstractColoredView
     def get_color_value(self, id):
         d = self.get_geodata(id)
         return d['population'] / d['area']
-
-    def get_legend_title(self):
-        return self.legend_title
 
     # Implement AbstractLabelledView
     @property
