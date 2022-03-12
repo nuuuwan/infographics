@@ -58,5 +58,3 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
     def get_label_value(self, id):
         d = self.geodata_index[id]
         return d['population']
-
-    
