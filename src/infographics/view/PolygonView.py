@@ -8,10 +8,8 @@ class PolygonView:
     def __init__(
         self,
         id_to_multipolygon,
-        get_color=None,
     ):
         self.id_to_multipolygon = id_to_multipolygon
-        self.get_color = get_color
         self.palette = SVGPalette()
 
     def __len__(self):
