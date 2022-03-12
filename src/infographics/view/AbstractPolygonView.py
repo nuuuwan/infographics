@@ -3,14 +3,14 @@ Renders a collection of polygons
 """
 from abc import ABC, abstractproperty
 
-from infographics.core import SVGPalette
+from infographics.core import ColorPaletteVaryHue, SVGPalette
 from infographics.view.AbstractColoredView import AbstractColoredView
 
 
 class AbstractPolygonView(AbstractColoredView, ABC):
-    def __init__(self, legend_title=''):
+    def __init__(self, legend_title='', color_palette=ColorPaletteVaryHue()):
         # AbstractColoredView.__init__
-        AbstractColoredView.__init__(self, legend_title)
+        AbstractColoredView.__init__(self, legend_title, color_palette)
 
         # other
         self.palette = SVGPalette()

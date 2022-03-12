@@ -12,15 +12,13 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
         region_id='LK',
         subregion_type='district',
         legend_title='Population Density (people per km²)',
+        color_palette=ColorPaletteVaryHue(),
     ):
         # LKGeoData.__init__
         LKGeoData.__init__(self, region_id, subregion_type)
 
         # AbstractLabelledPolygonView.__init__
-        AbstractLabelledPolygonView.__init__(self, legend_title)
-
-        # other
-        self.color_palette = ColorPaletteVaryHue()
+        AbstractLabelledPolygonView.__init__(self, legend_title, color_palette)
 
     # Implement AbstractColoredView
     def get_color_value(self, id):
