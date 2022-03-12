@@ -1,3 +1,5 @@
-from infographics.view.LabelledView import LabelledView
-from infographics.view.ColoredView import ColoredView
-from infographics.view.PolygonView import PolygonView
+from infographics.view.AbstractColoredView import AbstractColoredView
+from infographics.view.AbstractLabelledPolygonView import \
+    AbstractLabelledPolygonView
+from infographics.view.AbstractLabelledView import AbstractLabelledView
+from infographics.view.AbstractPolygonView import AbstractPolygonView

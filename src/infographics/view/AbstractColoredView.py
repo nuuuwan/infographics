@@ -1,10 +1,12 @@
+from abc import ABC, abstractmethod
+
 from infographics.core import ColorPaletteVaryHue, SVGPalette
 from infographics.view import format
 
 N_LEGEND = 7
 
 
-class ColoredView:
+class AbstractColoredView(ABC):
     def __init__(self, legend_title=''):
         self.color_palette = ColorPaletteVaryHue()
         self.legend_title = legend_title
@@ -27,7 +29,7 @@ class ColoredView:
         return self.color_palette.color(
             (self.color_value_to_i[color_value] / n))
 
-    def render_legend(self):
+    def __xml__(self):
         x0, y0 = 0.8, 0.5
         inner_list = [
             self.palette.draw_text(
@@ -61,7 +63,6 @@ class ColoredView:
             ]))
         return self.palette.draw_g(inner_list)
 
-    # abstract methods
+    @abstractmethod
     def get_color_value(self, id):
-        d = self.geodata_index[id]
-        return d['population'] / d['area']
+        pass

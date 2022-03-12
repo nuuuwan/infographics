@@ -1,16 +1,15 @@
-
 from infographics.base import xy
 from infographics.core import ColorPaletteVaryHue
 from infographics.data import LKGeoData
-from infographics.view import LabelledView, ColoredView, PolygonView
+from infographics.view import AbstractLabelledPolygonView
 
 
-class LKMap(LKGeoData, PolygonView, LabelledView, ColoredView):
+class LKMap(LKGeoData, AbstractLabelledPolygonView):
     def __init__(
         self,
         region_id='LK',
         subregion_type='district',
-        color_palette=ColorPaletteVaryHue(),
+        legend_title='Population Density (people per km²)',
     ):
         # LKGeoData.__init__
         LKGeoData.__init__(self, region_id, subregion_type)
@@ -33,18 +32,26 @@ class LKMap(LKGeoData, PolygonView, LabelledView, ColoredView):
             self.geodata_index.items(),
         )))
 
-        # ColoredView.__init__
-        ColoredView.__init__(self, 'Density (people per km²)')
-
-        # PolygonView.__init__
-        PolygonView.__init__(self, id_to_multipolygon)
+        # AbstractLabelledPolygonView.__init__
+        AbstractLabelledPolygonView.__init__(
+            self, legend_title, id_to_multipolygon)
 
         # other
-        self.color_palette = color_palette
+        self.color_palette = ColorPaletteVaryHue()
 
-    def __xml__(self):
-        return self.palette.draw_g([
-            PolygonView.__xml__(self),
-            self.render_labels(),
-            self.render_legend(),
-        ])
+    # Implement AbstractColoredView
+    def get_color_value(self, id):
+        d = self.geodata_index[id]
+        return d['population'] / d['area']
+
+    # Implement LabelledView
+    def get_label_ids(self):
+        return list(self.geodata_index.keys())
+
+    def get_label(self, id):
+        d = self.geodata_index[id]
+        return d['name']
+
+    def get_label_value(self, id):
+        d = self.geodata_index[id]
+        return d['population']
