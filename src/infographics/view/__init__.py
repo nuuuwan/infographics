@@ -1,1 +1,1 @@
-from infographics.view.PointMap import PointMap
+from infographics.view.PolygonView import PolygonView
