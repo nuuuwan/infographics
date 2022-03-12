@@ -10,7 +10,7 @@ class AbstractLabelledView(ABC):
 
     def __xml__(self):
         inner_list = []
-        for id in self:
+        for id in self.keys():
             inner_list.append(
                 self.palette.draw_g(
                     self.render_label(id),

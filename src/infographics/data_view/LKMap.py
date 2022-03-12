@@ -36,6 +36,15 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
         return id_to_multipolygon
 
     # Implement AbstractColoredView
+    def keys(self):
+        return self.lk_geo_data.keys()
+
+    def values(self):
+        return self.lk_geo_data.values()
+
+    def __getitem__(self, id):
+        return self.lk_geo_data[id]    
+
     def get_color_value(self, id):
         d = self[id]
         return d['population'] / d['area']

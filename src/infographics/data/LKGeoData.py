@@ -19,7 +19,7 @@ class LKGeoData:
         self.subregion_type = subregion_type
 
     @cached_property
-    def idx(self):
+    def lk_geo_data(self):
         log.debug('[expensive] geodata.get_region_geodata')
         df = geodata.get_region_geodata(
             self.region_id,
@@ -27,19 +27,3 @@ class LKGeoData:
         )
         geodata_index = pandax.df_to_geodata_index(df)
         return geodata_index
-
-    def __len__(self):
-        return len(self.idx)
-
-    def __getitem__(self, id):
-        return self.idx[id]
-
-    def keys(self):
-        return self.idx.keys()
-
-    def values(self):
-        return self.idx.values()
-
-    def __iter__(self):
-        for id in self.keys():
-            yield id
