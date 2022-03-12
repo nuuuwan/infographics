@@ -17,6 +17,9 @@ class PolygonView:
     def __len__(self):
         return len(self.id_to_multipolygon)
 
+    def get_multipolygon(self, id):
+        return self.id_to_multipolygon[id]
+
     def __xml__(self):
         inner_child_list = []
         for id, multipolygon in self.id_to_multipolygon.items():
