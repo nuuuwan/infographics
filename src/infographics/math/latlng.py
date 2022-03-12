@@ -42,8 +42,8 @@ def shapely_point_to_latlng(point):
     return (point[1], point[0])
 
 
-def df_to_geodata_list(df):
-    geodata_list = []
+def df_to_geodata_index(df):
+    geodata_index = {}
     for row in df.itertuples():
         d = dict(row._asdict())
 
@@ -69,10 +69,10 @@ def df_to_geodata_list(df):
         ))
 
         del d['geometry']
-        geodata_list.append(d | {
+        geodata_index[d['id']] = d | {
             'multipolygon': multipolygon,
-        })
-    return geodata_list
+        }
+    return geodata_index
 
 
 def norm_multi2polygon(
