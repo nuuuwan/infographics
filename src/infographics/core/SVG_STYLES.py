@@ -24,6 +24,7 @@ class SVG_STYLES:
     LINE = {
         'stroke': 'lightgray',
         'stroke-width': 1,
+        'opacity': 0.2,
     }
 
     PATH = {
