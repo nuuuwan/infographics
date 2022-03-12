@@ -1,6 +1,6 @@
 from utils import colorx
 
-from infographics.base import latlng
+from infographics.base import xy
 from infographics.data import LKGeoData
 from infographics.view import PolygonView
 
@@ -12,7 +12,7 @@ class LKMap(LKGeoData, PolygonView):
         subregion_type='district',
     ):
         LKGeoData.__init__(self, region_id, subregion_type)
-        multi2polygon = latlng.norm_multi2polygon(
+        multi2polygon = xy.norm_multi2polygon(
             list(map(
                 lambda geodata: geodata['multipolygon'],
                 self.geodata_index.values(),
@@ -47,7 +47,7 @@ class LKMap(LKGeoData, PolygonView):
             multipolygon)
         relative_font_size = min(1, relative_font_width / len(name))
 
-        (x, y) = latlng.get_midlatlng(multipolygon)
+        (x, y) = xy.get_midxy(multipolygon)
         return [self.palette.draw_text(
             name,
             (x, y),

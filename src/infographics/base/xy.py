@@ -1,8 +1,8 @@
 """
-Various latlng related utils.
+Various xy rexed utils.
 
 point hierarchy
-0 - coordinates (x or y, lat or lng)
+0 - coordinates (x or y, x or y)
 1 - point
 2 - polygon (point_list)
 3 - multipolygon (point_list_list)
@@ -12,28 +12,28 @@ from utils import ds
 
 
 def get_bounds(polygon):
-    min_lat, min_lng = 180, 180
-    max_lat, max_lng = -180, -180
-    for lat, lng in polygon:
-        min_lat = min(min_lat, lat)
-        min_lng = min(min_lng, lng)
-        max_lat = max(max_lat, lat)
-        max_lng = max(max_lng, lng)
-    return ((min_lat, min_lng), (max_lat, max_lng))
+    min_x, min_y = 180, 180
+    max_x, max_y = -180, -180
+    for x, y in polygon:
+        min_x = min(min_x, x)
+        min_y = min(min_y, y)
+        max_x = max(max_x, x)
+        max_y = max(max_y, y)
+    return ((min_x, min_y), (max_x, max_y))
 
 
-def get_midlatlng(multipolygon):
+def get_midxy(multipolygon):
     polygon = ds.flatten(multipolygon)
-    ((min_lat, min_lng), (max_lat, max_lng)) = get_bounds(polygon)
-    mid_lat = (min_lat + max_lat) / 2
-    mid_lng = (min_lng + max_lng) / 2
-    return (mid_lat, mid_lng)
+    ((min_x, min_y), (max_x, max_y)) = get_bounds(polygon)
+    mid_x = (min_x + max_x) / 2
+    mid_y = (min_y + max_y) / 2
+    return (mid_x, mid_y)
 
 
 def get_spans(multipolygon):
     polygon = ds.flatten(multipolygon)
-    ((min_lat, min_lng), (max_lat, max_lng)) = get_bounds(polygon)
-    return (max_lat - min_lat), (max_lng - min_lng)
+    ((min_x, min_y), (max_x, max_y)) = get_bounds(polygon)
+    return (max_x - min_x), (max_y - min_y)
 
 
 def shapely_multipolygon_to_polygon_list(multipolygon):
@@ -44,7 +44,7 @@ def shapely_polygon_to_point_list(polygon):
     return list(polygon.exterior.coords)
 
 
-def shapely_point_to_latlng(point):
+def shapely_point_to_xy(point):
     return (point[1], point[0])
 
 
@@ -68,7 +68,7 @@ def df_to_geodata_index(df):
 
         multipolygon = list(map(
             lambda point_list: list(map(
-                shapely_point_to_latlng,
+                shapely_point_to_xy,
                 point_list,
             )),
             point_list_list,
@@ -88,11 +88,11 @@ def norm_multi2polygon(
         1600,
         900)):
     polygon = ds.flatten(ds.flatten(multi2polygon))
-    ((min_lat, min_lng), (max_lat, max_lng)) = get_bounds(polygon)
-    lat_span = max_lat - min_lat
-    lng_span = max_lng - min_lng
+    ((min_x, min_y), (max_x, max_y)) = get_bounds(polygon)
+    x_span = max_x - min_x
+    y_span = max_y - min_y
 
-    r = lat_span / lng_span * (size[0] / size[1])
+    r = x_span / y_span * (size[0] / size[1])
     padding_x = 0
     padding_y = 0
     if r > 1:
@@ -100,10 +100,10 @@ def norm_multi2polygon(
     else:
         padding_y = (1 - r) / 2
 
-    def t(latlng):
-        lat, lng = latlng
-        qy = (lat - min_lat) / lat_span
-        qx = (lng - min_lng) / lng_span
+    def t(xy):
+        x, y = xy
+        qy = (x - min_x) / x_span
+        qx = (y - min_y) / y_span
 
         rx = padding_x + qx * (1 - padding_x * 2)
         ry = padding_y + qy * (1 - padding_y * 2)
