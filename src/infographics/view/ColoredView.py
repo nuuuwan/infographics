@@ -4,7 +4,7 @@ from infographics.view import format
 N_LEGEND = 7
 
 
-class LegendView:
+class ColoredView:
     def __init__(self, legend_title=''):
         self.color_palette = ColorPaletteVaryHue()
         self.legend_title = legend_title

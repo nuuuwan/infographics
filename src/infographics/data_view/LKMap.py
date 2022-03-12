@@ -2,10 +2,10 @@
 from infographics.base import xy
 from infographics.core import ColorPaletteVaryHue
 from infographics.data import LKGeoData
-from infographics.view import LabelledView, LegendView, PolygonView
+from infographics.view import LabelledView, ColoredView, PolygonView
 
 
-class LKMap(LKGeoData, PolygonView, LabelledView, LegendView):
+class LKMap(LKGeoData, PolygonView, LabelledView, ColoredView):
     def __init__(
         self,
         region_id='LK',
@@ -33,8 +33,8 @@ class LKMap(LKGeoData, PolygonView, LabelledView, LegendView):
             self.geodata_index.items(),
         )))
 
-        # LegendView.__init__
-        LegendView.__init__(self, 'Density (people per km²)')
+        # ColoredView.__init__
+        ColoredView.__init__(self, 'Density (people per km²)')
 
         # PolygonView.__init__
         PolygonView.__init__(self, id_to_multipolygon)
