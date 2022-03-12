@@ -1,4 +1,6 @@
-
+"""
+Renders a collection of polygons
+"""
 from infographics.core import SVGPalette
 
 
