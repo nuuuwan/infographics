@@ -1,3 +1,12 @@
+"""
+Various latlng related utils.
+
+point hierarchy
+0 - coordinates (x or y, lat or lng)
+1 - point
+2 - polygon (point_list)
+3 - multipolygon (point_list_list)
+"""
 from shapely.geometry import MultiPolygon, Polygon
 from utils import ds
 
