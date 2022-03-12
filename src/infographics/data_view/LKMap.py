@@ -78,49 +78,58 @@ class LKMap(LKGeoData, PolygonView):
 
         return inner_list
 
-    def func_id_to_color(self, id):
-        density_list = []
-        for d0 in self.geodata_index.values():
-            population0 = d0['population']
-            area0 = d0['area']
-            density0 = population0 / area0
-            density_list.append(density0)
-        density_list.sort()
+    def func_id_to_color_value(self, id):
+        d = self.geodata_index[id]
+        d['population']
+        return d['population'] / d['area']
 
-        n = len(density_list)
-        density_to_i = dict(list(map(
-            lambda x: (x[1], x[0]),
-            enumerate(density_list),
+    def func_id_to_label(self, id):
+        d = self.geodata_index[id]
+        return d['name']
+
+    def func_id_to_label_value(self, id):
+        d = self.geodata_index[id]
+        return d['population']
+
+    def func_id_to_color(self, id):
+        color_value_list = sorted(list(map(
+            self.func_id_to_color_value,
+            self.geodata_index.keys(),
         )))
 
-        d = self.geodata_index[id]
-        population = d['population']
-        area = d['area']
-        density = population / area
+        n = len(color_value_list)
+        color_value_to_i = dict(list(map(
+            lambda x: (x[1], x[0]),
+            enumerate(color_value_list),
+        )))
 
-        hue = (int)(240 * (1 - (density_to_i[density] / n)))
+        color_value = self.func_id_to_color_value(id)
+        hue = (int)(240 * (1 - (color_value_to_i[color_value] / n)))
         return colorx.random_hsl(hue=hue)
 
-    def func_id_to_child_list(self, id):
+    def func_id_to_polygon(self, id):
         d = self.geodata_index[id]
-        multipolygon = d['norm_multipolygon']
-        name = d['name']
-        population = d['population']
+        return d['norm_multipolygon']
+
+    def func_id_to_child_list(self, id):
+        label_value = self.func_id_to_label_value(id)
+        label = self.func_id_to_label(id)
+        multipolygon = self.func_id_to_polygon(id)
 
         relative_font_width = self.palette.get_relative_font_width(
             multipolygon)
-        relative_font_size = min(0.8, relative_font_width / len(name))
+        relative_font_size = min(0.8, relative_font_width / len(label))
 
         (x, y) = xy.get_midxy(multipolygon)
         return [
             self.palette.draw_text(
-                format.format_population(population),
+                format.format_population(label_value),
                 (x, y + 0.025 * relative_font_size),
                 relative_font_size,
                 {'font-weight': 'bold'},
             ),
             self.palette.draw_text(
-                name,
+                label,
                 (x, y - 0.025 * relative_font_size),
                 relative_font_size * 0.8,
             ),
