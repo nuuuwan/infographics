@@ -12,10 +12,10 @@ from utils import ds
 
 
 
-def get_bounds(latlng_list):
+def get_bounds(polygon):
     min_lat, min_lng = 180, 180
     max_lat, max_lng = -180, -180
-    for lat, lng in latlng_list:
+    for lat, lng in polygon:
         min_lat = min(min_lat, lat)
         min_lng = min(min_lng, lng)
         max_lat = max(max_lat, lat)
@@ -35,8 +35,8 @@ def shapely_point_to_latlng(point):
     return (point[1], point[0])
 
 
-def df_to_latlng_list_list_list(df):
-    latlng_list_list_list = []
+def df_to_multimultipolygon(df):
+    multimultipolygon = []
     for row in df.itertuples():
         shape = row.geometry
         if isinstance(shape, MultiPolygon):
@@ -51,25 +51,25 @@ def df_to_latlng_list_list_list(df):
             polygon_list,
         ))
 
-        latlng_list_list = list(map(
+        multipolygon = list(map(
             lambda point_list: list(map(
                 shapely_point_to_latlng,
                 point_list,
             )),
             point_list_list,
         ))
-        latlng_list_list_list.append(latlng_list_list)
-    return latlng_list_list_list
+        multimultipolygon.append(multipolygon)
+    return multimultipolygon
 
 
-def norm_latlng_list_list_list(
-    latlng_list_list_list,
+def norm_multimultipolygon(
+    multimultipolygon,
     map_r=0.8,
     size=(
         1600,
         900)):
-    latlng_list = ds.flatten(ds.flatten(latlng_list_list_list))
-    ((min_lat, min_lng), (max_lat, max_lng)) = get_bounds(latlng_list)
+    polygon = ds.flatten(ds.flatten(multimultipolygon))
+    ((min_lat, min_lng), (max_lat, max_lng)) = get_bounds(polygon)
     lat_span = max_lat - min_lat
     lng_span = max_lng - min_lng
 
@@ -94,11 +94,11 @@ def norm_latlng_list_list_list(
         return (px, py)
 
     return list(map(
-        lambda latlng_list_list: list(map(
-            lambda latlng_list: list(map(
+        lambda multipolygon: list(map(
+            lambda polygon: list(map(
                 t,
-                latlng_list,
-            )), latlng_list_list
+                polygon,
+            )), multipolygon
         )),
-        latlng_list_list_list,
+        multimultipolygon,
     ))

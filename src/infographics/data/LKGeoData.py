@@ -16,9 +16,9 @@ class LKGeoData:
             self.region_id,
             self.subregion_type,
         )
-        latlng_list_list_list = latlng.df_to_latlng_list_list_list(df)
-        p_list_list_list = latlng.norm_latlng_list_list_list(
-            latlng_list_list_list,
+        multimultipolygon = latlng.df_to_multimultipolygon(df)
+        p_list_list_list = latlng.norm_multimultipolygon(
+            multimultipolygon,
             size=palette.size,
         )
         return p_list_list_list
