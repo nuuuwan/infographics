@@ -37,15 +37,83 @@ class LKMap(LKGeoData, PolygonView):
         PolygonView.__init__(
             self,
             id_to_multipolygon,
-            self.func_id_to_color,
+            self.get_polygon_color,
         )
 
         # other
         self.color_palette = color_palette
 
+        # pre-processing
+        color_value_list = sorted(list(map(
+            self.get_polygon_color_value,
+            self.geodata_index.keys(),
+        )))
+
+        self.color_value_to_i = dict(list(map(
+            lambda x: (x[1], x[0]),
+            enumerate(color_value_list),
+        )))
+
+    def get_multipolygon(self, id):
+        d = self.geodata_index[id]
+        return d['norm_multipolygon']
+
+    # polygon labels
+    def get_label(self, id):
+        d = self.geodata_index[id]
+        return d['name']
+
+    def get_label_value(self, id):
+        d = self.geodata_index[id]
+        return d['population']
+
+    def render_label(self, id):
+        label_value = self.get_label_value(id)
+        label = self.get_label(id)
+        multipolygon = self.get_multipolygon(id)
+
+        relative_font_width = self.palette.get_relative_font_width(
+            multipolygon)
+        relative_font_size = min(0.8, relative_font_width / len(label))
+
+        (x, y) = xy.get_midxy(multipolygon)
+        return [
+            self.palette.draw_text(
+                format.format_population(label_value),
+                (x, y + 0.025 * relative_font_size),
+                relative_font_size,
+                {'font-weight': 'bold'},
+            ),
+            self.palette.draw_text(
+                label,
+                (x, y - 0.025 * relative_font_size),
+                relative_font_size * 0.8,
+            ),
+        ]
+
+    def render_labels(self):
+        inner_list = []
+        for id in self.geodata_index:
+            inner_list.append(self.palette.draw_g(
+                self.render_label(id),
+            ))
+        return self.palette.draw_g(inner_list)
+
+    # polygon colors
+    def get_polygon_color_value(self, id):
+        d = self.geodata_index[id]
+        d['population']
+        return d['population'] / d['area']
+
+    def get_polygon_color(self, id):
+        color_value = self.get_polygon_color_value(id)
+        n = len(self.color_value_to_i)
+        return self.color_palette.color(
+            (self.color_value_to_i[color_value] / n))
+
     def render_legend(self):
         color_value_list = sorted(list(map(
-            self.func_id_to_color_value,
+            self.get_polygon_color_value,
             self.geodata_index.keys(),
         )))
 
@@ -82,72 +150,9 @@ class LKMap(LKGeoData, PolygonView):
             ]))
         return self.palette.draw_g(inner_list)
 
-    def render_labels(self):
-        inner_list = []
-        for id in self.geodata_index:
-            inner_list.append(self.palette.draw_g(
-                self.func_id_to_child_list(id),
-            ))
-        return inner_list
-
-    def render_child_list(self):
-        return [
+    def __xml__(self):
+        return self.palette.draw_g([
+            PolygonView.__xml__(self),
+            self.render_labels(),
             self.render_legend(),
-        ] + self.render_labels()
-
-    def func_id_to_color_value(self, id):
-        d = self.geodata_index[id]
-        d['population']
-        return d['population'] / d['area']
-
-    def func_id_to_label(self, id):
-        d = self.geodata_index[id]
-        return d['name']
-
-    def func_id_to_label_value(self, id):
-        d = self.geodata_index[id]
-        return d['population']
-
-    def func_id_to_color(self, id):
-        color_value_list = sorted(list(map(
-            self.func_id_to_color_value,
-            self.geodata_index.keys(),
-        )))
-
-        n = len(color_value_list)
-        color_value_to_i = dict(list(map(
-            lambda x: (x[1], x[0]),
-            enumerate(color_value_list),
-        )))
-
-        color_value = self.func_id_to_color_value(id)
-        return self.color_palette.color(
-            (color_value_to_i[color_value] / n))
-
-    def func_id_to_polygon(self, id):
-        d = self.geodata_index[id]
-        return d['norm_multipolygon']
-
-    def func_id_to_child_list(self, id):
-        label_value = self.func_id_to_label_value(id)
-        label = self.func_id_to_label(id)
-        multipolygon = self.func_id_to_polygon(id)
-
-        relative_font_width = self.palette.get_relative_font_width(
-            multipolygon)
-        relative_font_size = min(0.8, relative_font_width / len(label))
-
-        (x, y) = xy.get_midxy(multipolygon)
-        return [
-            self.palette.draw_text(
-                format.format_population(label_value),
-                (x, y + 0.025 * relative_font_size),
-                relative_font_size,
-                {'font-weight': 'bold'},
-            ),
-            self.palette.draw_text(
-                label,
-                (x, y - 0.025 * relative_font_size),
-                relative_font_size * 0.8,
-            ),
-        ]
+        ])

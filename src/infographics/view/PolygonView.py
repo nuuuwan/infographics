@@ -8,23 +8,21 @@ class PolygonView:
     def __init__(
         self,
         id_to_multipolygon,
-        func_id_to_color=None,
+        get_polygon_color=None,
     ):
         self.id_to_multipolygon = id_to_multipolygon
-        self.func_id_to_color = func_id_to_color
+        self.get_polygon_color = get_polygon_color
         self.palette = SVGPalette()
 
     def __len__(self):
         return len(self.id_to_multipolygon)
 
-    @property
-    def xml(self):
-
+    def __xml__(self):
         inner_child_list = []
         for id, multipolygon in self.id_to_multipolygon.items():
             attribs = {}
-            if self.func_id_to_color:
-                attribs['fill'] = self.func_id_to_color(id)
+            if self.get_polygon_color:
+                attribs['fill'] = self.get_polygon_color(id)
 
             inner_child_list.append(
                 self.palette.draw_multipolygon(
@@ -33,5 +31,4 @@ class PolygonView:
                     attribs,
                 )
             )
-
-        return self.palette.draw_g(inner_child_list + self.render_child_list())
+        return self.palette.draw_g(inner_child_list)
