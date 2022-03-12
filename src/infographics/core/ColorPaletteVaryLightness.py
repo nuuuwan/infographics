@@ -2,7 +2,7 @@ from utils import colorx
 
 
 class ColorPaletteVaryLightness:
-    def __init__(self, hue=0, min_lightness=0.8, max_lightness=0.2, n=1):
+    def __init__(self, hue=0, min_lightness=0.9, max_lightness=0.1, n=1):
         self.hue = hue
         self.min_lightness = min_lightness
         self.max_lightness = max_lightness
