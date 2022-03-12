@@ -16,9 +16,9 @@ class LKGeoData:
             self.region_id,
             self.subregion_type,
         )
-        multimultipolygon = latlng.df_to_multimultipolygon(df)
-        multimultipolygon = latlng.norm_multimultipolygon(
-            multimultipolygon,
+        multi2polygon = latlng.df_to_multi2polygon(df)
+        multi2polygon = latlng.norm_multi2polygon(
+            multi2polygon,
             size=palette.size,
         )
-        return multimultipolygon
+        return multi2polygon

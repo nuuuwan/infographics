@@ -34,8 +34,8 @@ def shapely_point_to_latlng(point):
     return (point[1], point[0])
 
 
-def df_to_multimultipolygon(df):
-    multimultipolygon = []
+def df_to_multi2polygon(df):
+    multi2polygon = []
     for row in df.itertuples():
         shape = row.geometry
         if isinstance(shape, MultiPolygon):
@@ -57,17 +57,17 @@ def df_to_multimultipolygon(df):
             )),
             point_list_list,
         ))
-        multimultipolygon.append(multipolygon)
-    return multimultipolygon
+        multi2polygon.append(multipolygon)
+    return multi2polygon
 
 
-def norm_multimultipolygon(
-    multimultipolygon,
+def norm_multi2polygon(
+    multi2polygon,
     map_r=0.8,
     size=(
         1600,
         900)):
-    polygon = ds.flatten(ds.flatten(multimultipolygon))
+    polygon = ds.flatten(ds.flatten(multi2polygon))
     ((min_lat, min_lng), (max_lat, max_lng)) = get_bounds(polygon)
     lat_span = max_lat - min_lat
     lng_span = max_lng - min_lng
@@ -99,5 +99,5 @@ def norm_multimultipolygon(
                 polygon,
             )), multipolygon
         )),
-        multimultipolygon,
+        multi2polygon,
     ))

@@ -8,10 +8,10 @@ DEFAULT_BASE_FONT_SIZE = 16
 
 
 class SVGPalettePolygon:
-    def draw_multimultipolygon(self, multimultipolygon):
+    def draw_multi2polygon(self, multi2polygon):
         return _('g', list(map(
             self.draw_multipolygon,
-            multimultipolygon,
+            multi2polygon,
         )))
 
     def draw_multipolygon(self, multipolygon):
