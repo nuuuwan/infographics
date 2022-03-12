@@ -23,4 +23,4 @@ def as_number(num):
     if num > 1:
         return f'{num:2.0f}'
 
-    return f'{num:.0%}'    
+    return f'{num:.0%}'
