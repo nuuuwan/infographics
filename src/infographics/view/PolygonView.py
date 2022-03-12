@@ -34,4 +34,4 @@ class PolygonView:
                 )
             )
 
-        return self.palette.draw_g(inner_child_list + self.get_child_list())
+        return self.palette.draw_g(inner_child_list + self.render_child_list())

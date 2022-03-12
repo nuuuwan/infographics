@@ -37,7 +37,7 @@ class LKMap(LKGeoData, PolygonView):
 
         self.color_palette = color_palette
 
-    def get_child_list(self):
+    def render_legend(self):
         density_list = []
         for d0 in self.geodata_index.values():
             population0 = d0['population']
@@ -72,18 +72,25 @@ class LKMap(LKGeoData, PolygonView):
                     {'text-anchor': 'end'}
                 ),
                 self.palette.draw_cirle(
-                    (x0 + 0.01, y + r /2),
+                    (x0 + 0.01, y + r / 2),
                     r,
                     {'fill': color},
                 ),
             ]))
+        return self.palette.draw_g(inner_list)
 
+    def render_labels(self):
+        inner_list = []
         for id in self.geodata_index:
             inner_list.append(self.palette.draw_g(
                 self.func_id_to_child_list(id),
             ))
-
         return inner_list
+
+    def render_child_list(self):
+        return [
+            self.render_legend(),
+        ] + self.render_labels()
 
     def func_id_to_color_value(self, id):
         d = self.geodata_index[id]
