@@ -10,12 +10,11 @@ from infographics.view.AbstractColoredView import AbstractColoredView
 class AbstractPolygonView(AbstractColoredView, ABC):
     def __init__(
         self,
-        legend_title='',
         id_to_multipolygon={},
     ):
 
         # AbstractColoredView.__init__
-        AbstractColoredView.__init__(self, legend_title)
+        AbstractColoredView.__init__(self)
 
         # other
         self.id_to_multipolygon = id_to_multipolygon

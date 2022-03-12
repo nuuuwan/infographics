@@ -7,9 +7,8 @@ N_LEGEND = 7
 
 
 class AbstractColoredView(ABC):
-    def __init__(self, legend_title=''):
+    def __init__(self):
         self.color_palette = ColorPaletteVaryHue()
-        self.legend_title = legend_title
         self.palette = SVGPalette()
 
         # pre-processing
@@ -33,7 +32,7 @@ class AbstractColoredView(ABC):
         x0, y0 = 0.8, 0.5
         inner_list = [
             self.palette.draw_text(
-                self.legend_title,
+                self.get_legend_title(),
                 (x0, y0),
                 1,
             ),
@@ -65,4 +64,8 @@ class AbstractColoredView(ABC):
 
     @abstractmethod
     def get_color_value(self, id):
+        pass
+
+    @abstractmethod
+    def get_legend_title(self):
         pass

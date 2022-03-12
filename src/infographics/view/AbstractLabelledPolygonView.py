@@ -10,14 +10,13 @@ class AbstractLabelledPolygonView(
         AbstractLabelledView, AbstractPolygonView, ABC):
     def __init__(
         self,
-        legend_title='',
         id_to_multipolygon={},
     ):
         # LabelledView.__init__
         AbstractLabelledView.__init__(self)
 
         # AbstractPolygonView.__init__
-        AbstractPolygonView.__init__(self, legend_title, id_to_multipolygon)
+        AbstractPolygonView.__init__(self, id_to_multipolygon)
 
         # other
         self.color_palette = ColorPaletteVaryHue()
