@@ -9,7 +9,7 @@ class LKMap(LKGeoData, PolygonView):
     def __init__(
         self,
         region_id='LK',
-        subregion_type='province',
+        subregion_type='district',
     ):
         LKGeoData.__init__(self, region_id, subregion_type)
         multi2polygon = latlng.norm_multi2polygon(
@@ -42,8 +42,14 @@ class LKMap(LKGeoData, PolygonView):
         d = self.geodata_index[id]
         multipolygon = d['norm_multipolygon']
         name = d['name']
+
+        relative_font_width = self.palette.get_relative_font_width(
+            multipolygon)
+        relative_font_size = min(1, relative_font_width / len(name))
+
         (x, y) = latlng.get_midlatlng(multipolygon)
         return [self.palette.draw_text(
             name,
             (x, y),
+            relative_font_size,
         )]
