@@ -11,7 +11,6 @@ from shapely.geometry import MultiPolygon, Polygon
 from utils import ds
 
 
-
 def get_bounds(polygon):
     min_lat, min_lng = 180, 180
     max_lat, max_lng = -180, -180
