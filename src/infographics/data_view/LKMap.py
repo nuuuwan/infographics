@@ -42,10 +42,9 @@ class LKMap(LKGeoData, PolygonView, LabelledView, LegendView):
         # other
         self.color_palette = color_palette
 
-
     def __xml__(self):
         return self.palette.draw_g([
             PolygonView.__xml__(self),
             self.render_labels(),
             self.render_legend(),
-        ] )
+        ])
