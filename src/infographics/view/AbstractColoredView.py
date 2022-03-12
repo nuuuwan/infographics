@@ -49,11 +49,7 @@ class AbstractColoredView(ABC):
     def __xml__(self):
         x0, y0 = 0.8, 0.5
         inner_list = [
-            self.palette.draw_text(
-                self.get_legend_title(),
-                (x0, y0),
-                1,
-            ),
+            self.palette.draw_text(self.get_legend_title(), (x0, y0))
         ]
 
         color_value_list = list(self.color_value_to_i.keys())
