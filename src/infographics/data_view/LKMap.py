@@ -44,7 +44,7 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
         d = self.geodata_index[id]
         return d['population'] / d['area']
 
-    # Implement LabelledView
+    # Implement AbstractLabelledView
     def get_label_ids(self):
         return list(self.geodata_index.keys())
 
