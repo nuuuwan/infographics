@@ -1,6 +1,6 @@
 from geo import geodata
 
-from infographics.math import latlng
+from infographics.base import latlng
 
 
 class LKGeoData:

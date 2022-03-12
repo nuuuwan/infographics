@@ -1,7 +1,7 @@
 from utils import colorx
 
+from infographics.base import latlng
 from infographics.data import LKGeoData
-from infographics.math import latlng
 from infographics.view import PolygonView
 
 

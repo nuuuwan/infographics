@@ -1,8 +1,8 @@
 
 from utils.xmlx import _
 
+from infographics.base import latlng
 from infographics.core.SVG_STYLES import SVG_STYLES
-from infographics.math import latlng
 
 DEFAULT_WIDTH, DEFAULT_HEIGHT, PADDING = 1200, 675, 20
 DEFAULT_BASE_FONT_SIZE = 16

@@ -2,7 +2,7 @@
 
 import unittest
 
-from infographics.math import dorling_compress
+from infographics.base import dorling_compress
 
 
 class TestCase(unittest.TestCase):
