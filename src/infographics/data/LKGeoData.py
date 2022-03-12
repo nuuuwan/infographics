@@ -18,3 +18,6 @@ class LKGeoData:
         )
         geodata_index = pandax.df_to_geodata_index(df)
         return geodata_index
+
+    def get_geodata(self, id):
+        return self.geodata_index[id]
