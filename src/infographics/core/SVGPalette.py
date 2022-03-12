@@ -40,6 +40,16 @@ class SVGPalette(SVGPaletteSize, SVGPalettePolygon):
             'y2': y2,
         } | attribs)
 
+    def draw_cirle(self, pc, pr=0.1, attribs={}):
+        cx, cy = self.t(pc)
+        cx1, ___ = self.t((pc[0] + pr, pc[1]))
+        r = abs(cx1 - cx)
+        return _('circle', None, SVG_STYLES.CIRCLE | {
+            'cx': cx,
+            'cy': cy,
+            'r': r,
+        } | attribs)
+
     def draw_rect(self, p0=(-1, 1), size=(2, 2), attribs={}):
         x0, y0 = self.t(p0)
         x1, y1 = self.t((p0[0] + size[0], p0[1] - size[1]))

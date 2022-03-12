@@ -21,6 +21,12 @@ class SVG_STYLES:
         'stroke-width': 1,
     }
 
+    CIRCLE = {
+        'fill': 'white',
+        'stroke': 'lightgray',
+        'stroke-width': 1,
+    }
+
     LINE = {
         'stroke': 'lightgray',
         'stroke-width': 1,
