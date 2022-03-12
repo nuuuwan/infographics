@@ -1,5 +1,5 @@
 from infographics.core import Infographic
-from infographics.geo import LKMap
+from infographics.view import LKMap
 
 Infographic(
     title='Provinces',
