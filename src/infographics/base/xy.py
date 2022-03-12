@@ -7,7 +7,6 @@ point hierarchy
 2 - polygon (point_list)
 3 - multipolygon (point_list_list)
 """
-from shapely.geometry import MultiPolygon, Polygon
 from utils import ds
 
 
@@ -46,39 +45,6 @@ def shapely_polygon_to_point_list(polygon):
 
 def shapely_point_to_xy(point):
     return (point[1], point[0])
-
-
-def df_to_geodata_index(df):
-    geodata_index = {}
-    for row in df.itertuples():
-        d = dict(row._asdict())
-
-        shape = d['geometry']
-        if isinstance(shape, MultiPolygon):
-            polygon_list = shapely_multipolygon_to_polygon_list(shape)
-        elif isinstance(shape, Polygon):
-            polygon_list = [shape]
-        else:
-            polygon_list = []
-
-        point_list_list = list(map(
-            shapely_polygon_to_point_list,
-            polygon_list,
-        ))
-
-        multipolygon = list(map(
-            lambda point_list: list(map(
-                shapely_point_to_xy,
-                point_list,
-            )),
-            point_list_list,
-        ))
-
-        del d['geometry']
-        geodata_index[d['id']] = d | {
-            'multipolygon': multipolygon,
-        }
-    return geodata_index
 
 
 def norm_multi2polygon(

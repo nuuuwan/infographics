@@ -1,6 +1,6 @@
 from geo import geodata
 
-from infographics.base import xy
+from infographics.base import xy, pandax
 
 
 class LKGeoData:
@@ -14,5 +14,5 @@ class LKGeoData:
             self.region_id,
             self.subregion_type,
         )
-        geodata_index = xy.df_to_geodata_index(df)
+        geodata_index = pandax.df_to_geodata_index(df)
         return geodata_index
