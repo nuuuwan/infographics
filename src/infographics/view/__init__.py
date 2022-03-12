@@ -1,1 +1,1 @@
-from infographics.view.LKMap import LKMap
+from infographics.view.PointMap import PointMap
