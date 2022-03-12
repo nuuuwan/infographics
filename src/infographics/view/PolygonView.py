@@ -5,27 +5,39 @@ from infographics.core import SVGPalette
 
 
 class PolygonView:
-    def __init__(self, multi2polygon=None, color_list=None):
-
-        self.multi2polygon = multi2polygon if multi2polygon else []
-        if color_list:
-            self.color_list = color_list
-        else:
-            self.color_list = SVGPalette.get_random_color_list(len(self))
+    def __init__(
+        self,
+        id_to_multipolygon,
+        func_id_to_color=None,
+        func_id_to_child_list=None,
+    ):
+        self.id_to_multipolygon = id_to_multipolygon
+        self.func_id_to_color = func_id_to_color
+        self.func_id_to_child_list = func_id_to_child_list
 
     def __len__(self):
-        return len(self.multi2polygon)
+        return len(self.id_to_multipolygon)
 
     @property
     def xml(self):
         palette = SVGPalette()
 
-        return palette.draw_g(
-            list(map(
-                lambda x: palette.draw_multipolygon(
-                    x[1],
-                    {'fill': self.color_list[x[0]]},
-                ),
-                enumerate(self.multi2polygon),
-            )),
-        )
+        child_list = []
+        for id, multipolygon in self.id_to_multipolygon.items():
+            attribs = {}
+            if self.func_id_to_color:
+                attribs['fill'] = self.func_id_to_color(id)
+
+            multipolygon_child_list = []
+            if self.func_id_to_child_list:
+                multipolygon_child_list = self.func_id_to_child_list(id)
+
+            child_list.append(
+                palette.draw_multipolygon(
+                    multipolygon,
+                    multipolygon_child_list,
+                    attribs,
+                )
+            )
+
+        return palette.draw_g(child_list)
