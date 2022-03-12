@@ -16,7 +16,11 @@ class LKGeoData:
             self.region_id,
             self.subregion_type,
         )
-        multi2polygon = latlng.df_to_multi2polygon(df)
+        geodata_list = latlng.df_to_geodata_list(df)
+        multi2polygon = list(map(
+            lambda geodata: geodata['multipolygon'],
+            geodata_list,
+        ))
         multi2polygon = latlng.norm_multi2polygon(
             multi2polygon,
             size=palette.size,
