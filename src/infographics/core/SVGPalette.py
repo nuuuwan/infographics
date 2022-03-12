@@ -2,13 +2,14 @@
 from utils.xmlx import _
 
 from infographics.core.SVG_STYLES import SVG_STYLES
+from infographics.core.SVGPalettePolygon import SVGPalettePolygon
 from infographics.core.SVGPaletteSize import SVGPaletteSize
 
 DEFAULT_WIDTH, DEFAULT_HEIGHT, PADDING = 1200, 675, 20
 DEFAULT_BASE_FONT_SIZE = 16
 
 
-class SVGPalette(SVGPaletteSize):
+class SVGPalette(SVGPaletteSize, SVGPalettePolygon):
     def __init__(
         self,
         size=(DEFAULT_WIDTH, DEFAULT_HEIGHT, PADDING),
@@ -58,25 +59,3 @@ class SVGPalette(SVGPaletteSize):
             SVG_STYLES.SVG | {
                 'width': self.width,
                 'height': self.height})
-
-    def draw_p_list_list_list(self, p_list_list_list):
-        return _('g', list(map(
-            self.draw_p_list_list,
-            p_list_list_list,
-        )))
-
-    def draw_p_list_list(self, p_list_list):
-        return _('g', list(map(
-            self.draw_p_list,
-            p_list_list,
-        )))
-
-    def draw_p_list(self, p_list):
-        d_list = []
-        for p in p_list:
-            x, y = self.t(p)
-            prefix = 'M' if (not d_list) else 'L'
-            d_list.append('%s%d,%d' % (prefix, x, y))
-        d_list.append('z')
-        d = ' '.join(d_list)
-        return _('path', None, SVG_STYLES.PATH | {'d': d})
