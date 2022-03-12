@@ -22,15 +22,15 @@ class SVGPalette(SVGPaletteSize, SVGPalettePolygon):
     def get_font_size(self, relative_font_size):
         return self.base_font_size * relative_font_size
 
-    def draw_text(self, inner, p=(0, 0), relative_font_size=1):
+    def draw_text(self, inner, p=(0, 0), relative_font_size=1, attribs={}):
         x, y = self.t(p)
         return _('text', inner, SVG_STYLES.TEXT | {
             'x': x,
             'y': y,
             'font-size': self.get_font_size(relative_font_size),
-        })
+        } | attribs)
 
-    def draw_line(self, p1=(-1, 0), p2=(1, 0)):
+    def draw_line(self, p1=(-1, 0), p2=(1, 0), attribs={}):
         x1, y1 = self.t(p1)
         x2, y2 = self.t(p2)
         return _('line', None, SVG_STYLES.LINE | {
@@ -38,9 +38,9 @@ class SVGPalette(SVGPaletteSize, SVGPalettePolygon):
             'y1': y1,
             'x2': x2,
             'y2': y2,
-        })
+        } | attribs)
 
-    def draw_rect(self, p0=(-1, 1), size=(2, 2)):
+    def draw_rect(self, p0=(-1, 1), size=(2, 2), attribs={}):
         x0, y0 = self.t(p0)
         x1, y1 = self.t((p0[0] + size[0], p0[1] - size[1]))
         width = x1 - x0
@@ -50,16 +50,15 @@ class SVGPalette(SVGPaletteSize, SVGPalettePolygon):
             'y': y0,
             'width': width,
             'height': height,
+        } | attribs)
 
-        })
-
-    def draw_svg(self, child_list):
+    def draw_svg(self, child_list, attribs={}):
         return _(
             'svg',
             child_list,
             SVG_STYLES.SVG | {
                 'width': self.width,
-                'height': self.height})
+                'height': self.height} | attribs)
 
     def draw_g(self, child_list, attribs={}):
         return _('g', child_list, attribs)
