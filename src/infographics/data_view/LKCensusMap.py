@@ -32,7 +32,7 @@ class LKCensusMap(LKCensusData, LKMap):
 
     # Implement AbstractLabelledView
     def get_label(self, id):
-        return self.region_id
+        return self.lk_geo_data[id]['name']
 
     def get_label_value(self, id):
-        return self.lk_census_data[id][self.field]
+        return self.get_color_value(id)
