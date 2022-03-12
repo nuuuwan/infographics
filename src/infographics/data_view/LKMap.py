@@ -54,9 +54,6 @@ class LKMap(LKGeoData, PolygonView, LabelledView):
             enumerate(color_value_list),
         )))
 
-    def get_multipolygon(self, id):
-        d = self.geodata_index[id]
-        return d['norm_multipolygon']
 
     # polygon labels
     def get_label(self, id):
