@@ -32,7 +32,6 @@ class LKMap(LKGeoData, PolygonView):
             self,
             id_to_multipolygon,
             self.func_id_to_color,
-            self.func_id_to_child_list,
         )
 
     def get_child_list(self):
@@ -75,6 +74,11 @@ class LKMap(LKGeoData, PolygonView):
                     {'fill': color},
                 ),
             ]))
+
+        for id in self.geodata_index:
+            inner_list.append(self.palette.draw_g(
+                self.func_id_to_child_list(id),
+            ))
 
         return inner_list
 
