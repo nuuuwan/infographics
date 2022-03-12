@@ -58,7 +58,7 @@ class LKMap(LKGeoData, PolygonView):
         for j in range(0, N_LEGEND):
             i = (int)(j * (n - 1) / (N_LEGEND - 1))
             density = density_list[i]
-            y = y0 - ((i + 3.5) * 0.015)
+            y = y0 - ((j + 1.5) * 0.05)
             hue = (int)(240 * (1 - (i / n)))
             color = colorx.random_hsl(hue=hue)
 
