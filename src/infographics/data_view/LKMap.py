@@ -31,9 +31,13 @@ class LKMap(LKGeoData, PolygonView):
         PolygonView.__init__(
             self,
             id_to_multipolygon,
+            self.get_child_list(),
             self.func_id_to_color,
             self.func_id_to_child_list,
         )
+
+    def get_child_list(self):
+        return []
 
     def func_id_to_color(self, id):
         density_list = []
