@@ -8,10 +8,10 @@ class PolygonView:
     def __init__(
         self,
         id_to_multipolygon,
-        get_polygon_color=None,
+        get_color=None,
     ):
         self.id_to_multipolygon = id_to_multipolygon
-        self.get_polygon_color = get_polygon_color
+        self.get_color = get_color
         self.palette = SVGPalette()
 
     def __len__(self):
@@ -24,8 +24,8 @@ class PolygonView:
         inner_child_list = []
         for id, multipolygon in self.id_to_multipolygon.items():
             attribs = {}
-            if self.get_polygon_color:
-                attribs['fill'] = self.get_polygon_color(id)
+            if self.get_color:
+                attribs['fill'] = self.get_color(id)
 
             inner_child_list.append(
                 self.palette.draw_multipolygon(
