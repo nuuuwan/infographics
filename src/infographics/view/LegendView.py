@@ -1,12 +1,26 @@
-
+from infographics.core import ColorPaletteVaryHue, SVGPalette
 from infographics.view import format
+
+N_LEGEND = 7
+
 
 
 class LegendView:
-    def get_color_value(self, id):
-        d = self.geodata_index[id]
-        d['population']
-        return d['population'] / d['area']
+    def __init__(self, legend_title=''):
+        self.color_palette = ColorPaletteVaryHue()
+        self.legend_title = legend_title
+        self.palette = SVGPalette()
+
+        # pre-processing
+        color_value_list = sorted(list(map(
+            self.get_color_value,
+            self.geodata_index.keys(),
+        )))
+
+        self.color_value_to_i = dict(list(map(
+            lambda x: (x[1], x[0]),
+            enumerate(color_value_list),
+        )))
 
     def get_color(self, id):
         color_value = self.get_color_value(id)
@@ -18,7 +32,7 @@ class LegendView:
         x0, y0 = 0.8, 0.5
         inner_list = [
             self.palette.draw_text(
-                'Density (people per km²)',
+                self.legend_title,
                 (x0, y0),
                 1,
             ),
@@ -26,7 +40,6 @@ class LegendView:
 
         color_value_list = list(self.color_value_to_i.keys())
         n = len(color_value_list)
-        N_LEGEND = 7
         for j in range(0, N_LEGEND):
             i = (int)(j * (n - 1) / (N_LEGEND - 1))
             color_value = color_value_list[i]
@@ -48,3 +61,8 @@ class LegendView:
                 ),
             ]))
         return self.palette.draw_g(inner_list)
+
+    # abstract methods
+    def get_color_value(self, id):
+        d = self.geodata_index[id]
+        return d['population'] / d['area']

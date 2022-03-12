@@ -33,26 +33,15 @@ class LKMap(LKGeoData, PolygonView, LabelledView, LegendView):
             self.geodata_index.items(),
         )))
 
+        # LegendView.__init__
+        LegendView.__init__(self, 'Density (people per km²)')
+
         # PolygonView.__init__
-        PolygonView.__init__(
-            self,
-            id_to_multipolygon,
-            self.get_color,
-        )
+        PolygonView.__init__(self, id_to_multipolygon)
 
         # other
         self.color_palette = color_palette
 
-        # pre-processing
-        color_value_list = sorted(list(map(
-            self.get_color_value,
-            self.geodata_index.keys(),
-        )))
-
-        self.color_value_to_i = dict(list(map(
-            lambda x: (x[1], x[0]),
-            enumerate(color_value_list),
-        )))
 
     def __xml__(self):
         return self.palette.draw_g([
