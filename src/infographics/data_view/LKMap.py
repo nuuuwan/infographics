@@ -54,16 +54,6 @@ class LKMap(LKGeoData, PolygonView, LabelledView):
             enumerate(color_value_list),
         )))
 
-
-    # polygon labels
-    def get_label(self, id):
-        d = self.geodata_index[id]
-        return d['name']
-
-    def get_label_value(self, id):
-        d = self.geodata_index[id]
-        return d['population']
-
     # polygon colors
     def get_polygon_color_value(self, id):
         d = self.geodata_index[id]
