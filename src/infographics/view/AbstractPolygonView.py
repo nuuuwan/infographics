@@ -38,6 +38,7 @@ class AbstractPolygonView(AbstractColoredView, ABC):
         return self.palette.draw_g(
             inner_child_list + [AbstractColoredView.__xml__(self)])
 
+    # abstract methods
     @abstractproperty
     def id_to_multipolygon(self):
         pass

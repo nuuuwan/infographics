@@ -37,6 +37,7 @@ class AbstractLabelledView(ABC):
             ),
         ]
 
+    # abstract methods
     @abstractmethod
     def get_label_xy(self, id):
         pass

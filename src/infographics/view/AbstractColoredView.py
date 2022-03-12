@@ -63,6 +63,7 @@ class AbstractColoredView(ABC):
             ]))
         return self.palette.draw_g(inner_list)
 
+    # abstract methods
     @abstractmethod
     def get_color_value(self, id):
         pass
