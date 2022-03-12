@@ -18,7 +18,7 @@ class AbstractColoredView(ABC):
     def color_value_to_i(self):
         color_value_list = sorted(list(map(
             self.get_color_value,
-            self.ids,
+            self.keys(),
         )))
         return dict(list(map(
             lambda x: (x[1], x[0]),
@@ -65,9 +65,8 @@ class AbstractColoredView(ABC):
         return self.palette.draw_g(inner_list)
 
     # abstract methods
-
     @abstractproperty
-    def ids(self):
+    def keys(self):
         pass
 
     @abstractmethod
