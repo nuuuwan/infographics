@@ -2,10 +2,10 @@
 from infographics.base import xy
 from infographics.core import ColorPaletteVaryHue
 from infographics.data import LKGeoData
-from infographics.view import PolygonView, format
+from infographics.view import LabelledView, PolygonView, format
 
 
-class LKMap(LKGeoData, PolygonView):
+class LKMap(LKGeoData, PolygonView, LabelledView):
     def __init__(
         self,
         region_id='LK',
@@ -67,38 +67,6 @@ class LKMap(LKGeoData, PolygonView):
         d = self.geodata_index[id]
         return d['population']
 
-    def render_label(self, id):
-        label_value = self.get_label_value(id)
-        label = self.get_label(id)
-        multipolygon = self.get_multipolygon(id)
-
-        relative_font_width = self.palette.get_relative_font_width(
-            multipolygon)
-        relative_font_size = min(0.8, relative_font_width / len(label))
-
-        (x, y) = xy.get_midxy(multipolygon)
-        return [
-            self.palette.draw_text(
-                format.format_population(label_value),
-                (x, y + 0.025 * relative_font_size),
-                relative_font_size,
-                {'font-weight': 'bold'},
-            ),
-            self.palette.draw_text(
-                label,
-                (x, y - 0.025 * relative_font_size),
-                relative_font_size * 0.8,
-            ),
-        ]
-
-    def render_labels(self):
-        inner_list = []
-        for id in self.geodata_index:
-            inner_list.append(self.palette.draw_g(
-                self.render_label(id),
-            ))
-        return self.palette.draw_g(inner_list)
-
     # polygon colors
     def get_polygon_color_value(self, id):
         d = self.geodata_index[id]
@@ -112,11 +80,6 @@ class LKMap(LKGeoData, PolygonView):
             (self.color_value_to_i[color_value] / n))
 
     def render_legend(self):
-        color_value_list = sorted(list(map(
-            self.get_polygon_color_value,
-            self.geodata_index.keys(),
-        )))
-
         x0, y0 = 0.8, 0.5
         inner_list = [
             self.palette.draw_text(
@@ -126,6 +89,7 @@ class LKMap(LKGeoData, PolygonView):
             ),
         ]
 
+        color_value_list = list(self.color_value_to_i.keys())
         n = len(color_value_list)
         N_LEGEND = 7
         for j in range(0, N_LEGEND):
@@ -137,7 +101,7 @@ class LKMap(LKGeoData, PolygonView):
             r = 0.01
             inner_list.append(self.palette.draw_g([
                 self.palette.draw_text(
-                    format.format_population(color_value),
+                    format.as_number(color_value),
                     (x0 - 0.01, y),
                     1,
                     {'text-anchor': 'end'}
