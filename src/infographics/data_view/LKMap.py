@@ -74,11 +74,11 @@ class LKMap(LKGeoData, PolygonView):
                 format.format_population(population),
                 (x, y + 0.025 * relative_font_size),
                 relative_font_size,
+                {'font-weight': 'bold'},
             ),
             self.palette.draw_text(
                 name,
                 (x, y - 0.025 * relative_font_size),
                 relative_font_size * 0.8,
             ),
-
         ]
