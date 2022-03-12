@@ -9,6 +9,7 @@ Infographic(
         LKMap(
             region_id='LK',
             subregion_type='district',
+            legend_title='Population Density (people per km²)',
         ),
     ]
 ).save('/tmp/infographics.example2.svg')
