@@ -26,12 +26,9 @@ class AbstractLabelledPolygonView(
 
     # Implement LabelledView
     def get_label_xy(self, id):
-        multipolygon = self.get_multipolygon(id)
-        return xy.get_midxy(multipolygon)
+        return xy.get_midxy(self.get_multipolygon(id))
 
     def get_label_relative_font_size(self, id):
-        label = self.get_label(id)
-        multipolygon = self.get_multipolygon(id)
         relative_font_width = self.palette.get_relative_font_width(
-            multipolygon)
-        return min(0.8, relative_font_width / len(label))
+            self.get_multipolygon(id))
+        return min(0.8, relative_font_width / len(self.get_label(id)))
