@@ -43,7 +43,7 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
         return self.lk_geo_data.values()
 
     def __getitem__(self, id):
-        return self.lk_geo_data[id]    
+        return self.lk_geo_data[id]
 
     def get_color_value(self, id):
         d = self[id]
