@@ -5,6 +5,7 @@ from infographics.core import ColorPaletteVaryHue, SVGPalette
 from infographics.view import format
 
 N_LEGEND = 7
+CIRCLE_R_LEGEND = 0.01
 
 
 class AbstractColoredView(ABC):
@@ -29,6 +30,22 @@ class AbstractColoredView(ABC):
         return self.color_palette.color(
             (self.color_value_to_i[color_value] / n))
 
+    def render_row(self, color_value, color, xy):
+        x, y = xy
+        return self.palette.draw_g([
+            self.palette.draw_text(
+                format.as_number(color_value),
+                (x - 0.01, y),
+                1,
+                {'text-anchor': 'end'}
+            ),
+            self.palette.draw_cirle(
+                (x + 0.01, y + CIRCLE_R_LEGEND / 2),
+                CIRCLE_R_LEGEND,
+                {'fill': color},
+            ),
+        ])
+
     def __xml__(self):
         x0, y0 = 0.8, 0.5
         inner_list = [
@@ -44,23 +61,10 @@ class AbstractColoredView(ABC):
         for j in range(0, N_LEGEND):
             i = (int)(j * (n - 1) / (N_LEGEND - 1))
             color_value = color_value_list[i]
-            y = y0 - ((j + 1.5) * 0.05)
             color = self.color_palette.color(i / n)
+            y = y0 - ((j + 1.5) * 0.05)
+            inner_list.append(self.render_row(color_value, color, (x0, y)))
 
-            r = 0.01
-            inner_list.append(self.palette.draw_g([
-                self.palette.draw_text(
-                    format.as_number(color_value),
-                    (x0 - 0.01, y),
-                    1,
-                    {'text-anchor': 'end'}
-                ),
-                self.palette.draw_cirle(
-                    (x0 + 0.01, y + r / 2),
-                    r,
-                    {'fill': color},
-                ),
-            ]))
         return self.palette.draw_g(inner_list)
 
     # abstract methods
