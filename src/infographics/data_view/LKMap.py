@@ -1,3 +1,5 @@
+from functools import cached_property
+
 from infographics.base import xy
 from infographics.core import ColorPaletteVaryHue
 from infographics.data import LKGeoData
@@ -14,25 +16,8 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
         # LKGeoData.__init__
         LKGeoData.__init__(self, region_id, subregion_type)
 
-        # geodata_index
-        multi2polygon = xy.norm_multi2polygon(
-            list(map(
-                lambda geodata: geodata['multipolygon'],
-                self.geodata_index.values(),
-            )),
-        )
-
-        keys = list(self.geodata_index.keys())
-        for i, id in enumerate(keys):
-            self.get_geodata(id)['norm_multipolygon'] = multi2polygon[i]
-
-        id_to_multipolygon = dict(list(map(
-            lambda x: [x[0], x[1]['norm_multipolygon']],
-            self.geodata_index.items(),
-        )))
-
         # AbstractLabelledPolygonView.__init__
-        AbstractLabelledPolygonView.__init__(self, id_to_multipolygon)
+        AbstractLabelledPolygonView.__init__(self)
 
         # other
         self.legend_title = legend_title
@@ -55,3 +40,18 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
 
     def get_label_value(self, id):
         return self.get_geodata(id)['population']
+
+    # Implement AbstractPolygonView
+    @cached_property
+    def id_to_multipolygon(self):
+        multi2polygon = xy.norm_multi2polygon(
+            list(map(
+                lambda geodata: geodata['multipolygon'],
+                self.geodata_index.values(),
+            )),
+        )
+        id_to_multipolygon = {}
+        keys = list(self.geodata_index.keys())
+        for i, id in enumerate(keys):
+            id_to_multipolygon[id] = multi2polygon[i]
+        return id_to_multipolygon

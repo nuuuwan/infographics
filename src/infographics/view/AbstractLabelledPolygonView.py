@@ -8,15 +8,12 @@ from infographics.view.AbstractPolygonView import AbstractPolygonView
 
 class AbstractLabelledPolygonView(
         AbstractLabelledView, AbstractPolygonView, ABC):
-    def __init__(
-        self,
-        id_to_multipolygon={},
-    ):
+    def __init__(self):
         # LabelledView.__init__
         AbstractLabelledView.__init__(self)
 
         # AbstractPolygonView.__init__
-        AbstractPolygonView.__init__(self, id_to_multipolygon)
+        AbstractPolygonView.__init__(self)
 
         # other
         self.color_palette = ColorPaletteVaryHue()

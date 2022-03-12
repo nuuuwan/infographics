@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from functools import cached_property
 
 from infographics.core import ColorPaletteVaryHue, SVGPalette
 from infographics.view import format
@@ -11,13 +12,13 @@ class AbstractColoredView(ABC):
         self.color_palette = ColorPaletteVaryHue()
         self.palette = SVGPalette()
 
-        # pre-processing
+    @cached_property
+    def color_value_to_i(self):
         color_value_list = sorted(list(map(
             self.get_color_value,
             self.geodata_index.keys(),
         )))
-
-        self.color_value_to_i = dict(list(map(
+        return dict(list(map(
             lambda x: (x[1], x[0]),
             enumerate(color_value_list),
         )))

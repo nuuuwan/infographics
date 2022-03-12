@@ -1,23 +1,18 @@
 """
 Renders a collection of polygons
 """
-from abc import ABC
+from abc import ABC, abstractproperty
 
 from infographics.core import SVGPalette
 from infographics.view.AbstractColoredView import AbstractColoredView
 
 
 class AbstractPolygonView(AbstractColoredView, ABC):
-    def __init__(
-        self,
-        id_to_multipolygon={},
-    ):
-
+    def __init__(self):
         # AbstractColoredView.__init__
         AbstractColoredView.__init__(self)
 
         # other
-        self.id_to_multipolygon = id_to_multipolygon
         self.palette = SVGPalette()
 
     def __len__(self):
@@ -42,3 +37,7 @@ class AbstractPolygonView(AbstractColoredView, ABC):
             )
         return self.palette.draw_g(
             inner_child_list + [AbstractColoredView.__xml__(self)])
+
+    @abstractproperty
+    def id_to_multipolygon(self):
+        pass
