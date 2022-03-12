@@ -8,21 +8,21 @@ DEFAULT_BASE_FONT_SIZE = 16
 
 
 class SVGPalettePolygon:
-    def draw_p_list_list_list(self, p_list_list_list):
+    def draw_multimultipolygon(self, multimultipolygon):
         return _('g', list(map(
-            self.draw_p_list_list,
-            p_list_list_list,
+            self.draw_multipolygon,
+            multimultipolygon,
         )))
 
-    def draw_p_list_list(self, p_list_list):
+    def draw_multipolygon(self, multipolygon):
         return _('g', list(map(
-            self.draw_p_list,
-            p_list_list,
+            self.draw_polygon,
+            multipolygon,
         )))
 
-    def draw_p_list(self, p_list):
+    def draw_polygon(self, polygon):
         d_list = []
-        for p in p_list:
+        for p in polygon:
             x, y = self.t(p)
             prefix = 'M' if (not d_list) else 'L'
             d_list.append('%s%d,%d' % (prefix, x, y))
