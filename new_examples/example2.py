@@ -6,6 +6,9 @@ Infographic(
     subtitle='Provinces of Sri Lanka',
     footer_text='visualization by @nuuuwan',
     child_list=[
-        LKMap(),
+        LKMap(
+            region_id='LK',
+            subregion_type='district',
+        ),
     ]
 ).save('/tmp/infographics.example2.svg')
