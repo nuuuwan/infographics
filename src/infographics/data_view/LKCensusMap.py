@@ -5,6 +5,7 @@ from infographics.data_view.LKMap import LKMap
 
 class LKCensusMap(LKCensusData, LKMap):
     DEFAULT_FIELD = 'sinhalese'
+    DEFAULT_COLOR_PALETTE = ColorPaletteVaryLightness(hue=0)
 
     def __init__(
         self,
@@ -12,6 +13,7 @@ class LKCensusMap(LKCensusData, LKMap):
         field=DEFAULT_FIELD,
         region_id=LKMap.DEFAULT_REGION_ID,
         subregion_type=LKMap.DEFAULT_SUBREGION_TYPE,
+        color_palette=DEFAULT_COLOR_PALETTE,
     ):
         LKCensusData.__init__(self, table_id)
         LKMap.__init__(
@@ -19,7 +21,7 @@ class LKCensusMap(LKCensusData, LKMap):
             region_id,
             subregion_type,
             legend_title='% of Population',
-            color_palette=ColorPaletteVaryLightness(),
+            color_palette=color_palette,
         )
         self.field = field
 
