@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, abstractproperty
 from functools import cached_property
 
 from infographics.core import ColorPaletteVaryHue, SVGPalette
@@ -16,7 +16,7 @@ class AbstractColoredView(ABC):
     def color_value_to_i(self):
         color_value_list = sorted(list(map(
             self.get_color_value,
-            self.geodata_index.keys(),
+            self.ids,
         )))
         return dict(list(map(
             lambda x: (x[1], x[0]),
@@ -64,6 +64,10 @@ class AbstractColoredView(ABC):
         return self.palette.draw_g(inner_list)
 
     # abstract methods
+    @abstractproperty
+    def ids(self):
+        pass
+
     @abstractmethod
     def get_color_value(self, id):
         pass

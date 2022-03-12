@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, abstractproperty
 
 from infographics.core import SVGPalette
 from infographics.view import format
@@ -10,7 +10,7 @@ class AbstractLabelledView(ABC):
 
     def __xml__(self):
         inner_list = []
-        for id in self.get_label_ids():
+        for id in self.ids:
             inner_list.append(
                 self.palette.draw_g(
                     self.render_label(id),
@@ -38,16 +38,16 @@ class AbstractLabelledView(ABC):
         ]
 
     # abstract methods
+    @abstractproperty
+    def ids(self):
+        pass
+
     @abstractmethod
     def get_label_xy(self, id):
         pass
 
     @abstractmethod
     def get_label_relative_font_size(self, id):
-        pass
-
-    @abstractmethod
-    def get_label_ids(self):
         pass
 
     @abstractmethod

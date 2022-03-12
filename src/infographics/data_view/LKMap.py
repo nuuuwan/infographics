@@ -32,7 +32,8 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
         return self.legend_title
 
     # Implement AbstractLabelledView
-    def get_label_ids(self):
+    @property
+    def ids(self):
         return list(self.geodata_index.keys())
 
     def get_label(self, id):
