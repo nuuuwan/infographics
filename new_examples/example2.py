@@ -5,11 +5,5 @@ Infographic(
     title='Population & Population Density',
     subtitle='Provinces of Sri Lanka',
     footer_text='visualization by @nuuuwan',
-    child_list=[
-        LKMap(
-            region_id='LK',
-            subregion_type='district',
-            legend_title='Population Density (people per km²)',
-        ),
-    ]
+    child_list=[LKMap()]
 ).save('/tmp/infographics.example2.svg')
