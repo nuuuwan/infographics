@@ -7,7 +7,14 @@ from infographics.base import pandax
 
 
 class LKGeoData:
-    def __init__(self, region_id, subregion_type):
+    DEFAULT_REGION_ID = 'LK'
+    DEFAULT_SUBREGION_TYPE = 'province'
+
+    def __init__(
+        self,
+        region_id=DEFAULT_REGION_ID,
+        subregion_type=DEFAULT_SUBREGION_TYPE,
+    ):
         self.region_id = region_id
         self.subregion_type = subregion_type
 

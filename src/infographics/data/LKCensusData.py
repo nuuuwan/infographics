@@ -1,12 +1,16 @@
 from functools import cached_property
+
 from gig import ext_data
+
 from infographics._utils import log
 
 DATA_GROUP = 'census'
 
 
 class LKCensusData:
-    def __init__(self, table_id='ethnicity_of_population'):
+    DEFAULT_TABLE_ID = 'ethnicity_of_population'
+
+    def __init__(self, table_id=DEFAULT_TABLE_ID):
         self.table_id = table_id
 
     @cached_property

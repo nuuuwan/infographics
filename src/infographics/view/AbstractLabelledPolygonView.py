@@ -1,14 +1,18 @@
 from abc import ABC
 
 from infographics.base import xy
-from infographics.core import ColorPaletteVaryHue
+from infographics.view.AbstractColoredView import AbstractColoredView
 from infographics.view.AbstractLabelledView import AbstractLabelledView
 from infographics.view.AbstractPolygonView import AbstractPolygonView
 
 
 class AbstractLabelledPolygonView(
         AbstractLabelledView, AbstractPolygonView, ABC):
-    def __init__(self, legend_title='', color_palette=ColorPaletteVaryHue()):
+    def __init__(
+        self,
+        legend_title=AbstractColoredView.DEFAULT_LEGEND_TITLE,
+        color_palette=AbstractColoredView.DEFAULT_COLOR_PALETTE,
+    ):
         # LabelledView.__init__
         AbstractLabelledView.__init__(self)
 

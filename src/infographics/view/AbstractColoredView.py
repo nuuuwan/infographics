@@ -9,7 +9,14 @@ CIRCLE_R_LEGEND = 0.01
 
 
 class AbstractColoredView(ABC):
-    def __init__(self, legend_title='', color_palette=ColorPaletteVaryHue()):
+    DEFAULT_LEGEND_TITLE = ''
+    DEFAULT_COLOR_PALETTE = ColorPaletteVaryHue()
+
+    def __init__(
+        self,
+        legend_title=DEFAULT_LEGEND_TITLE,
+        color_palette=DEFAULT_COLOR_PALETTE,
+    ):
         self.color_palette = color_palette
         self.palette = SVGPalette()
         self.legend_title = legend_title

@@ -1,18 +1,19 @@
 from functools import cached_property
 
 from infographics.base import xy
-from infographics.core import ColorPaletteVaryHue
 from infographics.data import LKGeoData
-from infographics.view import AbstractLabelledPolygonView
+from infographics.view import AbstractColoredView, AbstractLabelledPolygonView
 
 
 class LKMap(LKGeoData, AbstractLabelledPolygonView):
+    DEFAULT_LEGEND_TITLE = 'Population Density (people per km²)'
+
     def __init__(
         self,
-        region_id='LK',
-        subregion_type='district',
-        legend_title='Population Density (people per km²)',
-        color_palette=ColorPaletteVaryHue(),
+        region_id=LKGeoData.DEFAULT_REGION_ID,
+        subregion_type=LKGeoData.DEFAULT_SUBREGION_TYPE,
+        legend_title=AbstractColoredView.DEFAULT_LEGEND_TITLE,
+        color_palette=AbstractColoredView.DEFAULT_COLOR_PALETTE,
     ):
         # LKGeoData.__init__
         LKGeoData.__init__(self, region_id, subregion_type)
