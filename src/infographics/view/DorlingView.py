@@ -107,6 +107,7 @@ class DorlingView(ABC):
             xyr = self.id_to_xyr[id]
             inner_child_list.append(
                 self.render_dorling_object(
+                    id,
                     (xyr['x'], xyr['y']),
                     xyr['r'],
                     attribs,
@@ -119,7 +120,7 @@ class DorlingView(ABC):
                 self.labelled_view.__xml__(),
             ])
 
-    def render_dorling_object(self, xy, r, attribs):
+    def render_dorling_object(self, id, xy, r, attribs):
         return self.palette.draw_circle(
             xy,
             r,

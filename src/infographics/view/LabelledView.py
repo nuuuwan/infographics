@@ -39,7 +39,7 @@ class LabelledView:
             self.palette.actual_width / SVGPalette.DEFAULT_BASE_FONT_SIZE
         relative_font_size = min(0.8, relative_font_width / len(label))
 
-        if relative_font_size < 0.5:
+        if relative_font_size < 1:
             return []
 
         return [

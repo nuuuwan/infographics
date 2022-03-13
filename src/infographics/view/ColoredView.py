@@ -7,7 +7,7 @@ N_LEGEND = 7
 CIRCLE_R_LEGEND = 0.01
 
 DEFAULT_COLOR = 'lightgray'
-KEY_TO_COLOR_VALUE = {
+KEY_TO_COLOR = {
     'sinhalese': '#8d153a',
     'sl_tamil': '#eb7400',
     'sl_moor': '#00534e',
@@ -16,6 +16,7 @@ KEY_TO_COLOR_VALUE = {
 
 
 class ColoredView:
+
     def __init__(
         self,
         keys,
@@ -50,7 +51,7 @@ class ColoredView:
         color_value = self.get_color_value(id)
 
         if isinstance(color_value, str):
-            return KEY_TO_COLOR_VALUE.get(color_value, DEFAULT_COLOR)
+            return KEY_TO_COLOR.get(color_value, DEFAULT_COLOR)
 
         n = len(self.color_value_to_i)
         return self.color_palette.color(
@@ -88,7 +89,7 @@ class ColoredView:
                 continue
             color_value = color_value_list[i]
             if isinstance(color_value, str):
-                color = KEY_TO_COLOR_VALUE.get(color_value, DEFAULT_COLOR)
+                color = KEY_TO_COLOR.get(color_value, DEFAULT_COLOR)
             else:
                 color = self.color_palette.color(i / n)
 

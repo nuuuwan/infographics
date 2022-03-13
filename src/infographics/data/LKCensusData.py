@@ -20,4 +20,12 @@ class LKCensusData:
     @cached_property
     def data(self):
         log.debug('[expensive] calling ext_data._get_table_index')
+        if self.table_id == 'ethnicity_religion':
+            ethnicity = ext_data._get_table_index(
+                DATA_GROUP, 'ethnicity_of_population')
+            religion = ext_data._get_table_index(
+                DATA_GROUP, 'religious_affiliation_of_population')
+            for id, d in religion.items():
+                ethnicity[id] |= d
+            return ethnicity
         return ext_data._get_table_index(DATA_GROUP, self.table_id)

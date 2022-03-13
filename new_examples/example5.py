@@ -21,7 +21,7 @@ def main():
                     max_lightness=0.4,
                 ),
                 class_view=DorlingView,
-            )]).save('/tmp/infographics.example4.svg')
+            )]).save('/tmp/infographics.example5.svg')
 
 
 if __name__ == '__main__':
