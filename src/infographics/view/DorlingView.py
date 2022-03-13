@@ -1,11 +1,13 @@
 import math
 from abc import ABC
 
-from infographics.base import xy
+from infographics.base import xy, dorling_compress
 from infographics.core import SVGPalette
 from infographics.view.ColoredView import ColoredView
 from infographics.view.LabelledView import LabelledView
+
 CIRLCE_RADIUS_MAX_LABEL_VALUE = 0.1
+
 
 class DorlingView(ABC):
     DEFAULT_CLASS_COLORED_VIEW = ColoredView
@@ -61,15 +63,30 @@ class DorlingView(ABC):
         for id, multipolygon in self.id_to_multipolygon.items():
             max_label_value = max(max_label_value, self.get_label_value(id))
 
+        xyrs = []
         for id, multipolygon in self.id_to_multipolygon.items():
+            pr = math.sqrt(self.get_label_value(id) /
+                           max_label_value) * CIRLCE_RADIUS_MAX_LABEL_VALUE
+            px, py = self.get_label_xy(id)
+            xyrs.append(dict(
+                x=px,
+                y=py,
+                r=pr,
+            ))
+
+        xyrs = dorling_compress._compress(xyrs, [-1, -1, 1, 1])
+
+        for i, (id, multipolygon) in enumerate(
+                self.id_to_multipolygon.items()):
             attribs = {}
             attribs['fill'] = self.colored_view.get_color(id)
 
-            pr = math.sqrt(self.get_label_value(id) / max_label_value) * CIRLCE_RADIUS_MAX_LABEL_VALUE
+            xyr = xyrs[i]
+
             inner_child_list.append(
                 self.palette.draw_circle(
-                    self.get_label_xy(id),
-                    pr,
+                    [xyr['x'], xyr['y']],
+                    xyr['r'],
                     attribs,
                 )
             )
