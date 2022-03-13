@@ -2,27 +2,33 @@ from abc import ABC
 
 from infographics.base import xy
 from infographics.view.AbstractColoredView import AbstractColoredView
-from infographics.view.AbstractLabelledView import AbstractLabelledView
 from infographics.view.AbstractPolygonView import AbstractPolygonView
+from infographics.view.LabelledView import LabelledView
 
 
-class AbstractLabelledPolygonView(
-        AbstractLabelledView, AbstractPolygonView, ABC):
+class AbstractLabelledPolygonView(AbstractPolygonView, ABC):
+    DEFAULT_CLASS_LABELLED_VIEW = LabelledView
+
     def __init__(
         self,
         legend_title=AbstractColoredView.DEFAULT_LEGEND_TITLE,
         color_palette=AbstractColoredView.DEFAULT_COLOR_PALETTE,
+        class_labelled_view=DEFAULT_CLASS_LABELLED_VIEW,
     ):
-        # LabelledView.__init__
-        AbstractLabelledView.__init__(self)
-
-        # AbstractPolygonView.__init__
         AbstractPolygonView.__init__(self, legend_title, color_palette)
+
+        self.labelled_view = class_labelled_view(
+            self.keys,
+            self.get_label,
+            self.get_label_value,
+            self.get_label_xy,
+            self.get_label_relative_font_size,
+        )
 
     def __xml__(self):
         return self.palette.draw_g([
             AbstractPolygonView.__xml__(self),
-            AbstractLabelledView.__xml__(self),
+            self.labelled_view.__xml__(),
         ])
 
     # Implement LabelledView

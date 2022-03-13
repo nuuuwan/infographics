@@ -30,7 +30,7 @@ class LKCensusMap(LKCensusData, LKMap):
         d = self.lk_census_data[id]
         return d[self.field] / d[self.total_field]
 
-    # Implement AbstractLabelledView
+    # For AbstractLabelledView
     def get_label(self, id):
         return self.lk_geo_data[id]['name']
 
