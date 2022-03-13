@@ -1,6 +1,9 @@
 
 
 def as_number(num):
+    if isinstance(num, str):
+        return num
+
     if num > 1_000_000:
         num_x = num / 1_000_000
         return f'{num_x:1.1f}M'

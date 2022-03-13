@@ -14,7 +14,7 @@ def main():
                 subregion_type='pd',
                 legend_title='% of Population',
                 table_id='ethnicity_of_population',
-                field='sl_moor',
+                field='all',
                 color_palette=ColorPaletteVaryLightness(
                     hue=140,
                     min_lightness=1,
