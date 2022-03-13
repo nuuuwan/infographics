@@ -6,7 +6,7 @@ from infographics.core import SVGPalette
 from infographics.view.ColoredView import ColoredView
 from infographics.view.LabelledView import LabelledView
 
-CIRLCE_RADIUS_MAX_LABEL_VALUE = 0.1
+CIRLCE_RADIUS_MAX_LABEL_VALUE = 0.2
 
 
 class DorlingView(ABC):
@@ -55,15 +55,15 @@ class DorlingView(ABC):
         self.palette = SVGPalette()
 
     def build_id_to_xyr(self):
-        max_label_value = 0
+        total_label_value = 0
         for id, multipolygon in self.id_to_multipolygon.items():
-            max_label_value = max(max_label_value, self.get_label_value(id))
+            total_label_value += self.get_label_value(id)
 
         id_to_xyr = {}
         for id, multipolygon in self.id_to_multipolygon.items():
             pr = math.sqrt(
                 self.get_label_value(id) /
-                max_label_value
+                total_label_value
             ) * CIRLCE_RADIUS_MAX_LABEL_VALUE
             px, py = xy.get_midxy(multipolygon)
 
@@ -120,6 +120,11 @@ class DorlingView(ABC):
         return (xyr['x'], xyr['y'])
 
     def get_label_relative_font_size(self, id):
-        relative_font_width = self.palette.get_relative_font_width(
-            self.get_multipolygon(id))
-        return min(0.8, relative_font_width / len(self.get_label(id)))
+        xyr = self.id_to_xyr[id]
+        relative_font_width = xyr['r'] * 2 * \
+            self.palette.actual_width / SVGPalette.DEFAULT_BASE_FONT_SIZE
+        relative_font_size = min(
+            0.8, relative_font_width / len(self.get_label(id)))
+        if relative_font_size < 0.1:
+            relative_font_size = 0
+        return relative_font_size
