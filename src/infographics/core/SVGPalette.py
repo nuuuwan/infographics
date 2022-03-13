@@ -40,14 +40,17 @@ class SVGPalette(SVGPaletteSize, SVGPalettePolygon):
             'y2': y2,
         } | attribs)
 
-    def draw_circle(self, pc, pr=0.1, attribs={}):
+    def draw_circle(self, pc, pr, attribs={}):
         cx, cy = self.t(pc)
-        cx1, ___ = self.t((pc[0] + pr, pc[1]))
-        r = abs(cx1 - cx)
-        return _('circle', None, SVG_STYLES.CIRCLE | {
+        cx1, cy1 = self.t((pc[0] + pr, pc[1] + pr))
+        rx = abs(cx1 - cx)
+        ry = abs(cy1 - cy)
+
+        return _('ellipse', None, SVG_STYLES.CIRCLE | {
             'cx': cx,
             'cy': cy,
-            'r': r,
+            'rx': rx,
+            'ry': ry,
         } | attribs)
 
     def draw_rect(self, p0=(-1, 1), size=(2, 2), attribs={}):
