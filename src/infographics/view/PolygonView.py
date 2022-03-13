@@ -17,9 +17,9 @@ class PolygonView(ABC):
         get_color_value,
         legend_title,
         color_palette,
+
         # For LabelledView
-        get_label,
-        get_label_value,
+        get_label_data,
 
         # For PolygonView
         id_to_multipolygon,
@@ -35,14 +35,13 @@ class PolygonView(ABC):
             color_palette,
         )
 
-        self.get_label = get_label
+        self.get_label_data = get_label_data
 
         self.labelled_view = class_labelled_view(
             keys,
-            get_label,
-            get_label_value,
+            get_label_data,
             self.get_label_xy,
-            self.get_label_relative_font_size,
+            self.get_label_r,
         )
         self.id_to_multipolygon = id_to_multipolygon
         self.palette = SVGPalette()
@@ -77,7 +76,5 @@ class PolygonView(ABC):
     def get_label_xy(self, id):
         return xy.get_midxy(self.get_multipolygon(id))
 
-    def get_label_relative_font_size(self, id):
-        relative_font_width = self.palette.get_relative_font_width(
-            self.get_multipolygon(id))
-        return min(0.8, relative_font_width / len(self.get_label(id)))
+    def get_label_r(self, id):
+        return self.palette.get_radius(self.get_multipolygon(id))

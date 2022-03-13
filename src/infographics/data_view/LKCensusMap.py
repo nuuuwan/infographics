@@ -27,8 +27,7 @@ class LKCensusMap:
             self.get_color_value,
             legend_title,
             color_palette,
-            self.get_label,
-            self.get_label_value,
+            self.get_label_data,
             class_view,
         )
 
@@ -41,8 +40,9 @@ class LKCensusMap:
         return d[self.field] / d[self.data.total_field]
 
     # For AbstractLabelledView
-    def get_label(self, id):
-        return self.view.geodata.data[id]['name']
-
-    def get_label_value(self, id):
-        return self.data.data[id][self.field]
+    def get_label_data(self, id):
+        d = self.view.geodata.data[id]
+        return d | {
+            'label': d['name'],
+            'label_value': d['population'],
+        }

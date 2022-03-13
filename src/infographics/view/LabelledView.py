@@ -6,17 +6,15 @@ class LabelledView:
     def __init__(
         self,
         keys,
-        get_label,
-        get_label_value,
+        get_label_data,
         get_label_xy,
-        get_label_relative_font_size,
+        get_label_r,
     ):
 
         self.keys = keys
-        self.get_label = get_label
-        self.get_label_value = get_label_value
+        self.get_label_data = get_label_data
         self.get_label_xy = get_label_xy
-        self.get_label_relative_font_size = get_label_relative_font_size
+        self.get_label_r = get_label_r
 
         self.palette = SVGPalette()
 
@@ -31,10 +29,16 @@ class LabelledView:
         return self.palette.draw_g(inner_list)
 
     def render_label(self, id):
-        label_value = self.get_label_value(id)
-        label = self.get_label(id)
-        relative_font_size = self.get_label_relative_font_size(id)
+        label_data = self.get_label_data(id)
+        label = label_data['label']
+        label_value = label_data['label_value']
+        r = self.get_label_r(id)
         (x, y) = self.get_label_xy(id)
+
+        relative_font_width = r * 2 * \
+            self.palette.actual_width / SVGPalette.DEFAULT_BASE_FONT_SIZE
+        relative_font_size = min(0.8, relative_font_width / len(label))
+
         return [
             self.palette.draw_text(
                 format.as_number(label_value),

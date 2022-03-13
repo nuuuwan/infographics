@@ -14,8 +14,7 @@ class GeoMap:
         get_color_value,
         legend_title,
         color_palette,
-        get_label,
-        get_label_value,
+        get_label_data,
 
         # classes
         class_geodata,
@@ -32,9 +31,7 @@ class GeoMap:
             legend_title,
             color_palette,
 
-            get_label,
-            get_label_value,
-
+            get_label_data,
             self.id_to_multipolygon,
         )
 

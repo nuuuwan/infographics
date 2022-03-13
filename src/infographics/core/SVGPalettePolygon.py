@@ -9,9 +9,13 @@ DEFAULT_BASE_FONT_SIZE = 16
 
 
 class SVGPalettePolygon:
-    def get_relative_font_width(self, multipolygon):
+    def get_radius(self, multipolygon):
         x_span, ___ = xy.get_spans(multipolygon)
-        return self.actual_width * x_span / DEFAULT_BASE_FONT_SIZE
+        return x_span / 2
+
+    def get_relative_font_width(self, multipolygon):
+        return self.actual_width * \
+            (self.get_radius(multipolygon) * 2) / DEFAULT_BASE_FONT_SIZE
 
     def draw_multi2polygon(self, multi2polygon, child_list=[], attribs={}):
         return self.draw_g(
