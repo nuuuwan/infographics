@@ -5,18 +5,18 @@ from infographics.view import DorlingView
 
 def main():
     Infographic(
-        title='Sinhala Population',
+        title='SL Moor Population',
         subtitle='Colombo Electoral District - Polling Divisions',
         footer_text='visualization by @nuuuwan',
         child_list=[
             LKCensusMap(
                 region_id='LK',
-                subregion_type='province',
+                subregion_type='pd',
                 legend_title='% of Population',
                 table_id='ethnicity_of_population',
-                field='sinhalese',
+                field='sl_moor',
                 color_palette=ColorPaletteVaryLightness(
-                    hue=0,
+                    hue=140,
                     min_lightness=1,
                     max_lightness=0.4,
                 ),

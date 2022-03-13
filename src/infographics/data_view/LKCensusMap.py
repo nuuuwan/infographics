@@ -42,7 +42,8 @@ class LKCensusMap:
 
     # For AbstractLabelledView
     def get_label(self, id):
-        return self.view.geodata.data[id]['name']
+        label = self.view.geodata.data[id]['name']
+        return label[:10]
 
     def get_label_value(self, id):
         return self.data.data[id][self.field]
