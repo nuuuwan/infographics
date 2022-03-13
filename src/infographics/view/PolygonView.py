@@ -1,6 +1,7 @@
-from abc import ABC, abstractproperty
+from abc import ABC
 
 from infographics.base import xy
+from infographics.core import SVGPalette
 from infographics.view.ColoredView import ColoredView
 from infographics.view.LabelledView import LabelledView
 
@@ -11,25 +12,36 @@ class PolygonView(ABC):
 
     def __init__(
         self,
+        # For ColoredView
+        keys,
+        get_color_value,
         legend_title,
         color_palette,
+        # For LabelledView
+        get_label,
+        get_label_value,
+
+        # For PolygonView
+        id_to_multipolygon,
+
+        # classes
         class_colored_view=DEFAULT_CLASS_COLORED_VIEW,
         class_labelled_view=DEFAULT_CLASS_LABELLED_VIEW,
     ):
-        self.colored_view = class_colored_view(
-            self.keys,
-            self.get_color_value,
-            self.legend_title,
-            self.color_palette,
-        )
+        self.keys = keys
+        self.get_color_value = get_color_value
+        self.legend_title = legend_title
+        self.color_palette = color_palette
 
-        self.labelled_view = class_labelled_view(
-            self.keys,
-            self.get_label,
-            self.get_label_value,
-            self.get_label_xy,
-            self.get_label_relative_font_size,
-        )
+        self.get_label = get_label
+        self.get_label_value = get_label_value
+
+        self.id_to_multipolygon = id_to_multipolygon
+
+        self.class_colored_view = class_colored_view
+        self.class_labelled_view = class_labelled_view
+
+        self.palette = SVGPalette()
 
     def __len__(self):
         return len(self.id_to_multipolygon)
@@ -38,10 +50,26 @@ class PolygonView(ABC):
         return self.id_to_multipolygon[id]
 
     def __xml__(self):
+
+        colored_view = self.class_colored_view(
+            self.keys,
+            self.get_color_value,
+            self.legend_title,
+            self.color_palette,
+        )
+
+        labelled_view = self.class_labelled_view(
+            self.keys,
+            self.get_label,
+            self.get_label_value,
+            self.get_label_xy,
+            self.get_label_relative_font_size,
+        )
+
         inner_child_list = []
         for id, multipolygon in self.id_to_multipolygon.items():
             attribs = {}
-            attribs['fill'] = self.colored_view.get_color(id)
+            attribs['fill'] = colored_view.get_color(id)
 
             inner_child_list.append(
                 self.palette.draw_multipolygon(
@@ -50,13 +78,14 @@ class PolygonView(ABC):
                     attribs,
                 )
             )
+
         return self.palette.draw_g(
             inner_child_list + [
-                self.colored_view.__xml__(),
-                self.labelled_view.__xml__(),
+                colored_view.__xml__(),
+                labelled_view.__xml__(),
             ])
 
-    # Implement LabelledView
+    # For LabelledView
     def get_label_xy(self, id):
         return xy.get_midxy(self.get_multipolygon(id))
 
@@ -64,8 +93,3 @@ class PolygonView(ABC):
         relative_font_width = self.palette.get_relative_font_width(
             self.get_multipolygon(id))
         return min(0.8, relative_font_width / len(self.get_label(id)))
-
-    # abstract methods
-    @abstractproperty
-    def id_to_multipolygon(self):
-        pass
