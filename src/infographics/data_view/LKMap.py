@@ -6,13 +6,18 @@ from infographics.data import LKGeoData
 from infographics.view import PolygonView
 
 
-class LKMap(LKGeoData, PolygonView):
+class LKMap:
+    DEFAULT_CLASS_DATA = LKGeoData
+    DEFAULT_VIEW_DATA = PolygonView
+
     def __init__(
         self,
         region_id,
         subregion_type,
         legend_title,
         color_palette,
+        class_data=DEFAULT_CLASS_DATA,
+        class_view=DEFAULT_VIEW_DATA,
     ):
         self.region_id = region_id
         self.subregion_type = subregion_type
@@ -20,10 +25,29 @@ class LKMap(LKGeoData, PolygonView):
         self.color_palette = color_palette
         self.palette = SVGPalette()
 
-        LKGeoData.__init__(self, region_id, subregion_type)
-        PolygonView.__init__(self, legend_title, color_palette)
+        self.class_data = class_data
+        self.class_view = class_view
 
-    # Implement AbstractPolygonView
+        self.data = self.class_data(
+            self.region_id,
+            self.subregion_type,
+        )
+        self.view = self.class_view(
+            self.keys,
+            self.get_color_value,
+            self.legend_title,
+            self.color_palette,
+
+            self.get_label,
+            self.get_label_value,
+
+            self.id_to_multipolygon,
+        )
+
+    def __xml__(self):
+        return self.view.__xml__()
+
+    # For View
     @cached_property
     def id_to_multipolygon(self):
         multi2polygon = xy.norm_multi2polygon(
@@ -37,15 +61,14 @@ class LKMap(LKGeoData, PolygonView):
             id_to_multipolygon[id] = multi2polygon[i]
         return id_to_multipolygon
 
-    # Implement AbstractColoredView
     def keys(self):
-        return self.lk_geo_data.keys()
+        return self.data.lk_geo_data.keys()
 
     def values(self):
-        return self.lk_geo_data.values()
+        return self.data.lk_geo_data.values()
 
     def __getitem__(self, id):
-        return self.lk_geo_data[id]
+        return self.data.lk_geo_data[id]
 
     def get_color_value(self, id):
         d = self[id]
