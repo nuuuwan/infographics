@@ -45,4 +45,4 @@ class LKCensusMap:
         return self.view.geodata.data[id]['name']
 
     def get_label_value(self, id):
-        return self.get_color_value(id)
+        return self.data.data[id][self.field]
