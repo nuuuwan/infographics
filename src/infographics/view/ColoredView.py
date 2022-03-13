@@ -49,7 +49,7 @@ class ColoredView:
                 1,
                 {'text-anchor': 'end'}
             ),
-            self.palette.draw_cirle(
+            self.palette.draw_circle(
                 (x + 0.01, y + CIRCLE_R_LEGEND / 2),
                 CIRCLE_R_LEGEND,
                 {'fill': color},

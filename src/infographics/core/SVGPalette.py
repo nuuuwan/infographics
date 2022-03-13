@@ -40,7 +40,7 @@ class SVGPalette(SVGPaletteSize, SVGPalettePolygon):
             'y2': y2,
         } | attribs)
 
-    def draw_cirle(self, pc, pr=0.1, attribs={}):
+    def draw_circle(self, pc, pr=0.1, attribs={}):
         cx, cy = self.t(pc)
         cx1, ___ = self.t((pc[0] + pr, pc[1]))
         r = abs(cx1 - cx)
