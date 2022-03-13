@@ -1,10 +1,8 @@
-from abc import ABC
-
 from infographics.core import SVGPalette
 from infographics.view import format
 
 
-class LabelledView(ABC):
+class LabelledView:
     def __init__(
         self,
         keys,
