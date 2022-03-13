@@ -1,5 +1,6 @@
 from infographics.core import ColorPaletteVaryLightness, Infographic
 from infographics.data_view import LKCensusMap
+from infographics.view import PolygonView
 
 
 def main():
@@ -17,7 +18,9 @@ def main():
                 color_palette=ColorPaletteVaryLightness(
                     hue=60,
                     min_lightness=1,
-                    max_lightness=0.4),
+                    max_lightness=0.4,
+                ),
+                class_view=PolygonView,
             )]).save('/tmp/infographics.example3.svg')
 
 

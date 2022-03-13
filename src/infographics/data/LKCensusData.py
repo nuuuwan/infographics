@@ -18,6 +18,6 @@ class LKCensusData:
         return 'total_population'
 
     @cached_property
-    def lk_census_data(self):
+    def data(self):
         log.debug('[expensive] calling ext_data._get_table_index')
         return ext_data._get_table_index(DATA_GROUP, self.table_id)
