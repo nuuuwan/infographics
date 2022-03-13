@@ -2,18 +2,16 @@ from functools import cached_property
 
 from infographics.base import xy
 from infographics.data import LKGeoData
-from infographics.view import AbstractColoredView, AbstractLabelledPolygonView
+from infographics.view import AbstractLabelledPolygonView
 
 
 class LKMap(LKGeoData, AbstractLabelledPolygonView):
-    DEFAULT_LEGEND_TITLE = 'Population Density (people per km²)'
-
     def __init__(
         self,
-        region_id=LKGeoData.DEFAULT_REGION_ID,
-        subregion_type=LKGeoData.DEFAULT_SUBREGION_TYPE,
-        legend_title=AbstractColoredView.DEFAULT_LEGEND_TITLE,
-        color_palette=AbstractColoredView.DEFAULT_COLOR_PALETTE,
+        region_id,
+        subregion_type,
+        legend_title,
+        color_palette,
     ):
         # LKGeoData.__init__
         LKGeoData.__init__(self, region_id, subregion_type)

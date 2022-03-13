@@ -1,25 +1,27 @@
-from abc import ABC, abstractmethod, abstractproperty
 from functools import cached_property
 
-from infographics.core import ColorPaletteVaryHue, SVGPalette
+from infographics.core import SVGPalette
 from infographics.view import format
 
 N_LEGEND = 7
 CIRCLE_R_LEGEND = 0.01
 
 
-class AbstractColoredView(ABC):
-    DEFAULT_LEGEND_TITLE = ''
-    DEFAULT_COLOR_PALETTE = ColorPaletteVaryHue()
-
+class ColoredView:
     def __init__(
         self,
-        legend_title=DEFAULT_LEGEND_TITLE,
-        color_palette=DEFAULT_COLOR_PALETTE,
+        keys,
+        get_color_value,
+        legend_title,
+        color_palette,
+
     ):
-        self.color_palette = color_palette
-        self.palette = SVGPalette()
+        self.keys = keys
+        self.get_color_value = get_color_value
         self.legend_title = legend_title
+        self.color_palette = color_palette
+
+        self.palette = SVGPalette()
 
     @cached_property
     def color_value_to_i(self):
@@ -70,12 +72,3 @@ class AbstractColoredView(ABC):
             inner_list.append(self.render_row(color_value, color, (x0, y)))
 
         return self.palette.draw_g(inner_list)
-
-    # abstract methods
-    @abstractproperty
-    def keys(self):
-        pass
-
-    @abstractmethod
-    def get_color_value(self, id):
-        pass

@@ -1,7 +1,6 @@
 from abc import ABC
 
 from infographics.base import xy
-from infographics.view.AbstractColoredView import AbstractColoredView
 from infographics.view.AbstractPolygonView import AbstractPolygonView
 from infographics.view.LabelledView import LabelledView
 
@@ -11,8 +10,8 @@ class AbstractLabelledPolygonView(AbstractPolygonView, ABC):
 
     def __init__(
         self,
-        legend_title=AbstractColoredView.DEFAULT_LEGEND_TITLE,
-        color_palette=AbstractColoredView.DEFAULT_COLOR_PALETTE,
+        legend_title,
+        color_palette,
         class_labelled_view=DEFAULT_CLASS_LABELLED_VIEW,
     ):
         AbstractPolygonView.__init__(self, legend_title, color_palette)

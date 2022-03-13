@@ -4,16 +4,27 @@ Renders a collection of polygons
 from abc import ABC, abstractproperty
 
 from infographics.core import SVGPalette
-from infographics.view.AbstractColoredView import AbstractColoredView
+from infographics.view.ColoredView import ColoredView
 
 
-class AbstractPolygonView(AbstractColoredView, ABC):
+class AbstractPolygonView(ABC):
+    DEFAULT_CLASS_COLORED_VIEW = ColoredView
+
     def __init__(
         self,
-        legend_title=AbstractColoredView.DEFAULT_LEGEND_TITLE,
-        color_palette=AbstractColoredView.DEFAULT_COLOR_PALETTE,
+        legend_title,
+        color_palette,
+        class_colored_view=DEFAULT_CLASS_COLORED_VIEW,
     ):
-        AbstractColoredView.__init__(self, legend_title, color_palette)
+        self.legend_title = legend_title
+        self.color_palette = color_palette
+
+        self.colored_view = class_colored_view(
+            self.keys,
+            self.get_color_value,
+            self.legend_title,
+            self.color_palette,
+        )
         self.palette = SVGPalette()
 
     def __len__(self):
@@ -26,8 +37,7 @@ class AbstractPolygonView(AbstractColoredView, ABC):
         inner_child_list = []
         for id, multipolygon in self.id_to_multipolygon.items():
             attribs = {}
-            if self.get_color:
-                attribs['fill'] = self.get_color(id)
+            attribs['fill'] = self.colored_view.get_color(id)
 
             inner_child_list.append(
                 self.palette.draw_multipolygon(
@@ -37,7 +47,7 @@ class AbstractPolygonView(AbstractColoredView, ABC):
                 )
             )
         return self.palette.draw_g(
-            inner_child_list + [AbstractColoredView.__xml__(self)])
+            inner_child_list + [self.colored_view.__xml__()])
 
     # abstract methods
     @abstractproperty
