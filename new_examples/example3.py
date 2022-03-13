@@ -11,6 +11,7 @@ def main():
             LKCensusMap(
                 region_id='LK-11',
                 subregion_type='dsd',
+                legend_title='% of Population',
                 table_id='religious_affiliation_of_population',
                 field='buddhist',
                 color_palette=ColorPaletteVaryLightness(
