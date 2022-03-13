@@ -10,7 +10,7 @@ def main():
         footer_text='visualization by @nuuuwan',
         child_list=[
             LKCensusMap(
-                region_id='LK',
+                region_id='EC-01',
                 subregion_type='pd',
                 legend_title='% of Population',
                 table_id='ethnicity_of_population',

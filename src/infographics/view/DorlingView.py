@@ -20,12 +20,15 @@ class DorlingView(ABC):
         get_color_value,
         legend_title,
         color_palette,
+
         # For LabelledView
         get_label,
         get_label_value,
 
         # For PolygonView
         id_to_multipolygon,
+
+        # For DorlingView
 
         # classes
         class_colored_view=DEFAULT_CLASS_COLORED_VIEW,
@@ -101,8 +104,8 @@ class DorlingView(ABC):
 
             xyr = self.id_to_xyr[id]
             inner_child_list.append(
-                self.palette.draw_circle(
-                    [xyr['x'], xyr['y']],
+                self.render_dorling_object(
+                    (xyr['x'], xyr['y']),
                     xyr['r'],
                     attribs,
                 )
@@ -113,6 +116,13 @@ class DorlingView(ABC):
                 self.colored_view.__xml__(),
                 self.labelled_view.__xml__(),
             ])
+
+    def render_dorling_object(self, xy, r, attribs):
+        return self.palette.draw_circle(
+            xy,
+            r,
+            attribs,
+        )
 
     # For LabelledView
     def get_label_xy(self, id):
