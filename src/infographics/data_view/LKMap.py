@@ -1,11 +1,12 @@
 from functools import cached_property
 
 from infographics.base import xy
+from infographics.core import SVGPalette
 from infographics.data import LKGeoData
-from infographics.view import AbstractLabelledPolygonView
+from infographics.view import PolygonView
 
 
-class LKMap(LKGeoData, AbstractLabelledPolygonView):
+class LKMap(LKGeoData, PolygonView):
     def __init__(
         self,
         region_id,
@@ -13,11 +14,14 @@ class LKMap(LKGeoData, AbstractLabelledPolygonView):
         legend_title,
         color_palette,
     ):
-        # LKGeoData.__init__
-        LKGeoData.__init__(self, region_id, subregion_type)
+        self.region_id = region_id
+        self.subregion_type = subregion_type
+        self.legend_title = legend_title
+        self.color_palette = color_palette
+        self.palette = SVGPalette()
 
-        # AbstractLabelledPolygonView.__init__
-        AbstractLabelledPolygonView.__init__(self, legend_title, color_palette)
+        LKGeoData.__init__(self, region_id, subregion_type)
+        PolygonView.__init__(self, legend_title, color_palette)
 
     # Implement AbstractPolygonView
     @cached_property

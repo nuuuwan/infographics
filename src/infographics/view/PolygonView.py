@@ -1,31 +1,35 @@
-"""
-Renders a collection of polygons
-"""
 from abc import ABC, abstractproperty
 
-from infographics.core import SVGPalette
+from infographics.base import xy
 from infographics.view.ColoredView import ColoredView
+from infographics.view.LabelledView import LabelledView
 
 
-class AbstractPolygonView(ABC):
+class PolygonView(ABC):
     DEFAULT_CLASS_COLORED_VIEW = ColoredView
+    DEFAULT_CLASS_LABELLED_VIEW = LabelledView
 
     def __init__(
         self,
         legend_title,
         color_palette,
         class_colored_view=DEFAULT_CLASS_COLORED_VIEW,
+        class_labelled_view=DEFAULT_CLASS_LABELLED_VIEW,
     ):
-        self.legend_title = legend_title
-        self.color_palette = color_palette
-
         self.colored_view = class_colored_view(
             self.keys,
             self.get_color_value,
             self.legend_title,
             self.color_palette,
         )
-        self.palette = SVGPalette()
+
+        self.labelled_view = class_labelled_view(
+            self.keys,
+            self.get_label,
+            self.get_label_value,
+            self.get_label_xy,
+            self.get_label_relative_font_size,
+        )
 
     def __len__(self):
         return len(self.id_to_multipolygon)
@@ -47,7 +51,19 @@ class AbstractPolygonView(ABC):
                 )
             )
         return self.palette.draw_g(
-            inner_child_list + [self.colored_view.__xml__()])
+            inner_child_list + [
+                self.colored_view.__xml__(),
+                self.labelled_view.__xml__(),
+            ])
+
+    # Implement LabelledView
+    def get_label_xy(self, id):
+        return xy.get_midxy(self.get_multipolygon(id))
+
+    def get_label_relative_font_size(self, id):
+        relative_font_width = self.palette.get_relative_font_width(
+            self.get_multipolygon(id))
+        return min(0.8, relative_font_width / len(self.get_label(id)))
 
     # abstract methods
     @abstractproperty
