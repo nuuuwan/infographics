@@ -28,19 +28,23 @@ class PolygonView(ABC):
         class_colored_view=DEFAULT_CLASS_COLORED_VIEW,
         class_labelled_view=DEFAULT_CLASS_LABELLED_VIEW,
     ):
-        self.keys = keys
-        self.get_color_value = get_color_value
-        self.legend_title = legend_title
-        self.color_palette = color_palette
+        self.colored_view = class_colored_view(
+            keys,
+            get_color_value,
+            legend_title,
+            color_palette,
+        )
 
         self.get_label = get_label
-        self.get_label_value = get_label_value
 
+        self.labelled_view = class_labelled_view(
+            keys,
+            get_label,
+            get_label_value,
+            self.get_label_xy,
+            self.get_label_relative_font_size,
+        )
         self.id_to_multipolygon = id_to_multipolygon
-
-        self.class_colored_view = class_colored_view
-        self.class_labelled_view = class_labelled_view
-
         self.palette = SVGPalette()
 
     def __len__(self):
@@ -50,26 +54,10 @@ class PolygonView(ABC):
         return self.id_to_multipolygon[id]
 
     def __xml__(self):
-
-        colored_view = self.class_colored_view(
-            self.keys,
-            self.get_color_value,
-            self.legend_title,
-            self.color_palette,
-        )
-
-        labelled_view = self.class_labelled_view(
-            self.keys,
-            self.get_label,
-            self.get_label_value,
-            self.get_label_xy,
-            self.get_label_relative_font_size,
-        )
-
         inner_child_list = []
         for id, multipolygon in self.id_to_multipolygon.items():
             attribs = {}
-            attribs['fill'] = colored_view.get_color(id)
+            attribs['fill'] = self.colored_view.get_color(id)
 
             inner_child_list.append(
                 self.palette.draw_multipolygon(
@@ -81,8 +69,8 @@ class PolygonView(ABC):
 
         return self.palette.draw_g(
             inner_child_list + [
-                colored_view.__xml__(),
-                labelled_view.__xml__(),
+                self.colored_view.__xml__(),
+                self.labelled_view.__xml__(),
             ])
 
     # For LabelledView
