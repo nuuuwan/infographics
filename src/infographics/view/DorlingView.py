@@ -1,7 +1,7 @@
 import math
 from abc import ABC
 
-from infographics.base import xy, dorling_compress
+from infographics.base import dorling_compress, xy
 from infographics.core import SVGPalette
 from infographics.view.ColoredView import ColoredView
 from infographics.view.LabelledView import LabelledView
@@ -31,6 +31,12 @@ class DorlingView(ABC):
         class_colored_view=DEFAULT_CLASS_COLORED_VIEW,
         class_labelled_view=DEFAULT_CLASS_LABELLED_VIEW,
     ):
+
+        self.get_label = get_label
+        self.get_label_value = get_label_value
+        self.id_to_multipolygon = id_to_multipolygon
+        self.id_to_xyr = self.build_id_to_xyr()
+
         self.colored_view = class_colored_view(
             keys,
             get_color_value,
@@ -38,8 +44,6 @@ class DorlingView(ABC):
             color_palette,
         )
 
-        self.get_label = get_label
-        self.get_label_value = get_label_value
         self.labelled_view = class_labelled_view(
             keys,
             get_label,
@@ -47,8 +51,32 @@ class DorlingView(ABC):
             self.get_label_xy,
             self.get_label_relative_font_size,
         )
-        self.id_to_multipolygon = id_to_multipolygon
+
         self.palette = SVGPalette()
+
+    def build_id_to_xyr(self):
+        max_label_value = 0
+        for id, multipolygon in self.id_to_multipolygon.items():
+            max_label_value = max(max_label_value, self.get_label_value(id))
+
+        id_to_xyr = {}
+        for id, multipolygon in self.id_to_multipolygon.items():
+            pr = math.sqrt(
+                self.get_label_value(id) /
+                max_label_value
+            ) * CIRLCE_RADIUS_MAX_LABEL_VALUE
+            px, py = xy.get_midxy(multipolygon)
+
+            id_to_xyr[id] = dict(
+                x=px,
+                y=py,
+                r=pr,
+            )
+
+        xyrs = list(id_to_xyr.values())
+        xyrs = dorling_compress._compress(xyrs, [-1, -1, 1, 1])
+        id_to_xyr = dict(zip(id_to_xyr.keys(), xyrs))
+        return id_to_xyr
 
     def __len__(self):
         return len(self.id_to_multipolygon)
@@ -59,30 +87,10 @@ class DorlingView(ABC):
     def __xml__(self):
         inner_child_list = []
 
-        max_label_value = 0
         for id, multipolygon in self.id_to_multipolygon.items():
-            max_label_value = max(max_label_value, self.get_label_value(id))
+            attribs = {'fill': self.colored_view.get_color(id)}
 
-        xyrs = []
-        for id, multipolygon in self.id_to_multipolygon.items():
-            pr = math.sqrt(self.get_label_value(id) /
-                           max_label_value) * CIRLCE_RADIUS_MAX_LABEL_VALUE
-            px, py = self.get_label_xy(id)
-            xyrs.append(dict(
-                x=px,
-                y=py,
-                r=pr,
-            ))
-
-        xyrs = dorling_compress._compress(xyrs, [-1, -1, 1, 1])
-
-        for i, (id, multipolygon) in enumerate(
-                self.id_to_multipolygon.items()):
-            attribs = {}
-            attribs['fill'] = self.colored_view.get_color(id)
-
-            xyr = xyrs[i]
-
+            xyr = self.id_to_xyr[id]
             inner_child_list.append(
                 self.palette.draw_circle(
                     [xyr['x'], xyr['y']],
@@ -99,7 +107,8 @@ class DorlingView(ABC):
 
     # For LabelledView
     def get_label_xy(self, id):
-        return xy.get_midxy(self.get_multipolygon(id))
+        xyr = self.id_to_xyr[id]
+        return (xyr['x'], xyr['y'])
 
     def get_label_relative_font_size(self, id):
         relative_font_width = self.palette.get_relative_font_width(
