@@ -124,7 +124,6 @@ class DorlingView(ABC):
         relative_font_width = xyr['r'] * 2 * \
             self.palette.actual_width / SVGPalette.DEFAULT_BASE_FONT_SIZE
         relative_font_size = min(
-            0.8, relative_font_width / len(self.get_label(id)))
-        if relative_font_size < 0.5:
-            relative_font_size = 0
+            0.8, relative_font_width / len(self.get_label(id)),
+        )
         return relative_font_size
