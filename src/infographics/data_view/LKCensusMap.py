@@ -19,6 +19,7 @@ class LKCensusMap:
         field,
 
     ):
+        self.field = field
         self.data = LKCensusData(table_id)
         self.view = LKMap(
             region_id,
@@ -30,7 +31,6 @@ class LKCensusMap:
             self.get_label_value,
             class_view,
         )
-        self.field = field
 
     def __xml__(self):
         return self.view.__xml__()
