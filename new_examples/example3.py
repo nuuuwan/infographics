@@ -6,12 +6,12 @@ from infographics.view import PolygonView
 def main():
     Infographic(
         title='Buddhist Population',
-        subtitle='Provinces of Sri Lanka',
+        subtitle='Colombo Electoral District - Polling Divisions',
         footer_text='visualization by @nuuuwan',
         child_list=[
             LKCensusMap(
-                region_id='LK-11',
-                subregion_type='dsd',
+                region_id='EC-01',
+                subregion_type='pd',
                 legend_title='% of Population',
                 table_id='religious_affiliation_of_population',
                 field='buddhist',
