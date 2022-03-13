@@ -88,6 +88,15 @@ class DorlingView(ABC):
         inner_child_list = []
 
         for id, multipolygon in self.id_to_multipolygon.items():
+            inner_child_list.append(
+                self.palette.draw_multipolygon(
+                    multipolygon,
+                    [],
+                    {},
+                )
+            )
+
+        for id, multipolygon in self.id_to_multipolygon.items():
             attribs = {'fill': self.colored_view.get_color(id)}
 
             xyr = self.id_to_xyr[id]
