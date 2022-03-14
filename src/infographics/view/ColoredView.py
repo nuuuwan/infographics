@@ -11,7 +11,7 @@ KEY_TO_COLOR = {
     'sinhalese': '#8d153a',
     'sl_tamil': '#eb7400',
     'sl_moor': '#00534e',
-    'buddhist': '#ffbe29',
+    'buddhist': 'yellow',
 }
 
 
