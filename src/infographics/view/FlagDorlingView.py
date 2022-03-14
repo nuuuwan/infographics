@@ -42,6 +42,5 @@ class FlagDorlingView(DorlingView):
                 )
             )
             x0 += rx0 * 2
-            print(p)
 
         return self.palette.draw_g(inner_list)
