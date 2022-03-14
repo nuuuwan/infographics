@@ -38,7 +38,7 @@ class FlagDorlingView(DorlingView):
                 self.palette.draw_rect(
                     (x0, y0),
                     (rx0 * 2, ry * 2),
-                    {'fill': color},
+                    {'fill': color, 'stroke': 'black', 'stroke-width': 0.1},
                 )
             )
             x0 += rx0 * 2
