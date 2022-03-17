@@ -20,8 +20,6 @@ class Infographic:
         palette = SVGPalette()
         return palette.draw_svg([
             palette.draw_rect(),
-            palette.draw_line((-1, 0), (1, 0)),
-            palette.draw_line((0, -1), (0, 1)),
 
             palette.draw_text(self.title, (0, 0.9), 2),
             palette.draw_text(self.subtitle, (0, 0.8), 1),
