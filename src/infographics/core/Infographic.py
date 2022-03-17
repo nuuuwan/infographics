@@ -20,11 +20,11 @@ class Infographic:
         palette = SVGPalette()
         return palette.draw_svg([
             palette.draw_rect(),
-
+        ] + [child.__xml__() for child in self.child_list] + [
             palette.draw_text(self.title, (0, 0.9), 2),
             palette.draw_text(self.subtitle, (0, 0.8), 1),
             palette.draw_text(self.footer_text, (0, -0.9), 1),
-        ] + [child.__xml__() for child in self.child_list])
+        ])
 
     def save(self, svg_file):
         self.__xml__().store(svg_file)
