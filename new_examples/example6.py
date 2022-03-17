@@ -9,12 +9,12 @@ def sub(region_id, subregion_type):
         f'-{region_id}-{subregion_type}.svg'
 
     Infographic(
-        title='SL Population',
+        title=f'{region_id}',
         subtitle=f'Flag Cartogram by {subregion_type.title()}',
         footer_text='visualization by @nuuuwan',
         child_list=[
             LKCensusMap(
-                region_id='LK',
+                region_id=region_id,
                 subregion_type=subregion_type,
                 legend_title='',
                 table_id='ethnicity_religion',
