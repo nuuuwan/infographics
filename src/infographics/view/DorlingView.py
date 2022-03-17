@@ -41,7 +41,7 @@ class DorlingView(ABC):
 
         self.colored_view = class_colored_view(
             keys,
-            get_color_value,
+            self.get_color_value,
             legend_title,
             color_palette,
         )
@@ -135,3 +135,6 @@ class DorlingView(ABC):
     def get_label_r(self, id):
         xyr = self.id_to_xyr[id]
         return xyr['r']
+
+    def get_color_value(self, id):
+        return ''

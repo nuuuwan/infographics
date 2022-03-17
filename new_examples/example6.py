@@ -6,12 +6,12 @@ from infographics.view import FlagDorlingView
 def main():
     Infographic(
         title='SL Population',
-        subtitle='"Flags"',
+        subtitle='Flag Cartogram',
         footer_text='visualization by @nuuuwan',
         child_list=[
             LKCensusMap(
                 region_id='LK',
-                subregion_type='ed',
+                subregion_type='country',
                 legend_title='',
                 table_id='ethnicity_religion',
                 field='all',

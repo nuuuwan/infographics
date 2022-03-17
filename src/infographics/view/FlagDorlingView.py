@@ -21,8 +21,8 @@ class FlagDorlingView(DorlingView):
         p_buddhist = n_buddhist / n_sinhalese
 
         x, y = xy
-        rx = r * 0.7
-        ry = rx
+        rx = r
+        ry = rx * 9 / 16
 
         x0 = x - rx
         y0 = y + ry
@@ -38,7 +38,12 @@ class FlagDorlingView(DorlingView):
                 self.palette.draw_rect(
                     (x0, y0),
                     (rx0 * 2, ry * 2),
-                    {'fill': color, 'stroke': 'black', 'stroke-width': 0.1},
+                    {
+                        'fill': color,
+                        'stroke': 'black',
+                        'stroke-width': 0.1,
+                        'fill-opacity': 1,
+                    },
                 )
             )
             x0 += rx0 * 2

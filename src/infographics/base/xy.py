@@ -51,7 +51,7 @@ def norm_multi2polygon(
     multi2polygon,
     map_r=0.8,
     size=(
-        1600,
+        800,
         900)):
     polygon = ds.flatten(ds.flatten(multi2polygon))
     ((min_x, min_y), (max_x, max_y)) = get_bounds(polygon)
