@@ -7,7 +7,7 @@ class Infographic:
         self,
         title='Title',
         subtitle='Subtitle',
-        footer_text='Footer Text',
+        footer_text='Created with https://github.com/nuuuwan/infographics',
         children=[],
     ):
         self.title = title
@@ -23,7 +23,7 @@ class Infographic:
         ] + [child.__xml__() for child in self.children] + [
             palette.draw_text(self.title, (0, 0.9), 2),
             palette.draw_text(self.subtitle, (0, 0.8), 1),
-            palette.draw_text(self.footer_text, (0, -0.9), 1),
+            palette.draw_text(self.footer_text, (0, -0.9), 0.67),
         ])
 
     def save(self, svg_file):
