@@ -1,4 +1,5 @@
 from gig import ent_types, ents
+from utils import colorx
 
 from infographics.base import xy
 from infographics.core import Infographic
@@ -9,8 +10,8 @@ from new_examples.examples import example_svg_file_name
 
 
 def main():
-    region_id = 'LK-1'
-    subregion_type = 'dsd'
+    region_id = 'LK'
+    subregion_type = 'district'
     region_ent = ents.get_entity(region_id)
     region_name = region_ent['name']
     region_entity_type = ent_types.get_entity_type(region_id)
@@ -30,25 +31,23 @@ def main():
     def get_id_to_norm_multipolygon(id):
         return lk_geodata[id]['norm_multipolygon']
 
-    color_metadata = [
-        (2000, None, 'maroon'),
-        (1000, 2000, 'red'),
-        (500, 1000, 'orange'),
-        (250, 500, 'yellow'),
-        (125, 250, 'green'),
-        (None, 125, 'blue'),
-    ]
+    ids = lk_geodata.keys()
+    n_ids = len(ids)
+    sorted_density_list = sorted(list(map(
+        lambda id: lk_geodata[id]['population'] / lk_geodata[id]['area'],
+        ids,
+    )))
+    density_to_rank_p = dict(list(map(
+        lambda x: [x[1], x[0] / n_ids],
+        enumerate(sorted_density_list),
+    )))
 
     def get_id_to_color(id):
         d = lk_geodata[id]
         density = d['population'] / d['area']
-        for min_value, max_value, color in color_metadata:
-            if min_value and min_value > density:
-                continue
-            if max_value and max_value <= density:
-                continue
-            return color
-        return 'gray'
+        rank_p = density_to_rank_p[density]
+        hue = (1 - rank_p) * 240
+        return colorx.random_hsl(hue=hue)
 
     def get_id_to_label(id, cxy, rxy):
         label = lk_geodata[id]['name']
@@ -60,24 +59,20 @@ def main():
             font_size,
         )
 
-    def get_color_value(x):
-        min_value, max_value, color = x
-        connector = ' - ' if (min_value and max_value) else ' '
-        min_value = min_value if min_value else '<'
-        max_value = max_value if max_value else '<'
-        return f'{min_value}{connector}{max_value}'
-
-    color_value_to_color = dict(list(map(
-        lambda x: (get_color_value(x), x[2]),
-        color_metadata,
-    )))
-    color_values = color_value_to_color.keys()
+    color_values = []
+    LEGEND_SIZE = 7
+    for i in range(0, LEGEND_SIZE):
+        j = (int)(i * (n_ids - 1) / (LEGEND_SIZE - 1))
+        color_values.append(sorted_density_list[j])
 
     def get_color_value_to_color(color_value):
-        return color_value_to_color[color_value]
+        rank_p = density_to_rank_p[color_value]
+        hue = (1 - rank_p) * 240
+        return colorx.random_hsl(hue=hue)
 
     def get_color_value_to_label(color_value):
-        return color_value
+        color_value = (int)(round(color_value, 0))
+        return f'{color_value:,}'
 
     infographic = Infographic(
         title=title,
