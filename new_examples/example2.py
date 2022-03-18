@@ -1,10 +1,11 @@
 from infographics.core import ColorPaletteVaryHue, Infographic
 from infographics.data_view import LKMap
 from infographics.view import PolygonView
+from new_examples.examples import example_svg_file_name
 
 
 def main():
-    Infographic(
+    infographic = Infographic(
         title='Population & Population Density',
         subtitle='Provinces of Sri Lanka',
         footer_text='visualization by @nuuuwan',
@@ -20,7 +21,8 @@ def main():
                 class_view=PolygonView,
             )
         ]
-    ).save('/tmp/infographics.example2.svg')
+    )
+    infographic.save(example_svg_file_name(__file__))
 
 
 if __name__ == '__main__':

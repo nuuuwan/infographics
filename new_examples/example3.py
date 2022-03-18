@@ -1,10 +1,11 @@
 from infographics.core import ColorPaletteVaryLightness, Infographic
 from infographics.data_view import LKCensusMap
 from infographics.view import PolygonView
+from new_examples.examples import example_svg_file_name
 
 
 def main():
-    Infographic(
+    infographic = Infographic(
         title='Buddhist Population',
         subtitle='Colombo Electoral District - Polling Divisions',
         footer_text='visualization by @nuuuwan',
@@ -21,7 +22,8 @@ def main():
                     max_lightness=0.4,
                 ),
                 class_view=PolygonView,
-            )]).save('/tmp/infographics.example3.svg')
+            )])
+    infographic.save(example_svg_file_name(__file__))
 
 
 if __name__ == '__main__':

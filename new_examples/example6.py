@@ -5,10 +5,7 @@ from infographics.view import FlagDorlingView
 
 def sub(region_id, subregion_type):
 
-    svg_file_name = '/tmp/infographics.example6' + \
-        f'-{region_id}-{subregion_type}.svg'
-
-    Infographic(
+    infographic = Infographic(
         title=f'{region_id}',
         subtitle=f'Flag Cartogram by {subregion_type.title()}',
         footer_text='visualization by @nuuuwan',
@@ -21,7 +18,11 @@ def sub(region_id, subregion_type):
                 field='all',
                 color_palette=None,
                 class_view=FlagDorlingView,
-            )]).save(svg_file_name)
+            )])
+
+    svg_file_name = '/tmp/infographics.example6' + \
+        f'-{region_id}-{subregion_type}.svg'
+    infographic.save(svg_file_name)
 
 
 def main():
