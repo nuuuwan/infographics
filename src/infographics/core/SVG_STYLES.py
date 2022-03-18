@@ -38,6 +38,6 @@ class SVG_STYLES:
     PATH = {
         'fill': 'white',
         'stroke': 'lightgray',
-        'stroke-width': 1,
+        'stroke-width': 0.5,
         'fill-opacity': 0.5,
     }
