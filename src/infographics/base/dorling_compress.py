@@ -1,14 +1,11 @@
 """Implements dorling."""
-import math
-
-from utils import ds
 
 from infographics._utils import log
 
 
 def _compress(points, bounds):
     (minx, miny, maxx, maxy) = bounds
-    dt = 0.001
+    dt = 0.01
     n_points = len(points)
 
     n_epochs = 100
@@ -17,28 +14,24 @@ def _compress(points, bounds):
             log.debug('i_epochs = {:,}'.format(i_epochs))
         no_moves = True
         for i_a in range(0, n_points):
-            x_a, y_a, r_a = ds.dict_get(
-                points[i_a],
-                ['x', 'y', 'r'],
-            )
-
-            d_minx = (x_a - r_a) - minx
-            d_miny = (y_a - r_a) - miny
-            d_maxx = maxx - (x_a + r_a)
-            d_maxy = maxy - (y_a + r_a)
+            [cx_a, cy_a], [rx_a, ry_a] = points[i_a]
+            d_minx = (cx_a - rx_a) - minx
+            d_miny = (cy_a - ry_a) - miny
+            d_maxx = maxx - (cx_a + rx_a)
+            d_maxy = maxy - (cy_a + ry_a)
 
             if any([d_minx < 0, d_miny < 0, d_maxx < 0, d_maxy < 0]):
                 if d_minx < 0:
-                    x_a = minx + r_a
+                    cx_a = minx + rx_a
                 if d_miny < 0:
-                    y_a = miny + r_a
+                    cy_a = miny + ry_a
 
                 if d_maxx < 0:
-                    x_a = maxx - r_a
+                    cx_a = maxx - rx_a
                 if d_maxy < 0:
-                    y_a = maxy - r_a
-                points[i_a]['x'] = x_a
-                points[i_a]['y'] = y_a
+                    cy_a = maxy - ry_a
+
+                points[i_a][0] = [cx_a, cy_a]
                 no_moves = False
                 continue
 
@@ -47,24 +40,20 @@ def _compress(points, bounds):
                 if i_a == i_b:
                     continue
 
-                x_b, y_b, r_b = ds.dict_get(
-                    points[i_b],
-                    ['x', 'y', 'r'],
-                )
-                dx, dy = x_b - x_a, y_b - y_a
-                d2 = dx ** 2 + dy ** 2
-                d = math.sqrt(d2)
-                if d > r_a + r_b:
+                [cx_b, cy_b], [rx_b, ry_b] = points[i_b]
+                dx, dy = cx_b - cx_a, cy_b - cy_a
+                if (abs(dx) > rx_a + rx_b) or (abs(dy) > ry_a + ry_b):
                     continue
 
-                f_b_a = -(r_b ** 2) / d2
-                s = dt * f_b_a
-                theta = math.atan2(dy, dx)
-                sx += s * math.cos(theta)
-                sy += s * math.sin(theta)
+                rb2 = ry_a ** 2 + ry_b ** 2
+                d2 = dx ** 2 + dy ** 2
+                f_b_a = -dt * (rb2) / d2
 
-            points[i_a]['x'] += sx
-            points[i_a]['y'] += sy
+                sx += dx * f_b_a
+                sy += dy * f_b_a
+
+            points[i_a][0][0] += sx
+            points[i_a][0][1] += sy
             no_moves = False
 
         if no_moves:
