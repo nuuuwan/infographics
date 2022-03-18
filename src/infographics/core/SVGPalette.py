@@ -53,6 +53,21 @@ class SVGPalette(SVGPaletteSize, SVGPalettePolygon):
             'ry': ry,
         } | attribs)
 
+    def draw_ellipse(self, pcxcy, prxry, attribs={}):
+        pcx, pcy = pcxcy
+        cx, cy = self.t(pcxcy)
+        prx, pry = prxry
+        cx1, cy1 = self.t((pcx + prx, pcy + pry))
+        rx = abs(cx1 - cx)
+        ry = abs(cy1 - cy)
+
+        return _('ellipse', None, SVG_STYLES.CIRCLE | {
+            'cx': cx,
+            'cy': cy,
+            'rx': rx,
+            'ry': ry,
+        } | attribs)
+
     def draw_rect(self, p0=(-1, 1), size=(2, 2), attribs={}):
         x0, y0 = self.t(p0)
         x1, y1 = self.t((p0[0] + size[0], p0[1] - size[1]))
