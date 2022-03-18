@@ -1,5 +1,4 @@
 from infographics.core import SVGPalette
-from infographics.view import format
 
 
 class LabelledView:
@@ -31,7 +30,6 @@ class LabelledView:
     def render_label(self, id):
         label_data = self.get_label_data(id)
         label = label_data['label']
-        label_value = label_data['label_value']
         r = self.get_label_r(id)
         (x, y) = self.get_label_xy(id)
 
