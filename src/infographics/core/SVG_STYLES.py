@@ -19,14 +19,12 @@ class SVG_STYLES:
         'fill': 'white',
         'stroke': 'lightgray',
         'stroke-width': 1,
-        'fill-opacity': 0.5,
     }
 
     CIRCLE = {
         'fill': 'white',
         'stroke': 'lightgray',
         'stroke-width': 1,
-        'fill-opacity': 0.5,
     }
 
     LINE = {
@@ -39,5 +37,4 @@ class SVG_STYLES:
         'fill': 'white',
         'stroke': 'lightgray',
         'stroke-width': 0.5,
-        'fill-opacity': 0.5,
     }
