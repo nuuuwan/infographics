@@ -2,13 +2,15 @@
 
 from infographics._utils import log
 
+R_PADDING = 0.05
+
 
 def _compress(points, bounds):
     (minx, miny, maxx, maxy) = bounds
     dt = 0.01
     n_points = len(points)
 
-    n_epochs = 100
+    n_epochs = 1000
     for i_epochs in range(0, n_epochs):
         if i_epochs % (n_epochs / 10) == 0:
             log.debug('i_epochs = {:,}'.format(i_epochs))
@@ -42,7 +44,8 @@ def _compress(points, bounds):
 
                 [cx_b, cy_b], [rx_b, ry_b] = points[i_b]
                 dx, dy = cx_b - cx_a, cy_b - cy_a
-                if (abs(dx) > rx_a + rx_b) or (abs(dy) > ry_a + ry_b):
+                if (abs(dx) > (rx_a + rx_b) * (1 + R_PADDING)) \
+                        or (abs(dy) > (ry_a + ry_b) * (1 + R_PADDING)):
                     continue
 
                 rb2 = ry_a ** 2 + ry_b ** 2
@@ -52,9 +55,10 @@ def _compress(points, bounds):
                 sx += dx * f_b_a
                 sy += dy * f_b_a
 
-            points[i_a][0][0] += sx
-            points[i_a][0][1] += sy
-            no_moves = False
+            if sx or sy:
+                points[i_a][0][0] += sx
+                points[i_a][0][1] += sy
+                no_moves = False
 
         if no_moves:
             break
