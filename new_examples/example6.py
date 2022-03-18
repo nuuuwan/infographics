@@ -30,10 +30,10 @@ def main():
         ['LK', 'province'],
         ['LK', 'district'],
         ['LK', 'pd'],
-        ['LK-11', 'pd'],
-        ['LK-12', 'pd'],
-        ['LK-62', 'pd'],
-        ['LK-52', 'pd'],
+        ['EC-01', 'pd'],
+        ['EC-02', 'pd'],
+        ['EC-14', 'pd'],
+        ['EC-16', 'pd'],
     ]:
         sub(region_id, subregion_type)
 
