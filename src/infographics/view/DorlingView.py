@@ -1,80 +1,49 @@
-import math
 from abc import ABC
+import math
 from functools import cached_property
 
 from infographics._utils import log
 from infographics.base import dorling_compress, xy
 from infographics.core import SVGPalette
-from infographics.view.ColoredView import ColoredView
-from infographics.view.LabelledView import LabelledView
-
-CIRLCE_RADIUS_MAX_LABEL_VALUE = 0.2
 
 
 class DorlingView(ABC):
-    DEFAULT_CLASS_COLORED_VIEW = ColoredView
-    DEFAULT_CLASS_LABELLED_VIEW = LabelledView
-
     def __init__(
         self,
-        # For ColoredView
-        keys,
-        get_color_value,
-        legend_title,
-        color_palette,
-
-        # For LabelledView
-        get_label_data,
-
-        # For PolygonView
-        id_to_multipolygon,
-
-        # For DorlingView
-
-        # classes
-        class_colored_view=DEFAULT_CLASS_COLORED_VIEW,
-        class_labelled_view=DEFAULT_CLASS_LABELLED_VIEW,
+        ids,
+        get_id_to_norm_multipolygon,
+        get_id_to_color,
+        get_id_to_label,
+        get_id_to_cartogram_value,
+        children=[],
     ):
 
-        self.get_label_data = get_label_data
-        self.id_to_multipolygon = id_to_multipolygon
-
-        self.colored_view = class_colored_view(
-            keys,
-            self.get_color_value,
-            legend_title,
-            color_palette,
-        )
-
-        self.labelled_view = class_labelled_view(
-            keys,
-            get_label_data,
-            self.get_label_xy,
-            self.get_label_r,
-        )
-
+        self.ids = ids
+        self.get_id_to_norm_multipolygon = get_id_to_norm_multipolygon
+        self.get_id_to_color = get_id_to_color
+        self.get_id_to_label = get_id_to_label
+        self.get_id_to_cartogram_value = get_id_to_cartogram_value
+        self.children = children
         self.palette = SVGPalette()
 
     @cached_property
     def id_to_xyr(self):
         log.debug('[expensive] DorlingView.id_to_xyr')
-        total_label_value = 0
-        for id, multipolygon in self.id_to_multipolygon.items():
-            label_data = self.get_label_data(id)
-            total_label_value += label_data['label_value']
+        total_cartogram_value = 0
+        for id in self.ids:
+            cartogram_value = self.get_id_to_cartogram_value(id)
+            total_cartogram_value += cartogram_value
 
         id_to_xyr = {}
-        for id, multipolygon in self.id_to_multipolygon.items():
-            label_data = self.get_label_data(id)
-            pr = math.sqrt(
-                label_data['label_value'] /
-                total_label_value
-            ) * CIRLCE_RADIUS_MAX_LABEL_VALUE
-            px, py = xy.get_midxy(multipolygon)
+        for id in self.ids:
+            norm_multipolygon = self.get_id_to_norm_multipolygon(id)
+            cartogram_value = self.get_id_to_cartogram_value(id)
+            (cx, cy), ____ = xy.get_cxcyrxry(norm_multipolygon)
+            pr = 0.3 * math.sqrt(cartogram_value / total_cartogram_value)
 
             id_to_xyr[id] = dict(
-                x=px,
-                y=py,
+                x=cx,
+                y=cy,
                 r=pr,
             )
 
@@ -83,42 +52,40 @@ class DorlingView(ABC):
         id_to_xyr = dict(zip(id_to_xyr.keys(), xyrs))
         return id_to_xyr
 
-    def __len__(self):
-        return len(self.id_to_multipolygon)
-
-    def get_multipolygon(self, id):
-        return self.id_to_multipolygon[id]
-
     def __xml__(self):
         inner_child_list = []
+        for id in self.ids:
+            norm_multipolygon = self.get_id_to_norm_multipolygon(id)
 
-        for id, multipolygon in self.id_to_multipolygon.items():
             inner_child_list.append(
                 self.palette.draw_multipolygon(
-                    multipolygon,
+                    norm_multipolygon,
                     [],
-                    {},
+                    {'fill': 'white'},
                 )
             )
 
-        for id, multipolygon in self.id_to_multipolygon.items():
-            attribs = {'fill': self.colored_view.get_color(id)}
-
+        for id in self.ids:
             xyr = self.id_to_xyr[id]
             inner_child_list.append(
                 self.render_dorling_object(
                     id,
                     (xyr['x'], xyr['y']),
                     xyr['r'],
-                    attribs,
+                    {'fill': self.get_id_to_color(id)},
                 )
             )
 
+        for id in self.ids:
+            xyr = self.id_to_xyr[id]
+            inner_child_list.append(
+                self.get_id_to_label(id, (xyr['x'], xyr['y']), (xyr['r'], xyr['r'])),
+            )
+
         return self.palette.draw_g(
-            inner_child_list + [
-                self.colored_view.__xml__(),
-                self.labelled_view.__xml__(),
-            ])
+            inner_child_list,
+            self.children,
+        )
 
     def render_dorling_object(self, id, xy, r, attribs):
         return self.palette.draw_circle(
@@ -126,15 +93,3 @@ class DorlingView(ABC):
             r,
             attribs,
         )
-
-    # For LabelledView
-    def get_label_xy(self, id):
-        xyr = self.id_to_xyr[id]
-        return (xyr['x'], xyr['y'])
-
-    def get_label_r(self, id):
-        xyr = self.id_to_xyr[id]
-        return xyr['r']
-
-    def get_color_value(self, id):
-        return ''
