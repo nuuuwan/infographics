@@ -35,6 +35,13 @@ def get_spans(multipolygon):
     return (max_x - min_x), (max_y - min_y)
 
 
+def get_cxcyrxry(multipolygon):
+    cx, cy = get_midxy(multipolygon)
+    x_span, y_span = get_spans(multipolygon)
+    rx, ry = x_span / 2, y_span / 2
+    return (cx, cy), (rx, ry)
+
+
 def shapely_multipolygon_to_polygon_list(multipolygon):
     return list(multipolygon)
 
