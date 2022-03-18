@@ -8,8 +8,8 @@ def example_svg_file_name(file):
 
 
 def main():
-    for file_only in os.listdir('new_examples'):
-        if file_only[-3:] == '.py':
+    for file_only in sorted(os.listdir('new_examples')):
+        if file_only[-3:] == '.py' and file_only != 'examples.py':
             py_file = os.path.join(DIR_NEW_EXAMPLES, file_only)
             os.system(f'python3 {py_file}')
 
