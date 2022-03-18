@@ -54,7 +54,7 @@ def shapely_point_to_xy(point):
     return (point[1], point[0])
 
 
-def norm_multi2polygon(
+def get_norm_multi2polygon(
     multi2polygon,
     map_r=0.8,
     size=(
