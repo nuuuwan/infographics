@@ -1,5 +1,5 @@
-from abc import ABC
 import math
+from abc import ABC
 from functools import cached_property
 
 from infographics._utils import log
@@ -72,24 +72,22 @@ class DorlingView(ABC):
                     id,
                     (xyr['x'], xyr['y']),
                     xyr['r'],
-                    {'fill': self.get_id_to_color(id)},
                 )
             )
 
         for id in self.ids:
             xyr = self.id_to_xyr[id]
-            inner_child_list.append(
-                self.get_id_to_label(id, (xyr['x'], xyr['y']), (xyr['r'], xyr['r'])),
-            )
+            inner_child_list.append(self.get_id_to_label(
+                id, (xyr['x'], xyr['y']), (xyr['r'], xyr['r'])), )
 
         return self.palette.draw_g(
             inner_child_list,
             self.children,
         )
 
-    def render_dorling_object(self, id, xy, r, attribs):
+    def render_dorling_object(self, id, xy, r):
         return self.palette.draw_circle(
             xy,
             r,
-            attribs,
+            {'fill': self.get_id_to_color(id)},
         )
