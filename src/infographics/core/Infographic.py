@@ -8,19 +8,19 @@ class Infographic:
         title='Title',
         subtitle='Subtitle',
         footer_text='Footer Text',
-        child_list=[],
+        children=[],
     ):
         self.title = title
         self.subtitle = subtitle
         self.footer_text = footer_text
         self.title = title
-        self.child_list = child_list
+        self.children = children
 
     def __xml__(self):
         palette = SVGPalette()
         return palette.draw_svg([
             palette.draw_rect(),
-        ] + [child.__xml__() for child in self.child_list] + [
+        ] + [child.__xml__() for child in self.children] + [
             palette.draw_text(self.title, (0, 0.9), 2),
             palette.draw_text(self.subtitle, (0, 0.8), 1),
             palette.draw_text(self.footer_text, (0, -0.9), 1),
