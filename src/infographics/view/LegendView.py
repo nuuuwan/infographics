@@ -38,7 +38,7 @@ class LegendView:
         ])
 
     def __xml__(self):
-        x0, y0 = 0.5, 0.5
+        x0, y0 = 0.6, 0.5
         inner_list = [
             self.palette.draw_text(
                 self.legend_title, (x0, y0), 1, {
