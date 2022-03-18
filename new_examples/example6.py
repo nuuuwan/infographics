@@ -11,7 +11,7 @@ from new_examples.examples import example_svg_file_name
 
 def main():
     region_id = 'LK'
-    subregion_type = 'province'
+    subregion_type = 'district'
     region_ent = ents.get_entity(region_id)
     region_name = region_ent['name']
     region_entity_type = ent_types.get_entity_type(region_id)
