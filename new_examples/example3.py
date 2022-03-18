@@ -9,13 +9,13 @@ from new_examples.examples import example_svg_file_name
 
 
 def main():
-    region_id = 'LK-1'
+    region_id = 'LK'
     subregion_type = 'dsd'
     region_ent = ents.get_entity(region_id)
     region_name = region_ent['name']
     region_entity_type = ent_types.get_entity_type(region_id)
     title = f'{region_name} {region_entity_type.upper()}'
-    subtitle = f'Population Density by {subregion_type.upper()}'
+    subtitle = f'Most Common Ethnicity by {subregion_type.upper()}'
 
     palette = SVGPalette()
     lk_geodata = LKGeoData(
@@ -34,10 +34,12 @@ def main():
         table_id='ethnicity_of_population',
     ).data
 
+    MAJORITY_LIMIT = 0.8
     color_value_to_color = {
-        'sinhalese': 'maroon',
-        'tamil': 'orange',
-        'muslim': 'green',
+        f'sinhalese': 'maroon',
+        f'tamil': 'orange',
+        f'muslim': 'green',
+        'none': 'white',
     }
 
     id_to_color_value = {}
@@ -46,15 +48,16 @@ def main():
         n_sinhala = d['sinhalese']
         n_tamil = d['sl_tamil'] + d['ind_tamil']
         n_muslim = d['sl_moor'] + d['malay']
+        n_total = d['total_population']
 
-        n_max = max(n_sinhala, n_tamil, n_muslim)
-        max_color_value = 'unknown'
-        if n_max == n_sinhala:
+        max_color_value = 'none'
+        if n_sinhala > n_total * MAJORITY_LIMIT:
             max_color_value = 'sinhalese'
-        elif n_max == n_muslim:
-            max_color_value = 'muslim'
-        elif n_max == n_tamil:
+        elif n_tamil > n_total * MAJORITY_LIMIT:
             max_color_value = 'tamil'
+        elif n_muslim > n_total * MAJORITY_LIMIT:
+            max_color_value = 'muslim'
+
         id_to_color_value[id] = max_color_value
 
     def get_id_to_label(id, cxy, rxy):
@@ -68,7 +71,10 @@ def main():
         )
 
     def get_id_to_color(id):
-        return id_to_color_value[id]
+        return color_value_to_color.get(
+            id_to_color_value[id],
+            'gray',
+        )
 
     color_values = color_value_to_color.keys()
 
@@ -88,7 +94,7 @@ def main():
                 children=[],
             ),
             LegendView(
-                legend_title='Persons per km²',
+                legend_title='Most Common Ethnicity',
                 color_values=color_values,
                 get_color_value_to_color=get_color_value_to_color,
             )
