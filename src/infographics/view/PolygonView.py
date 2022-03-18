@@ -2,14 +2,9 @@ from abc import ABC
 
 from infographics.base import xy
 from infographics.core import SVGPalette
-from infographics.view.ColoredView import ColoredView
-from infographics.view.LabelledView import LabelledView
 
 
 class PolygonView(ABC):
-    DEFAULT_CLASS_COLORED_VIEW = ColoredView
-    DEFAULT_CLASS_LABELLED_VIEW = LabelledView
-
     def __init__(
         self,
         ids,
@@ -29,13 +24,12 @@ class PolygonView(ABC):
         inner_child_list = []
         for id in self.ids:
             multipolygon = self.get_id_to_multipolygon(id)
-            attribs = {'fill': self.get_id_to_color(id)}
 
             inner_child_list.append(
                 self.palette.draw_multipolygon(
                     multipolygon,
                     [],
-                    attribs,
+                    {'fill': self.get_id_to_color(id)},
                 )
             )
 
