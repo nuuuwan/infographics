@@ -37,7 +37,7 @@ def main():
     MAJORITY_LIMIT = 0.6
 
     color_value_to_color = {
-        f'sinhalese': 'maroon',
+        'sinhalese': 'maroon',
         'tamil': 'orange',
         'muslim': 'green',
         'none': 'white',
