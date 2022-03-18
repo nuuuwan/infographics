@@ -76,6 +76,9 @@ def main():
     def get_color_value_to_color(color_value):
         return color_value_to_color[color_value]
 
+    def get_color_value_to_label(color_value):
+        return color_value
+
     infographic = Infographic(
         title=title,
         subtitle=subtitle,
@@ -92,6 +95,7 @@ def main():
                 legend_title='Persons per km²',
                 color_values=color_values,
                 get_color_value_to_color=get_color_value_to_color,
+                get_color_value_to_label=get_color_value_to_label,
             )
         ]
     )

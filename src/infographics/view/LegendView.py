@@ -10,11 +10,13 @@ class LegendView:
         legend_title,
         color_values,
         get_color_value_to_color,
+        get_color_value_to_label,
 
     ):
         self.legend_title = legend_title
         self.color_values = color_values
         self.get_color_value_to_color = get_color_value_to_color
+        self.get_color_value_to_label = get_color_value_to_label
         self.palette = SVGPalette()
 
     def render_row(self, color_value, xy):
@@ -28,7 +30,7 @@ class LegendView:
                 {'fill': color},
             ),
             self.palette.draw_text(
-                color_value,
+                self.get_color_value_to_label(color_value),
                 (x + CIRCLE_R_LEGEND * 3, y),
                 1,
                 {'text-anchor': 'start'},
