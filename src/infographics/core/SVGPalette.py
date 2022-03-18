@@ -8,7 +8,7 @@ from infographics.core.SVGPaletteSize import SVGPaletteSize
 
 
 class SVGPalette(SVGPaletteSize, SVGPalettePolygon):
-    DEFAULT_WIDTH, DEFAULT_HEIGHT, PADDING = 600, 675, 20
+    DEFAULT_WIDTH, DEFAULT_HEIGHT, PADDING = 1200, 675, 20
     DEFAULT_BASE_FONT_SIZE = 16
 
     def __init__(
