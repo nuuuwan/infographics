@@ -34,12 +34,21 @@ def main():
         table_id='ethnicity_of_population',
     ).data
 
-    MAJORITY_LIMIT = 0.8
+    MAJORITY_LIMIT = 0.6
+
     color_value_to_color = {
         f'sinhalese': 'maroon',
-        f'tamil': 'orange',
-        f'muslim': 'green',
+        'tamil': 'orange',
+        'muslim': 'green',
         'none': 'white',
+    }
+
+    label_majority_limit = f'> {MAJORITY_LIMIT:.0%}'
+    color_value_to_label = {
+        'sinhalese': f'Sinhalese {label_majority_limit}',
+        'tamil': f'Tamil {label_majority_limit}',
+        'muslim': f'Muslim {label_majority_limit}',
+        'none': f'No ethnicity with {label_majority_limit}',
     }
 
     id_to_color_value = {}
@@ -76,6 +85,9 @@ def main():
             'gray',
         )
 
+    def get_color_value_to_label(color_value):
+        return color_value_to_label.get(color_value)
+
     color_values = color_value_to_color.keys()
 
     def get_color_value_to_color(color_value):
@@ -97,6 +109,7 @@ def main():
                 legend_title='Most Common Ethnicity',
                 color_values=color_values,
                 get_color_value_to_color=get_color_value_to_color,
+                get_color_value_to_label=get_color_value_to_label,
             )
         ]
     )
