@@ -29,7 +29,7 @@ class FlagDorlingView(DorlingView):
         )
         self.get_id_to_flag_data = get_id_to_flag_data
 
-    def render_dorling_object(self, id, xy, r):
+    def render_dorling_object(self, id, cxcy, rxry):
         flag_data = self.get_id_to_flag_data(id)
         n_sinhalese = flag_data['sinhalese']
         n_tamil = flag_data['tamil']
@@ -43,12 +43,11 @@ class FlagDorlingView(DorlingView):
 
         p_buddhist = n_buddhist / n_sinhalese
 
-        x, y = xy
-        rx = r * 0.8
-        ry = rx
+        cx, cy = cxcy
+        rx, ry = rxry
 
-        x0 = x - rx
-        y0 = y + ry
+        x0 = cx - rx
+        y0 = cy + ry
         inner_list = []
         for [color, p] in [
             ['green', p_moor],
