@@ -1,116 +1,67 @@
-from gig import ent_types, ents
-from utils import colorx
 
-from infographics.base import xy
+from infographics.adaptors import SimpleLabel
 from infographics.core import Infographic
-from infographics.core.SVGPalette import SVGPalette
-from infographics.data import LKCensusData, LKGeoData
+from infographics.data import (LKCensusEthnicityData, LKCensusReligionData,
+                               LKGeoData, gig_utils)
 from infographics.view import FlagDorlingView, LegendView
 from new_examples.run_all_examples import example_svg_file_name
 
 
 def main():
     region_id = 'LK'
-    subregion_type = 'district'
-    region_ent = ents.get_entity(region_id)
-    region_name = region_ent['name']
-    region_entity_type = ent_types.get_entity_type(region_id)
-    title = f'{region_name} {region_entity_type.upper()}'
-    subtitle = f'Flag Cartogram by {subregion_type.upper()}'
+    subregion_type = 'province'
 
-    palette = SVGPalette()
-    lk_geodata = LKGeoData(
-        region_id=region_id,
-        subregion_type=subregion_type,
-    ).data
-
-    multi2polygon = list(map(lambda d: d['multipolygon'], lk_geodata.values()))
-    norm_multi2polygon = xy.get_norm_multi2polygon(multi2polygon)
-    for i, id in enumerate(list(lk_geodata.keys())):
-        lk_geodata[id]['norm_multipolygon'] = norm_multi2polygon[i]
-
-    def get_id_to_norm_multipolygon(id):
-        return lk_geodata[id]['norm_multipolygon']
-
-    ids = lk_geodata.keys()
-    n_ids = len(ids)
-    sorted_density_list = sorted(list(map(
-        lambda id: lk_geodata[id]['population'] / lk_geodata[id]['area'],
-        ids,
-    )))
-    density_to_rank_p = dict(list(map(
-        lambda x: [x[1], x[0] / n_ids],
-        enumerate(sorted_density_list),
-    )))
-
-    def get_id_to_color(id):
-        d = lk_geodata[id]
-        density = d['population'] / d['area']
-        rank_p = density_to_rank_p[density]
-        hue = (1 - rank_p) * 240
-        return colorx.random_hsl(hue=hue)
-
-    def get_id_to_label(id, cxy, rxy):
-        label = lk_geodata[id]['name']
-        rx, ry = rxy
-        font_size = palette.actual_width * rx / len(label) / 16
-        return palette.draw_text(
-            label,
-            cxy,
-            font_size,
-        )
-
-    color_values = ['muslim', 'tamil', 'buddhist', 'other sinhala']
-
-    def get_color_value_to_color(color_value):
-        return {
-            'muslim': 'green',
-            'tamil': 'orange',
-            'buddhist': 'yellow',
-            'other sinhala': 'maroon',
-        }.get(color_value)
-
-    def get_color_value_to_label(color_value):
-        return color_value.title()
-
-    def get_id_to_cartogram_value(id):
-        return lk_geodata[id]['population']
-
-    lk_census_data_ethnicity = LKCensusData(
-        table_id='ethnicity_of_population',
-    ).data
-    lk_census_data_religion = LKCensusData(
-        table_id='religious_affiliation_of_population',
-    ).data
+    lk_geodata = LKGeoData(region_id, subregion_type)
+    lk_census_ethnicity_data = LKCensusEthnicityData()
+    lk_census_religion_data = LKCensusReligionData()
 
     def get_id_to_flag_data(id):
-        d_eth = lk_census_data_ethnicity[id]
-        d_rel = lk_census_data_religion[id]
+        d_eth = lk_census_ethnicity_data[id]
+        d_rel = lk_census_religion_data[id]
+
+        n_sinhala = d_eth['sinhalese']
+        n_muslim = d_eth['sl_moor'] + d_eth['malay']
+        n_tamil = d_eth['sl_tamil'] + d_eth['ind_tamil']
+        n_buddhist = d_rel['buddhist']
+
         return {
-            'sinhalese': d_eth['sinhalese'],
-            'tamil': d_eth['sl_tamil'] + d_eth['ind_tamil'],
-            'muslim': d_eth['sl_moor'] + d_eth['malay'],
-            'buddhist': d_rel['buddhist'],
+            'muslim': n_muslim,
+            'tamil': n_tamil,
+            'buddhist': n_buddhist,
+            'sinhalese': n_sinhala,
         }
 
+    def get_color_value_to_label(color_value):
+        if color_value == 'sinhalese':
+            return 'Sinhalese (Non-Buddhist)'
+        return color_value.title()
+
+    def get_color_value_to_color(color_value):
+        color = LKCensusEthnicityData.get_color_value_to_color(color_value)
+        if color:
+            return color
+        return LKCensusReligionData.get_color_value_to_color(color_value)
+
+    simple_label = SimpleLabel(lk_geodata.get_id_to_name)
+
     infographic = Infographic(
-        title=title,
-        subtitle=subtitle,
-        footer_text='visualization by @nuuuwan',
+        gig_utils.get_full_name(region_id),
+        gig_utils.get_by_name(subregion_type, 'Flag Cartogram'),
+        'visualization by @nuuuwan',
         children=[
             FlagDorlingView(
-                ids=lk_geodata.keys(),
-                get_id_to_norm_multipolygon=get_id_to_norm_multipolygon,
-                get_id_to_flag_data=get_id_to_flag_data,
-                get_id_to_label=get_id_to_label,
-                get_id_to_cartogram_value=get_id_to_cartogram_value,
-                children=[],
+                lk_geodata.keys(),
+                lk_geodata.get_id_to_norm_multipolygon,
+                simple_label.get_id_to_label,
+                lk_geodata.get_id_to_population,
+                get_id_to_flag_data,
+                [],
             ),
             LegendView(
-                legend_title='Ethnicity and Religion',
-                color_values=color_values,
-                get_color_value_to_color=get_color_value_to_color,
-                get_color_value_to_label=get_color_value_to_label,
+                'Ethnicity & Religion',
+                ['muslim', 'tamil', 'buddhist', 'sinhalese'],
+                get_color_value_to_color,
+                get_color_value_to_label,
             )
         ]
     )
