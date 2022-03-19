@@ -51,3 +51,6 @@ class LKGeoData:
 
     def get_id_to_name(self, id):
         return self[id]['name']
+
+    def get_id_to_population_density(self, id):
+        return self[id]['population'] / self[id]['area']
