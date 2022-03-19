@@ -48,17 +48,16 @@ def get_cxcyrxry_for_multipolygon(multipolygon):
     return (cx, cy), (rx, ry)
 
 
-def get_norm_multi2polygon(
+def get_norm_transformer(
     multi2polygon,
-    map_r=0.8,
-    size=(
-        1600,
-        900)):
+    padding_p,
+    aspect_ratio,
+):
     polygon = ds.flatten(ds.flatten(multi2polygon))
-    ((min_x, min_y), (max_x, max_y)) = get_bounds(polygon)
+    ((min_x, min_y), ___) = get_bounds(polygon)
     x_span, y_span = get_spans(polygon)
 
-    r = x_span / y_span * (size[0] / size[1])
+    r = x_span / y_span * aspect_ratio
     padding_x = 0
     padding_y = 0
     if r > 1:
@@ -74,9 +73,23 @@ def get_norm_multi2polygon(
         rx = padding_x + qx * (1 - padding_x * 2)
         ry = padding_y + qy * (1 - padding_y * 2)
 
-        px = (rx * 2 - 1) * map_r
-        py = (ry * 2 - 1) * map_r
+        px = (rx * 2 - 1) * padding_p
+        py = (ry * 2 - 1) * padding_p
         return (px, py)
+
+    return t
+
+
+def get_norm_multi2polygon(
+    multi2polygon,
+    padding_p=0.8,
+    aspect_ratio=16 / 9
+):
+    t = get_norm_transformer(
+        multi2polygon,
+        padding_p,
+        aspect_ratio,
+    )
 
     return list(map(
         lambda multipolygon: list(map(
