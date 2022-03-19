@@ -15,21 +15,18 @@ def main():
     title = gig_utils.get_region_full_name(region_id)
     subtitle = f'Population Density by {subregion_type.upper()}'
 
-    lk_geodata = LKGeoData(
-        region_id=region_id,
-        subregion_type=subregion_type,
-    )
+    lk_geodata = LKGeoData(region_id, subregion_type)
     color_histogram = ColorHistogram(
-        ids=lk_geodata.keys(),
-        get_id_to_color_value=lk_geodata.get_id_to_population_density,
+        lk_geodata.keys(),
+        lk_geodata.get_id_to_population_density,
     )
     simple_label = SimpleLabel(lk_geodata.get_id_to_name)
 
     infographic = Infographic(
-        title=title,
-        subtitle=subtitle,
-        footer_text='visualization by @nuuuwan',
-        children=[
+        title,
+        subtitle,
+        'visualization by @nuuuwan',
+        [
             PolygonView(
                 lk_geodata.keys(),
                 lk_geodata.get_id_to_norm_multipolygon,
@@ -42,7 +39,8 @@ def main():
                 color_histogram.get_color_values(LEGEND_SIZE),
                 color_histogram.get_color_value_to_color,
                 color_histogram.get_color_value_to_label,
-            )])
+            )
+        ])
     infographic.save(example_svg_file_name(__file__))
 
 
