@@ -22,14 +22,14 @@ class SVG_STYLES:
         'font-family': DEFAULT_FONT,
     }
 
-    RECT = DEFAULT_BORDERED_AREA
-
-    CIRCLE = DEFAULT_BORDERED_AREA
-
     LINE = {
         'stroke': 'lightgray',
         'stroke-width': 1,
         'opacity': 0.2,
     }
+
+    RECT = DEFAULT_BORDERED_AREA
+
+    CIRCLE = DEFAULT_BORDERED_AREA
 
     PATH = DEFAULT_BORDERED_AREA
