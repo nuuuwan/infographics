@@ -35,8 +35,8 @@ def get_cxcyrxry_for_multipolygon(multipolygon):
 
 def get_norm_transformer(
     multi2polygon,
-    padding_p,
     aspect_ratio,
+    padding_p,
 ):
     polygon = ds.flatten(ds.flatten(multi2polygon))
     ((min_x, min_y), ___) = get_bounds(polygon)
@@ -67,10 +67,10 @@ def get_norm_transformer(
 
 def get_norm_multi2polygon(
     multi2polygon,
-    padding_p=0.8,
     aspect_ratio=16 / 9
+    padding_p=0.8,
 ):
-    t = get_norm_transformer(multi2polygon, padding_p, aspect_ratio)
+    t = get_norm_transformer(multi2polygon, aspect_ratio, padding_p)
     return list(map(
         lambda multipolygon: list(map(
             lambda polygon: list(map(
