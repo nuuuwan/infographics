@@ -1,10 +1,10 @@
 from infographics.core import Infographic
-from new_examples.run_all_examples import example_svg_file_name
+from new_examples.run_all_examples import save
 
 
 def main():
     infographic = Infographic()
-    infographic.save(example_svg_file_name(__file__))
+    save(infographic, __file__)
 
 
 if __name__ == '__main__':

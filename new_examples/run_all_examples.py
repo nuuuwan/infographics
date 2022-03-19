@@ -5,8 +5,12 @@ import new_examples
 from infographics._utils import log
 
 
-def example_svg_file_name(file):
+def get_svg_file_name(file):
     return '/tmp/infographics.' + os.path.basename(file)[:-3] + '.svg'
+
+
+def save(infographic, file):
+    infographic.save(get_svg_file_name(file))
 
 
 def main():

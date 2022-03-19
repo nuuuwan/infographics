@@ -4,7 +4,7 @@ from infographics.adaptors import (ColorBase, ColorPercentVaryLightness,
 from infographics.core import Infographic
 from infographics.data import LKCensusEthnicityData, LKGeoData, gig_utils
 from infographics.view import DorlingView, LegendView
-from new_examples.run_all_examples import example_svg_file_name
+from new_examples.run_all_examples import save
 
 
 def main():
@@ -43,7 +43,7 @@ def main():
             )
         ]
     )
-    infographic.save(example_svg_file_name(__file__))
+    save(infographic, __file__)
 
 
 if __name__ == '__main__':
