@@ -35,7 +35,7 @@ def main():
                 'Persons per km²',
                 color_histogram.get_color_values(LEGEND_SIZE),
                 color_histogram.get_color_value_to_color,
-                color_histogram.get_color_value_to_label,
+                color_histogram.get_color_value_to_int_label,
             )
         ])
     infographic.save(example_svg_file_name(__file__))
