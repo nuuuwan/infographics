@@ -19,7 +19,7 @@ class PolygonView:
     def render_polygons(self, palette):
         rendered_polygons = []
         for id in self.ids:
-            norm_multipolygon = self.get_id_to_norm_multipolygon(id)
+            norm_multipolygon = self.get_id_to_norm_multipolygon(palette, id)
 
             rendered_polygons.append(
                 palette.draw_multipolygon(
@@ -29,15 +29,15 @@ class PolygonView:
             )
         return rendered_polygons
 
-    def get_id_to_cxcyrxry(self, id):
-        norm_multipolygon = self.get_id_to_norm_multipolygon(id)
+    def get_id_to_cxcyrxry(self, palette, id):
+        norm_multipolygon = self.get_id_to_norm_multipolygon(palette, id)
         (cx, cy), (rx, ry) = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
         return (cx, cy), (rx, ry)
 
     def render_labels(self, palette):
         rendered_labels = []
         for id in self.ids:
-            (cx, cy), (rx, ry) = self.get_id_to_cxcyrxry(id)
+            (cx, cy), (rx, ry) = self.get_id_to_cxcyrxry(palette, id)
             rendered_labels.append(
                 self.get_id_to_label(palette, id, (cx, cy), (rx, ry)),
             )

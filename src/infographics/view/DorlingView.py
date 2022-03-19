@@ -1,5 +1,5 @@
 import math
-from functools import cached_property
+from functools import cache
 
 from infographics._utils import log
 from infographics.base import dorling_compress, xy
@@ -30,8 +30,8 @@ class DorlingView(PolygonView):
         self.get_id_to_color_cartogram = get_id_to_color_cartogram
         self.get_id_to_cartogram_value = get_id_to_cartogram_value
 
-    @cached_property
-    def id_to_cxcyrxry(self):
+    @cache
+    def get_id_to_cxcyrxry_all(self, palette):
         log.debug('[expensive] DorlingView.id_to_cxcyrxry')
         total_cartogram_value = 0
         for id in self.ids:
@@ -40,7 +40,7 @@ class DorlingView(PolygonView):
 
         id_to_cxcyrxry = {}
         for id in self.ids:
-            norm_multipolygon = self.get_id_to_norm_multipolygon(id)
+            norm_multipolygon = self.get_id_to_norm_multipolygon(palette, id)
             cartogram_value = self.get_id_to_cartogram_value(id)
             (cx, cy), ____ = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
             pr = 0.2 * math.sqrt(cartogram_value / total_cartogram_value)
@@ -52,8 +52,8 @@ class DorlingView(PolygonView):
         id_to_cxcyrxry = dict(zip(id_to_cxcyrxry.keys(), xyrs))
         return id_to_cxcyrxry
 
-    def get_id_to_cxcyrxry(self, id):
-        return self.id_to_cxcyrxry[id]
+    def get_id_to_cxcyrxry(self, palette, id):
+        return self.get_id_to_cxcyrxry_all(palette).get(id)
 
     def render_dorling_object(self, palette, id, cxcy, rxry):
         return palette.draw_ellipse(
@@ -65,7 +65,7 @@ class DorlingView(PolygonView):
     def render_dorling_objects(self, palette):
         rendered_dorling_objects = []
         for id in self.ids:
-            [cx, cy], [rx, ry] = self.get_id_to_cxcyrxry(id)
+            [cx, cy], [rx, ry] = self.get_id_to_cxcyrxry(palette, id)
             rendered_dorling_objects.append(
                 self.render_dorling_object(
                     palette,

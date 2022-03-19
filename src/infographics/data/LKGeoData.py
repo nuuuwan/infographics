@@ -19,7 +19,7 @@ class LKGeoData(AbstractData):
         self.subregion_type = subregion_type
 
     @cache
-    def get_data_raw(self):
+    def get_data(self):
         log.debug('[expensive] geodata.get_region_geodata...')
         df = geodata.get_region_geodata(
             self.region_id,
@@ -29,16 +29,20 @@ class LKGeoData(AbstractData):
         return geodata_index
 
     @cache
-    def get_data(self):
-        data = self.get_data_raw()
+    def get_norm_transformer(self, palette):
+        data = self.get_data()
         multi2polygon = list(map(lambda d: d['multipolygon'], data.values()))
-        norm_multi2polygon = xy.get_norm_multi2polygon(multi2polygon)
-        for i, id in enumerate(list(data.keys())):
-            data[id]['norm_multipolygon'] = norm_multi2polygon[i]
-        return data
+        return xy.get_norm_transformer(
+            multi2polygon,
+            aspect_ratio=palette.size[0] / palette.size[1],
+        )
 
-    def get_id_to_norm_multipolygon(self, id):
-        return self[id]['norm_multipolygon']
+    @cache
+    def get_id_to_norm_multipolygon(self, palette, id):
+        return xy.get_norm_multipolygon(
+            self.get_norm_transformer(palette),
+            self[id]['multipolygon'],
+        )
 
     def get_id_to_name(self, id):
         return self[id]['name']
