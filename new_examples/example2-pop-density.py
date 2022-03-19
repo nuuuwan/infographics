@@ -5,6 +5,7 @@ from infographics.data import LKGeoData, gig_utils
 from infographics.view import LegendView, PolygonView
 from new_examples.run_all_examples import example_svg_file_name
 
+
 def main():
     region_id = 'LK'
     subregion_type = 'district'
