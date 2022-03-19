@@ -20,8 +20,8 @@ def main():
     simple_label = SimpleLabel(lk_geodata.get_id_to_name)
 
     infographic = Infographic(
-        gig_utils.get_region_full_name(region_id),
-        f'Population Density by {subregion_type.upper()}',
+        gig_utils.get_full_name(region_id),
+        gig_utils.get_by_name(subregion_type, 'Population Density')
         'visualization by @nuuuwan',
         [
             PolygonView(
