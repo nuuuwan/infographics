@@ -37,6 +37,7 @@ class LKCensusData:
 
     def get_get_id_to_p_population(self, field_list):
         get_id_to_population = self.get_get_id_to_population(field_list)
+
         def get_id_to_p_population(id):
             n_total = self.get_id_to_total_population(id)
             n_fields = get_id_to_population(id)
