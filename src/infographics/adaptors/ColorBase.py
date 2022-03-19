@@ -1,5 +1,7 @@
 from functools import cache, cached_property
 
+DEFAULT_LEGEND_SIZE = 7
+
 
 class ColorBase:
     def __init__(
@@ -28,7 +30,7 @@ class ColorBase:
         return list(set(self.color_values))
 
     @cache
-    def get_color_values(self, legend_size):
+    def get_color_values(self, legend_size=DEFAULT_LEGEND_SIZE):
         sorted_color_values = self.sorted_color_values
         n = len(sorted_color_values)
         legend_color_values = []
@@ -44,3 +46,6 @@ class ColorBase:
     def get_color_value_to_int_label(self, color_value):
         color_value = (int)(round(color_value, 0))
         return f'{color_value:,}'
+
+    def get_color_value_to_percent_label(self, color_value):
+        return f'{color_value:.1%}'
