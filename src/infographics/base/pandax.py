@@ -1,6 +1,6 @@
 from shapely.geometry import MultiPolygon, Polygon
 
-from infographics.base import shapely
+from infographics.base import ds, shapely
 
 
 def shape_to_shapely_polygon_list(shape):
@@ -44,8 +44,4 @@ def df_to_geodata_index(df):
             'multipolygon': multipolygon,
         }
 
-    geodata_index = dict(sorted(
-        geodata_index.items(),
-        key=lambda item: item[0],
-    ))
-    return geodata_index
+    return ds.sort_dict_by_key(geodata_index)
