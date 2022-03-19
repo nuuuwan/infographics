@@ -1,5 +1,4 @@
 
-from utils import colorx
 from utils.xmlx import _
 
 from infographics.core.SVG_STYLES import SVG_STYLES
@@ -80,7 +79,3 @@ class SVGPalette(SVGPaletteSize, SVGPalettePolygon):
 
     def draw_g(self, child_list, attribs={}):
         return _('g', child_list, attribs)
-
-    @staticmethod
-    def get_random_color_list(n):
-        return [colorx.random_hex() for i in range(0, n)]
