@@ -21,26 +21,20 @@ def main():
     lk_geodata = LKGeoData(
         region_id=region_id,
         subregion_type=subregion_type,
-    ).get_norm_data()
-
-    def get_id_to_norm_multipolygon(id):
-        return lk_geodata[id]['norm_multipolygon']
-
-    ids = lk_geodata.keys()
+    )
 
     def get_id_to_color_value(id):
         d = lk_geodata[id]
         return d['population'] / d['area']
-
     color_histogram = ColorHistogram(
-        ids=ids,
+        ids=lk_geodata.keys(),
         get_id_to_color_value=get_id_to_color_value,
     )
 
-    n_ids = len(ids)
+    n_ids = len(lk_geodata)
     sorted_density_list = sorted(list(map(
         lambda id: lk_geodata[id]['population'] / lk_geodata[id]['area'],
-        ids,
+        lk_geodata.keys(),
     )))
     density_to_rank_p = dict(list(map(
         lambda x: [x[1], x[0] / n_ids],
@@ -81,7 +75,9 @@ def main():
         children=[
             PolygonView(
                 ids=lk_geodata.keys(),
-                get_id_to_norm_multipolygon=get_id_to_norm_multipolygon,
+                get_id_to_norm_multipolygon=(
+                    lk_geodata.get_id_to_norm_multipolygon
+                ),
                 get_id_to_color=color_histogram.get_id_to_color,
                 get_id_to_label=get_id_to_label,
                 children=[],
@@ -91,9 +87,7 @@ def main():
                 color_values=color_values,
                 get_color_value_to_color=get_color_value_to_color,
                 get_color_value_to_label=get_color_value_to_label,
-            )
-        ]
-    )
+            )])
     infographic.save(example_svg_file_name(__file__))
 
 
