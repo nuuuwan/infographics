@@ -26,7 +26,6 @@ class PolygonView:
             rendered_polygons.append(
                 self.palette.draw_multipolygon(
                     norm_multipolygon,
-                    [],
                     {'fill': self.get_id_to_color(id)},
                 )
             )
