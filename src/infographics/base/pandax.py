@@ -1,6 +1,6 @@
 from shapely.geometry import MultiPolygon, Polygon
 
-from infographics.base import xy, shapely
+from infographics.base import shapely
 
 
 def df_to_geodata_index(df):
