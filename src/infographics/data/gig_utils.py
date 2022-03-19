@@ -9,5 +9,6 @@ def get_full_name(region_id):
         return region_name
     return f'{region_name} {region_entity_type.upper()}'
 
+
 def get_by_name(region_type, label):
     return f'{label} by {region_type.upper()}',
