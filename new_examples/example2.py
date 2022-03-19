@@ -1,6 +1,7 @@
 from gig import ent_types, ents
 from utils import colorx
 
+from infographics.adaptors import ColorHistogram
 from infographics.core import Infographic
 from infographics.core.SVGPalette import SVGPalette
 from infographics.data import LKGeoData
@@ -26,6 +27,16 @@ def main():
         return lk_geodata[id]['norm_multipolygon']
 
     ids = lk_geodata.keys()
+
+    def get_id_to_color_value(id):
+        d = lk_geodata[id]
+        return d['population'] / d['area']
+
+    color_histogram = ColorHistogram(
+        ids=ids,
+        get_id_to_color_value=get_id_to_color_value,
+    )
+
     n_ids = len(ids)
     sorted_density_list = sorted(list(map(
         lambda id: lk_geodata[id]['population'] / lk_geodata[id]['area'],
@@ -35,13 +46,6 @@ def main():
         lambda x: [x[1], x[0] / n_ids],
         enumerate(sorted_density_list),
     )))
-
-    def get_id_to_color(id):
-        d = lk_geodata[id]
-        density = d['population'] / d['area']
-        rank_p = density_to_rank_p[density]
-        hue = (1 - rank_p) * 240
-        return colorx.random_hsl(hue=hue)
 
     palette = SVGPalette()
 
@@ -78,7 +82,7 @@ def main():
             PolygonView(
                 ids=lk_geodata.keys(),
                 get_id_to_norm_multipolygon=get_id_to_norm_multipolygon,
-                get_id_to_color=get_id_to_color,
+                get_id_to_color=color_histogram.get_id_to_color,
                 get_id_to_label=get_id_to_label,
                 children=[],
             ),
