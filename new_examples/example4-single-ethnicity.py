@@ -1,5 +1,6 @@
 
-from infographics.adaptors import ColorBase, ColorPercentVaryLightness, SimpleLabel
+from infographics.adaptors import (ColorBase, ColorPercentVaryLightness,
+                                   SimpleLabel)
 from infographics.core import Infographic
 from infographics.data import LKCensusEthnicityData, LKGeoData, gig_utils
 from infographics.view import LegendView, PolygonView
@@ -23,7 +24,7 @@ def main():
 
     infographic = Infographic(
         gig_utils.get_full_name(region_id),
-        gig_utils.get_by_name(subregion_type, 'Population'),
+        gig_utils.get_by_name(subregion_type, 'Tamil Population'),
         'visualization by @nuuuwan',
         children=[
             PolygonView(
