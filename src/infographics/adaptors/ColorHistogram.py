@@ -1,5 +1,7 @@
 from functools import cached_property
+
 from utils import colorx
+
 from infographics.adaptors.ColorBase import ColorBase
 
 
