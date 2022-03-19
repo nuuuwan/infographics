@@ -1,4 +1,4 @@
-from functools import cached_property, cache
+from functools import cache, cached_property
 
 from utils import colorx
 
@@ -22,7 +22,7 @@ class ColorHistogram:
         )))
 
     @cache
-    def get_legend_color_values(self, legend_size):
+    def get_color_values(self, legend_size):
         sorted_color_values = self.sorted_color_values
         n = len(sorted_color_values)
         legend_color_values = []
