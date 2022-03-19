@@ -4,11 +4,12 @@ from geo import geodata
 
 from infographics._utils import log
 from infographics.base import pandax, xy
+from infographics.data.AbstractData import AbstractData
 
 log.debug('[?expensive] from geo import geodata...')
 
 
-class LKGeoData:
+class LKGeoData(AbstractData):
     def __init__(
         self,
         region_id,
@@ -18,7 +19,7 @@ class LKGeoData:
         self.subregion_type = subregion_type
 
     @cache
-    def get_data(self):
+    def get_data_raw(self):
         log.debug('[expensive] geodata.get_region_geodata...')
         df = geodata.get_region_geodata(
             self.region_id,
@@ -28,23 +29,13 @@ class LKGeoData:
         return geodata_index
 
     @cache
-    def get_norm_data(self):
-        data = self.get_data()
+    def get_data(self):
+        data = self.get_data_raw()
         multi2polygon = list(map(lambda d: d['multipolygon'], data.values()))
         norm_multi2polygon = xy.get_norm_multi2polygon(multi2polygon)
         for i, id in enumerate(list(data.keys())):
             data[id]['norm_multipolygon'] = norm_multi2polygon[i]
         return data
-
-    @cache
-    def keys(self):
-        return self.get_data().keys()
-
-    def __getitem__(self, id):
-        return self.get_norm_data().get(id)
-
-    def __len__(self):
-        return len(self.keys())
 
     def get_id_to_norm_multipolygon(self, id):
         return self[id]['norm_multipolygon']

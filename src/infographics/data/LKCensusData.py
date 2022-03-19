@@ -3,11 +3,12 @@ from functools import cache
 from gig import ext_data
 
 from infographics._utils import log
+from infographics.data.AbstractData import AbstractData
 
 DATA_GROUP = 'census'
 
 
-class LKCensusData:
+class LKCensusData(AbstractData):
     def __init__(self, table_id):
         self.table_id = table_id
 
@@ -19,16 +20,6 @@ class LKCensusData:
     @cache
     def get_id_to_total_population(self, id):
         return self[id]['total_population']
-
-    @cache
-    def keys(self):
-        return self.get_data().keys()
-
-    def __getitem__(self, id):
-        return self.get_data().get(id)
-
-    def __len__(self):
-        return len(self.keys())
 
     def get_get_id_to_population(self, field_list):
         def get_id_to_population(id):
