@@ -1,7 +1,6 @@
 from gig import ent_types, ents
 from utils import colorx
 
-from infographics.base import xy
 from infographics.core import Infographic
 from infographics.core.SVGPalette import SVGPalette
 from infographics.data import LKGeoData
@@ -21,11 +20,7 @@ def main():
     lk_geodata = LKGeoData(
         region_id=region_id,
         subregion_type=subregion_type,
-    ).data
-    multi2polygon = list(map(lambda d: d['multipolygon'], lk_geodata.values()))
-    norm_multi2polygon = xy.get_norm_multi2polygon(multi2polygon)
-    for i, id in enumerate(list(lk_geodata.keys())):
-        lk_geodata[id]['norm_multipolygon'] = norm_multi2polygon[i]
+    ).get_norm_data()
 
     def get_id_to_norm_multipolygon(id):
         return lk_geodata[id]['norm_multipolygon']
