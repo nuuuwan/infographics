@@ -9,7 +9,7 @@ class PolygonView:
         get_id_to_norm_multipolygon,
         get_id_to_color,
         get_id_to_label,
-        children=[],
+        children,
     ):
         self.ids = ids
         self.get_id_to_norm_multipolygon = get_id_to_norm_multipolygon

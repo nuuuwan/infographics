@@ -14,7 +14,7 @@ class DorlingView(PolygonView):
         get_id_to_color_cartogram,
         get_id_to_label,
         get_id_to_cartogram_value,
-        children=[],
+        children,
     ):
         def get_id_to_color(id):
             return 'white'

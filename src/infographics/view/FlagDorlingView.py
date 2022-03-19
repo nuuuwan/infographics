@@ -12,7 +12,7 @@ class FlagDorlingView(DorlingView):
         get_id_to_label,
         get_id_to_cartogram_value,
         get_id_to_flag_data,
-        children=[],
+        children,
     ):
         def get_id_to_color(id):
             return 'gray'
