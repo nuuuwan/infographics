@@ -45,6 +45,7 @@ class FlagDorlingView(DorlingView):
 
         cx, cy = cxcy
         rx, ry = rxry
+        ry /= 2
 
         x0 = cx - rx
         y0 = cy + ry
