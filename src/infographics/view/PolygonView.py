@@ -1,10 +1,8 @@
-from abc import ABC
-
 from infographics.base import xy
 from infographics.core import SVGPalette
 
 
-class PolygonView(ABC):
+class PolygonView:
     def __init__(
         self,
         ids,

@@ -1,5 +1,4 @@
 import math
-from abc import ABC
 from functools import cached_property
 
 from infographics._utils import log
@@ -7,7 +6,7 @@ from infographics.base import dorling_compress, xy
 from infographics.core import SVGPalette
 
 
-class DorlingView(ABC):
+class DorlingView:
     def __init__(
         self,
         ids,
