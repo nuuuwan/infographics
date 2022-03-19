@@ -3,7 +3,7 @@ from infographics.adaptors import ColorHistogram, SimpleLabel
 from infographics.core import Infographic
 from infographics.data import LKGeoData, gig_utils
 from infographics.view import LegendView, PolygonView
-from new_examples.examples import example_svg_file_name
+from new_examples.run_all_examples import example_svg_file_name
 
 LEGEND_SIZE = 7
 

@@ -6,7 +6,7 @@ from infographics.core import Infographic
 from infographics.core.SVGPalette import SVGPalette
 from infographics.data import LKCensusData, LKGeoData
 from infographics.view import LegendView, PolygonView
-from new_examples.examples import example_svg_file_name
+from new_examples.run_all_examples import example_svg_file_name
 
 
 def main():

@@ -11,7 +11,7 @@ def example_svg_file_name(file):
 
 def main():
     for m in pkgutil.iter_modules(new_examples.__path__):
-        if m.name == 'examples':
+        if m.name == 'run_all_examples':
             continue
         log.info(f'Running: {m.name}.main()')
         mod = __import__(m.name)

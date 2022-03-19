@@ -1,5 +1,5 @@
 from infographics.core import Infographic
-from new_examples.examples import example_svg_file_name
+from new_examples.run_all_examples import example_svg_file_name
 
 
 def main():
