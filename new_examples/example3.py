@@ -17,17 +17,15 @@ def main():
 
     def id_to_most_common_ethnicity(id):
         d = lk_census_data[id]
-        n_sinhala = d['sinhalese']
-        n_tamil = d['sl_tamil'] + d['ind_tamil']
-        n_muslim = d['sl_moor'] + d['malay']
         n_total = d['total_population']
-
-        if n_sinhala > n_total * MAJORITY_LIMIT:
-            return 'sinhalese'
-        if n_tamil > n_total * MAJORITY_LIMIT:
-            return 'tamil'
-        if n_muslim > n_total * MAJORITY_LIMIT:
-            return 'muslim'
+        for color_value, fields in [
+            ['sinhalese', ['sinhalese']],
+            ['tamil', ['sl_tamil', 'ind_tamil']],
+            ['muslim', ['sl_moor', 'malay']],
+        ]:
+            n = sum([d[field] for field in fields])
+            if n > n_total * MAJORITY_LIMIT:
+                return color_value
         return 'none'
 
     def get_color_value_to_color(color_value):
@@ -35,7 +33,7 @@ def main():
             'sinhalese': 'maroon',
             'tamil': 'orange',
             'muslim': 'green',
-            'none': 'white',
+            'none': 'cyan',
         }.get(color_value)
 
     def get_color_value_to_label(color_value):
