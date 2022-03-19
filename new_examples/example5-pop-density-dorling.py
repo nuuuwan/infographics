@@ -45,6 +45,5 @@ def build_infographic():
     )
 
 
-
 if __name__ == '__main__':
     save(build_infographic(), __file__)
