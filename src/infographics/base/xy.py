@@ -1,12 +1,3 @@
-"""
-Various xy rexed utils.
-
-point hierarchy
-0 - coordinates (x or y, x or y)
-1 - point
-2 - polygon (point_list)
-3 - multipolygon (point_list_list)
-"""
 from utils import ds
 
 
@@ -23,9 +14,7 @@ def get_bounds(polygon):
 
 def get_midxy(polygon):
     ((min_x, min_y), (max_x, max_y)) = get_bounds(polygon)
-    mid_x = (min_x + max_x) / 2
-    mid_y = (min_y + max_y) / 2
-    return (mid_x, mid_y)
+    return ((min_x + max_x) / 2, (min_y + max_y) / 2)
 
 
 def get_spans(polygon):
@@ -41,11 +30,7 @@ def get_cxcyrxry(polygon):
 
 
 def get_cxcyrxry_for_multipolygon(multipolygon):
-    polygon = ds.flatten(multipolygon)
-    cx, cy = get_midxy(polygon)
-    x_span, y_span = get_spans(polygon)
-    rx, ry = x_span / 2, y_span / 2
-    return (cx, cy), (rx, ry)
+    return get_cxcyrxry(ds.flatten(multipolygon))
 
 
 def get_norm_transformer(
