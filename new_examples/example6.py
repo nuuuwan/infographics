@@ -63,5 +63,5 @@ if __name__ == '__main__':
             )
         ],
         (800, 900, 10),
-        20,
+        15,
     ).save('/tmp/infographics.example6.svg')
