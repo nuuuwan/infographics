@@ -5,9 +5,6 @@ from infographics.data import LKGeoData, gig_utils
 from infographics.view import LegendView, PolygonView
 from new_examples.run_all_examples import example_svg_file_name
 
-LEGEND_SIZE = 7
-
-
 def main():
     region_id = 'LK'
     subregion_type = 'district'
@@ -33,7 +30,7 @@ def main():
             ),
             LegendView(
                 'Persons per km²',
-                color_histogram.get_color_values(LEGEND_SIZE),
+                color_histogram.get_color_values(),
                 color_histogram.get_color_value_to_color,
                 color_histogram.get_color_value_to_int_label,
             )
