@@ -1,8 +1,7 @@
-from gig import ent_types, ents
 
 from infographics.adaptors import ColorHistogram, SimpleLabel
 from infographics.core import Infographic
-from infographics.data import LKGeoData
+from infographics.data import LKGeoData, gig_utils
 from infographics.view import LegendView, PolygonView
 from new_examples.examples import example_svg_file_name
 
@@ -12,10 +11,8 @@ LEGEND_SIZE = 7
 def main():
     region_id = 'LK'
     subregion_type = 'district'
-    region_ent = ents.get_entity(region_id)
-    region_name = region_ent['name']
-    region_entity_type = ent_types.get_entity_type(region_id)
-    title = f'{region_name} {region_entity_type.upper()}'
+
+    title = gig_utils.get_region_full_name(region_id)
     subtitle = f'Population Density by {subregion_type.upper()}'
 
     lk_geodata = LKGeoData(
