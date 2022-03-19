@@ -1,1 +1,2 @@
 from infographics.adaptors.ColorHistogram import ColorHistogram
+from infographics.adaptors.SimpleLabel import SimpleLabel
