@@ -11,4 +11,4 @@ def get_full_name(region_id):
 
 
 def get_by_name(region_type, label):
-    return f'{label} by {region_type.upper()}',
+    return f'{label} by {region_type.upper()}'
