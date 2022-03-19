@@ -18,7 +18,6 @@ def main():
     title = f'{region_name} {region_entity_type.upper()}'
     subtitle = f'Population Density by {subregion_type.upper()}'
 
-    palette = SVGPalette()
     lk_geodata = LKGeoData(
         region_id=region_id,
         subregion_type=subregion_type,
@@ -49,6 +48,7 @@ def main():
         hue = (1 - rank_p) * 240
         return colorx.random_hsl(hue=hue)
 
+    palette = SVGPalette()        
     def get_id_to_label(id, cxy, rxy):
         label = lk_geodata[id]['name']
         rx, ry = rxy
