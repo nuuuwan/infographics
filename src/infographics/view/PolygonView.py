@@ -1,5 +1,4 @@
 from infographics.base import xy
-from infographics.core import SVGPalette
 
 
 class PolygonView:
@@ -16,15 +15,14 @@ class PolygonView:
         self.get_id_to_color = get_id_to_color
         self.get_id_to_label = get_id_to_label
         self.children = children
-        self.palette = SVGPalette()
 
-    def render_polygons(self):
+    def render_polygons(self, palette):
         rendered_polygons = []
         for id in self.ids:
             norm_multipolygon = self.get_id_to_norm_multipolygon(id)
 
             rendered_polygons.append(
-                self.palette.draw_multipolygon(
+                palette.draw_multipolygon(
                     norm_multipolygon,
                     {'fill': self.get_id_to_color(id)},
                 )
@@ -36,17 +34,19 @@ class PolygonView:
         (cx, cy), (rx, ry) = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
         return (cx, cy), (rx, ry)
 
-    def render_labels(self):
+    def render_labels(self, palette):
         rendered_labels = []
         for id in self.ids:
             (cx, cy), (rx, ry) = self.get_id_to_cxcyrxry(id)
             rendered_labels.append(
-                self.get_id_to_label(id, (cx, cy), (rx, ry)),
+                self.get_id_to_label(palette, id, (cx, cy), (rx, ry)),
             )
         return rendered_labels
 
-    def __xml__(self):
+    def __xml__(self, palette):
 
-        return self.palette.draw_g(
-            self.render_polygons() + self.render_labels() + self.children,
+        return palette.draw_g(
+            self.render_polygons(palette) +
+            self.render_labels(palette) +
+            self.children,
         )

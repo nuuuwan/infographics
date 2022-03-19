@@ -7,13 +7,10 @@ from infographics.core.SVGPaletteSize import SVGPaletteSize
 
 
 class SVGPalette(SVGPaletteSize, SVGPalettePolygon):
-    DEFAULT_WIDTH, DEFAULT_HEIGHT, PADDING = 1200, 675, 20
-    DEFAULT_BASE_FONT_SIZE = 16
-
     def __init__(
         self,
-        size=(DEFAULT_WIDTH, DEFAULT_HEIGHT, PADDING),
-        base_font_size=DEFAULT_BASE_FONT_SIZE,
+        size,
+        base_font_size,
     ):
         self.size = size
         self.base_font_size = base_font_size

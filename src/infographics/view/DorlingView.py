@@ -55,19 +55,20 @@ class DorlingView(PolygonView):
     def get_id_to_cxcyrxry(self, id):
         return self.id_to_cxcyrxry[id]
 
-    def render_dorling_object(self, id, cxcy, rxry):
-        return self.palette.draw_ellipse(
+    def render_dorling_object(self, palette, id, cxcy, rxry):
+        return palette.draw_ellipse(
             cxcy,
             rxry,
             {'fill': self.get_id_to_color_cartogram(id)},
         )
 
-    def render_dorling_objects(self):
+    def render_dorling_objects(self, palette):
         rendered_dorling_objects = []
         for id in self.ids:
             [cx, cy], [rx, ry] = self.get_id_to_cxcyrxry(id)
             rendered_dorling_objects.append(
                 self.render_dorling_object(
+                    palette,
                     id,
                     (cx, cy),
                     (rx, ry),
@@ -75,10 +76,9 @@ class DorlingView(PolygonView):
             )
         return rendered_dorling_objects
 
-    def __xml__(self):
-
-        return self.palette.draw_g(
-            self.render_polygons() +
-            self.render_dorling_objects() +
-            self.render_labels(),
+    def __xml__(self, palette):
+        return palette.draw_g(
+            self.render_polygons(palette) +
+            self.render_dorling_objects(palette) +
+            self.render_labels(palette),
         )

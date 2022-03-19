@@ -29,7 +29,7 @@ class FlagDorlingView(DorlingView):
         )
         self.get_id_to_flag_data = get_id_to_flag_data
 
-    def render_dorling_object(self, id, cxcy, rxry):
+    def render_dorling_object(self, palette, id, cxcy, rxry):
         flag_data = self.get_id_to_flag_data(id)
         n_sinhalese = flag_data['sinhalese']
         n_tamil = flag_data['tamil']
@@ -57,7 +57,7 @@ class FlagDorlingView(DorlingView):
         ]:
             rx0 = rx * p
             inner_list.append(
-                self.palette.draw_rect(
+                palette.draw_rect(
                     (x0, y0),
                     (rx0 * 2, ry * 2),
                     {
@@ -70,4 +70,4 @@ class FlagDorlingView(DorlingView):
             )
             x0 += rx0 * 2
 
-        return self.palette.draw_g(inner_list)
+        return palette.draw_g(inner_list)

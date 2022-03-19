@@ -46,7 +46,7 @@ if __name__ == '__main__':
         gig_utils.get_full_name(region_id),
         gig_utils.get_by_name(subregion_type, 'Flag Cartogram'),
         'visualization by @nuuuwan',
-        children=[
+        [
             FlagDorlingView(
                 lk_geodata.keys(),
                 lk_geodata.get_id_to_norm_multipolygon,
@@ -61,5 +61,7 @@ if __name__ == '__main__':
                 get_color_value_to_color,
                 get_color_value_to_label,
             )
-        ]
+        ],
+        (800, 900, 10),
+        20,
     ).save('/tmp/infographics.example6.svg')
