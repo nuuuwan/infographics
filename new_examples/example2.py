@@ -22,13 +22,9 @@ def main():
         region_id=region_id,
         subregion_type=subregion_type,
     )
-
-    def get_id_to_color_value(id):
-        d = lk_geodata[id]
-        return d['population'] / d['area']
     color_histogram = ColorHistogram(
         ids=lk_geodata.keys(),
-        get_id_to_color_value=get_id_to_color_value,
+        get_id_to_color_value=lk_geodata.get_id_to_population_density,
     )
     simple_label = SimpleLabel(lk_geodata.get_id_to_name)
 
@@ -38,20 +34,17 @@ def main():
         footer_text='visualization by @nuuuwan',
         children=[
             PolygonView(
-                ids=lk_geodata.keys(),
-                get_id_to_norm_multipolygon=(
-                    lk_geodata.get_id_to_norm_multipolygon),
-                get_id_to_color=color_histogram.get_id_to_color,
-                get_id_to_label=simple_label.get_id_to_label,
-                children=[],
+                lk_geodata.keys(),
+                lk_geodata.get_id_to_norm_multipolygon,
+                color_histogram.get_id_to_color,
+                simple_label.get_id_to_label,
+                [],
             ),
             LegendView(
-                legend_title='Persons per km²',
-                color_values=color_histogram.get_legend_color_values(LEGEND_SIZE),
-                get_color_value_to_color=(
-                    color_histogram.get_color_value_to_color),
-                get_color_value_to_label=(
-                    color_histogram.get_color_value_to_label),
+                'Persons per km²',
+                color_histogram.get_color_values(LEGEND_SIZE),
+                color_histogram.get_color_value_to_color,
+                color_histogram.get_color_value_to_label,
             )])
     infographic.save(example_svg_file_name(__file__))
 
