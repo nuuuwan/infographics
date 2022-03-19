@@ -1,4 +1,4 @@
-from functools import cache, cached_property
+from functools import cache
 
 from gig import ext_data
 
