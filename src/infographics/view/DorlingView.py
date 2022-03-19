@@ -3,27 +3,32 @@ from functools import cached_property
 
 from infographics._utils import log
 from infographics.base import dorling_compress, xy
-from infographics.core import SVGPalette
+from infographics.view.PolygonView import PolygonView
 
 
-class DorlingView:
+class DorlingView(PolygonView):
     def __init__(
         self,
         ids,
         get_id_to_norm_multipolygon,
-        get_id_to_color,
+        get_id_to_color_cartogram,
         get_id_to_label,
         get_id_to_cartogram_value,
         children=[],
     ):
+        def get_id_to_color(id):
+            return 'white'
 
-        self.ids = ids
-        self.get_id_to_norm_multipolygon = get_id_to_norm_multipolygon
-        self.get_id_to_color = get_id_to_color
-        self.get_id_to_label = get_id_to_label
+        PolygonView.__init__(
+            self,
+            ids,
+            get_id_to_norm_multipolygon,
+            get_id_to_color,
+            get_id_to_label,
+            children,
+        )
+        self.get_id_to_color_cartogram = get_id_to_color_cartogram
         self.get_id_to_cartogram_value = get_id_to_cartogram_value
-        self.children = children
-        self.palette = SVGPalette()
 
     @cached_property
     def id_to_cxcyrxry(self):
@@ -47,43 +52,39 @@ class DorlingView:
         id_to_cxcyrxry = dict(zip(id_to_cxcyrxry.keys(), xyrs))
         return id_to_cxcyrxry
 
-    def __xml__(self):
-        inner_child_list = []
-        for id in self.ids:
-            norm_multipolygon = self.get_id_to_norm_multipolygon(id)
+    def render_dorling_object(self, id, cxcy, rxry):
+        return self.palette.draw_ellipse(
+            cxcy,
+            rxry,
+            {'fill': self.get_id_to_color_cartogram(id)},
+        )
 
-            inner_child_list.append(
-                self.palette.draw_multipolygon(
-                    norm_multipolygon,
-                    [],
-                    {'fill': 'white'},
-                )
-            )
-
+    def render_labels(self):
+        rendered_labels = []
         for id in self.ids:
             [cx, cy], [rx, ry] = self.id_to_cxcyrxry[id]
-            inner_child_list.append(
+            rendered_labels.append(
+                self.get_id_to_label(id, (cx, cy), (rx, ry)),
+            )
+        return rendered_labels
+
+    def render_dorling_objects(self):
+        rendered_dorling_objects = []
+        for id in self.ids:
+            [cx, cy], [rx, ry] = self.id_to_cxcyrxry[id]
+            rendered_dorling_objects.append(
                 self.render_dorling_object(
                     id,
                     (cx, cy),
                     (rx, ry),
                 )
             )
+        return rendered_dorling_objects
 
-        for id in self.ids:
-            [cx, cy], [rx, ry] = self.id_to_cxcyrxry[id]
-            inner_child_list.append(
-                self.get_id_to_label(id, (cx, cy), (rx, ry))
-            )
+    def __xml__(self):
 
         return self.palette.draw_g(
-            inner_child_list,
-            self.children,
-        )
-
-    def render_dorling_object(self, id, cxcy, rxry):
-        return self.palette.draw_ellipse(
-            cxcy,
-            rxry,
-            {'fill': self.get_id_to_color(id)},
+            self.render_polygons() +
+            self.render_dorling_objects() +
+            self.render_labels(),
         )
