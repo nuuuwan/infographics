@@ -1,4 +1,4 @@
-from functools import cached_property, cache
+from functools import cache, cached_property
 
 
 class ColorBase:
@@ -13,11 +13,19 @@ class ColorBase:
         self.get_color_value_to_color = get_color_value_to_color
 
     @cached_property
-    def sorted_color_values(self):
-        return sorted(list(map(
+    def color_values(self):
+        return list(map(
             lambda id: self.get_id_to_color_value(id),
             self.ids,
-        )))
+        ))
+
+    @cached_property
+    def sorted_color_values(self):
+        return sorted(self.color_values)
+
+    @cached_property
+    def unique_color_values(self):
+        return list(set(self.color_values))
 
     @cache
     def get_color_values(self, legend_size):
