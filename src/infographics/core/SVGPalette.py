@@ -40,18 +40,8 @@ class SVGPalette(SVGPaletteSize, SVGPalettePolygon):
             'y2': y2,
         } | attribs)
 
-    def draw_circle(self, pc, pr, attribs={}):
-        cx, cy = self.t(pc)
-        cx1, cy1 = self.t((pc[0] + pr, pc[1] + pr))
-        rx = abs(cx1 - cx)
-        ry = abs(cy1 - cy)
-
-        return _('ellipse', None, SVG_STYLES.CIRCLE | {
-            'cx': cx,
-            'cy': cy,
-            'rx': rx,
-            'ry': ry,
-        } | attribs)
+    def draw_circle(self, pcxcy, pr, attribs={}):
+        return self.draw_ellipse(pcxcy, [pr, pr], attribs)
 
     def draw_ellipse(self, pcxcy, prxry, attribs={}):
         pcx, pcy = pcxcy
