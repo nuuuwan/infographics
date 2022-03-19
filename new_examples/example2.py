@@ -12,9 +12,6 @@ def main():
     region_id = 'LK'
     subregion_type = 'district'
 
-    title = gig_utils.get_region_full_name(region_id)
-    subtitle = f'Population Density by {subregion_type.upper()}'
-
     lk_geodata = LKGeoData(region_id, subregion_type)
     color_histogram = ColorHistogram(
         lk_geodata.keys(),
@@ -23,8 +20,8 @@ def main():
     simple_label = SimpleLabel(lk_geodata.get_id_to_name)
 
     infographic = Infographic(
-        title,
-        subtitle,
+        gig_utils.get_region_full_name(region_id),
+        f'Population Density by {subregion_type.upper()}',
         'visualization by @nuuuwan',
         [
             PolygonView(
