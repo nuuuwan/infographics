@@ -1,5 +1,7 @@
 from functools import cache, cached_property
 
+from infographics.base import Humanize
+
 DEFAULT_LEGEND_SIZE = 7
 
 
@@ -44,8 +46,7 @@ class ColorBase:
         return self.get_color_value_to_color(color_value)
 
     def get_color_value_to_int_label(self, color_value):
-        color_value = (int)(round(color_value, 0))
-        return f'{color_value:,}'
+        return Humanize.int(color_value)
 
     def get_color_value_to_percent_label(self, color_value):
-        return f'{color_value:.1%}'
+        return Humanize.percent(color_value)
