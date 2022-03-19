@@ -2,7 +2,7 @@
 
 from infographics._utils import log
 
-R_PADDING = 0.05
+R_PADDING = 0.0001
 
 
 def _compress(points, bounds):
