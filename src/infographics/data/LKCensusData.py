@@ -30,10 +30,15 @@ class LKCensusData:
     def __len__(self):
         return len(self.keys())
 
+    def get_get_id_to_population(self, field_list):
+        def get_id_to_population(id):
+            return sum([self[id][field] for field in field_list])
+        return get_id_to_population
+
     def get_get_id_to_p_population(self, field_list):
+        get_id_to_population = self.get_get_id_to_population(field_list)
         def get_id_to_p_population(id):
-            d = self[id]
             n_total = self.get_id_to_total_population(id)
-            n_fields = sum([d[field] for field in field_list])
+            n_fields = get_id_to_population(id)
             return n_fields / n_total
         return get_id_to_p_population
