@@ -2,7 +2,7 @@
 
 from infographics._utils import log
 
-R_PADDING = 0.0001
+R_PADDING = 0.1
 
 
 def _compress(points, bounds):
@@ -10,7 +10,7 @@ def _compress(points, bounds):
     dt = 0.01
     n_points = len(points)
 
-    n_epochs = 1000
+    n_epochs = 100
     for i_epochs in range(0, n_epochs):
         if i_epochs % (n_epochs / 10) == 0:
             log.debug('i_epochs = {:,}'.format(i_epochs))
