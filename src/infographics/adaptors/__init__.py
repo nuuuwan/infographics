@@ -1,0 +1,1 @@
+from infographics.adaptors.ColorHistogram import ColorHistogram
