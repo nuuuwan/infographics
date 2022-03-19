@@ -3,10 +3,10 @@ from infographics.adaptors import ColorBase, SimpleLabel
 from infographics.core import Infographic
 from infographics.data import LKCensusEthnicityData, LKGeoData, gig_utils
 from infographics.view import LegendView, PolygonView
-from new_examples.run_all_examples import save
+from new_examples.common import save
 
 
-def main():
+def build_infographic():
     region_id = 'LK'
     subregion_type = 'dsd'
 
@@ -20,7 +20,7 @@ def main():
     )
     simple_label = SimpleLabel(lk_geodata.get_id_to_name)
 
-    infographic = Infographic(
+    return Infographic(
         gig_utils.get_full_name(region_id),
         gig_utils.get_by_name(subregion_type, 'Population Density'),
         'visualization by @nuuuwan',
@@ -40,8 +40,8 @@ def main():
             )
         ]
     )
-    save(infographic, __file__)
+
 
 
 if __name__ == '__main__':
-    main()
+    save(build_infographic(), __file__)

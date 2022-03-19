@@ -1,11 +1,11 @@
 from infographics.core import Infographic
-from new_examples.run_all_examples import save
+from new_examples.common import save
 
 
-def main():
-    infographic = Infographic()
-    save(infographic, __file__)
+def build_infographic():
+    return Infographic()
+
 
 
 if __name__ == '__main__':
-    main()
+    save(build_infographic(), __file__)
