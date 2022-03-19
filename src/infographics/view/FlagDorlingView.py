@@ -19,11 +19,11 @@ class FlagDorlingView(DorlingView):
 
         DorlingView.__init__(
             self,
-            ids=ids,
-            get_id_to_norm_multipolygon=get_id_to_norm_multipolygon,
-            get_id_to_color=get_id_to_color,
-            get_id_to_label=get_id_to_label,
-            get_id_to_cartogram_value=get_id_to_cartogram_value,
+            ids,
+            get_id_to_norm_multipolygon,
+            get_id_to_color,
+            get_id_to_label,
+            get_id_to_cartogram_value,
             children=children,
 
         )
