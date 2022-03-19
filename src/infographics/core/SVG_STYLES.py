@@ -1,17 +1,20 @@
 DEFAULT_FONT = 'Gill Sans'
 
 
-DEFAULT_BORDERED_AREA = {
+DEFAULT_FILL = {
     'fill': 'white',
+}
+DEFAULT_STROKE = {
     'stroke': 'lightgray',
     'stroke-width': 1,
 }
+DEFAULT_BORDERED_AREA = DEFAULT_FILL | DEFAULT_STROKE
+
 
 
 class SVG_STYLES:
     SVG = {
         'xmlns': 'http://www.w3.org/2000/svg',
-
     }
 
     TEXT = {
@@ -22,14 +25,7 @@ class SVG_STYLES:
         'font-family': DEFAULT_FONT,
     }
 
-    LINE = {
-        'stroke': 'lightgray',
-        'stroke-width': 1,
-        'opacity': 0.2,
-    }
-
+    LINE = DEFAULT_STROKE
     RECT = DEFAULT_BORDERED_AREA
-
     CIRCLE = DEFAULT_BORDERED_AREA
-
     PATH = DEFAULT_BORDERED_AREA
