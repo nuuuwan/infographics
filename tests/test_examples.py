@@ -18,7 +18,7 @@ class TestCase(unittest.TestCase):
 
             i = file_only[7]
             svg_file = f'/tmp/infographics.example{i}.svg'
-            self.assert_(os.path.exists(svg_file))
+            self.assertTrue(os.path.exists(svg_file))
 
 
 if __name__ == '__main__':
