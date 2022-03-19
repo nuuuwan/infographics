@@ -10,7 +10,7 @@ from new_examples.run_all_examples import example_svg_file_name
 def main():
     region_id = 'LK'
     subregion_type = 'district'
-    field_list = ['sl_tamil', 'ind_tamil']
+    field_list = ['sl_moor', 'malay']
 
     lk_geodata = LKGeoData(region_id, subregion_type)
     lk_census_ethnicity_data = LKCensusEthnicityData()
@@ -18,13 +18,13 @@ def main():
     color_base = ColorBase(
         lk_geodata.keys(),
         lk_census_ethnicity_data.get_get_id_to_p_population(field_list),
-        ColorPercentVaryLightness(hue=30).get_color_value_to_color,
+        ColorPercentVaryLightness(hue=130).get_color_value_to_color,
     )
     simple_label = SimpleLabel(lk_geodata.get_id_to_name)
 
     infographic = Infographic(
         gig_utils.get_full_name(region_id),
-        gig_utils.get_by_name(subregion_type, 'Tamil Population'),
+        gig_utils.get_by_name(subregion_type, 'Muslim/Malay Population'),
         'visualization by @nuuuwan',
         children=[
             DorlingView(
