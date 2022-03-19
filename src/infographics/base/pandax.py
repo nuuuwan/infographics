@@ -6,10 +6,9 @@ from infographics.base import ds, shapely
 def shape_to_shapely_polygon_list(shape):
     if isinstance(shape, MultiPolygon):
         return shapely.shapely_multipolygon_to_polygon_list(shape)
-    elif isinstance(shape, Polygon):
+    if isinstance(shape, Polygon):
         return [shape]
-    else:
-        raise Exception('Unknown shape: ', type(shape))
+    raise Exception('Unknown shape: ', type(shape))
 
 
 def shapely_polygon_list_to_multipolygon(shapely_polygon_list):
