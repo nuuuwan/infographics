@@ -21,23 +21,29 @@ def get_bounds(polygon):
     return ((min_x, min_y), (max_x, max_y))
 
 
-def get_midxy(multipolygon):
-    polygon = ds.flatten(multipolygon)
+def get_midxy(polygon):
     ((min_x, min_y), (max_x, max_y)) = get_bounds(polygon)
     mid_x = (min_x + max_x) / 2
     mid_y = (min_y + max_y) / 2
     return (mid_x, mid_y)
 
 
-def get_spans(multipolygon):
-    polygon = ds.flatten(multipolygon)
+def get_spans(polygon):
     ((min_x, min_y), (max_x, max_y)) = get_bounds(polygon)
     return (max_x - min_x), (max_y - min_y)
 
 
-def get_cxcyrxry(multipolygon):
-    cx, cy = get_midxy(multipolygon)
-    x_span, y_span = get_spans(multipolygon)
+def get_cxcyrxry(polygon):
+    cx, cy = get_midxy(polygon)
+    x_span, y_span = get_spans(polygon)
+    rx, ry = x_span / 2, y_span / 2
+    return (cx, cy), (rx, ry)
+
+
+def get_cxcyrxry_for_multipolygon(multipolygon):
+    polygon = ds.flatten(multipolygon)
+    cx, cy = get_midxy(polygon)
+    x_span, y_span = get_spans(polygon)
     rx, ry = x_span / 2, y_span / 2
     return (cx, cy), (rx, ry)
 
@@ -50,8 +56,7 @@ def get_norm_multi2polygon(
         900)):
     polygon = ds.flatten(ds.flatten(multi2polygon))
     ((min_x, min_y), (max_x, max_y)) = get_bounds(polygon)
-    x_span = max_x - min_x
-    y_span = max_y - min_y
+    x_span, y_span = get_spans(polygon)
 
     r = x_span / y_span * (size[0] / size[1])
     padding_x = 0

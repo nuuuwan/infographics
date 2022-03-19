@@ -34,7 +34,7 @@ class PolygonView:
 
     def get_id_to_cxcyrxry(self, id):
         norm_multipolygon = self.get_id_to_norm_multipolygon(id)
-        (cx, cy), (rx, ry) = xy.get_cxcyrxry(norm_multipolygon)
+        (cx, cy), (rx, ry) = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
         return (cx, cy), (rx, ry)
 
     def render_labels(self):

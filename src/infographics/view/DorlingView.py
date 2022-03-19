@@ -42,7 +42,7 @@ class DorlingView(PolygonView):
         for id in self.ids:
             norm_multipolygon = self.get_id_to_norm_multipolygon(id)
             cartogram_value = self.get_id_to_cartogram_value(id)
-            (cx, cy), ____ = xy.get_cxcyrxry(norm_multipolygon)
+            (cx, cy), ____ = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
             pr = 0.2 * math.sqrt(cartogram_value / total_cartogram_value)
 
             id_to_cxcyrxry[id] = [[cx, cy], [pr, pr]]
