@@ -3,7 +3,7 @@ from infographics.adaptors import (ColorBase, ColorPercentVaryLightness,
                                    SimpleLabel)
 from infographics.core import Infographic
 from infographics.data import LKCensusEthnicityData, LKGeoData, gig_utils
-from infographics.view import LegendView, DorlingView
+from infographics.view import DorlingView, LegendView
 from new_examples.run_all_examples import example_svg_file_name
 
 
