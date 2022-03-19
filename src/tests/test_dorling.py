@@ -11,10 +11,10 @@ class TestCase(unittest.TestCase):
     def test_compress(self):
         """Test."""
         points = [
-            {'x': 0.25, 'y': 0.25, 'r': 0.01, 'color': 'r'},
-            {'x': 0.25, 'y': 0.75, 'r': 0.02, 'color': 'g'},
-            {'x': 0.75, 'y': 0.25, 'r': 0.04, 'color': 'b'},
-            {'x': 0.75, 'y': 0.75, 'r': 0.03, 'color': 'orange'},
+            [[0.25, 0.25], [0.01, 0.04]],
+            [[0.25, 0.75], [0.02, 0.03]],
+            [[0.75, 0.25], [0.04, 0.02]],
+            [[0.75, 0.75], [0.03, 0.01]],
         ]
         compressed_points = dorling_compress._compress(points, [0, 0, 1, 1])
         self.assertEqual(points, compressed_points)
