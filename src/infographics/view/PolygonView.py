@@ -32,11 +32,15 @@ class PolygonView:
             )
         return rendered_polygons
 
+    def get_id_to_cxcyrxry(self, id):
+        norm_multipolygon = self.get_id_to_norm_multipolygon(id)
+        (cx, cy), (rx, ry) = xy.get_cxcyrxry(norm_multipolygon)
+        return (cx, cy), (rx, ry)
+
     def render_labels(self):
         rendered_labels = []
         for id in self.ids:
-            norm_multipolygon = self.get_id_to_norm_multipolygon(id)
-            (cx, cy), (rx, ry) = xy.get_cxcyrxry(norm_multipolygon)
+            (cx, cy), (rx, ry) = self.get_id_to_cxcyrxry(id)
             rendered_labels.append(
                 self.get_id_to_label(id, (cx, cy), (rx, ry)),
             )
