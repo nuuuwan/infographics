@@ -4,10 +4,8 @@ from infographics.core import Infographic
 from infographics.data import (LKCensusEthnicityData, LKCensusReligionData,
                                LKGeoData, gig_utils)
 from infographics.view import FlagDorlingView, LegendView
-from new_examples.common import save
 
-
-def build_infographic():
+if __name__ == '__main__':
     region_id = 'LK'
     subregion_type = 'province'
 
@@ -44,7 +42,7 @@ def build_infographic():
 
     simple_label = SimpleLabel(lk_geodata.get_id_to_name)
 
-    return Infographic(
+    Infographic(
         gig_utils.get_full_name(region_id),
         gig_utils.get_by_name(subregion_type, 'Flag Cartogram'),
         'visualization by @nuuuwan',
@@ -64,8 +62,4 @@ def build_infographic():
                 get_color_value_to_label,
             )
         ]
-    )
-
-
-if __name__ == '__main__':
-    save(build_infographic(), __file__)
+    ).save('/tmp/infographics.example6.svg')
