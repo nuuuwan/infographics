@@ -1,42 +1,48 @@
 
-from infographics.adaptors import ColorHistogram, SimpleLabel
+from infographics.adaptors import (ColorBase, ColorPercentVaryLightness,
+                                   SimpleLabel)
 from infographics.core import Infographic
-from infographics.data import LKGeoData, gig_utils
-from infographics.view import DorlingView, LegendView
+from infographics.data import LKCensusEthnicityData, LKGeoData, gig_utils
+from infographics.view import LegendView, DorlingView
 from new_examples.run_all_examples import example_svg_file_name
 
 
 def main():
     region_id = 'LK'
     subregion_type = 'district'
+    field_list = ['sl_tamil', 'ind_tamil']
 
     lk_geodata = LKGeoData(region_id, subregion_type)
-    color_histogram = ColorHistogram(
+    lk_census_ethnicity_data = LKCensusEthnicityData()
+
+    color_base = ColorBase(
         lk_geodata.keys(),
-        lk_geodata.get_id_to_population_density,
+        lk_census_ethnicity_data.get_get_id_to_p_population(field_list),
+        ColorPercentVaryLightness(hue=30).get_color_value_to_color,
     )
     simple_label = SimpleLabel(lk_geodata.get_id_to_name)
 
     infographic = Infographic(
         gig_utils.get_full_name(region_id),
-        gig_utils.get_by_name(subregion_type, 'Population Density'),
+        gig_utils.get_by_name(subregion_type, 'Tamil Population'),
         'visualization by @nuuuwan',
-        [
+        children=[
             DorlingView(
                 lk_geodata.keys(),
                 lk_geodata.get_id_to_norm_multipolygon,
-                color_histogram.get_id_to_color,
+                color_base.get_id_to_color,
                 simple_label.get_id_to_label,
-                lk_geodata.get_id_to_population,
+                lk_census_ethnicity_data.get_get_id_to_population(field_list),
                 [],
             ),
             LegendView(
-                'Persons per km²',
-                color_histogram.get_color_values(),
-                color_histogram.get_color_value_to_color,
-                color_histogram.get_color_value_to_int_label,
+                '% of Population',
+                color_base.get_color_values(),
+                color_base.get_color_value_to_color,
+                color_base.get_color_value_to_percent_label,
             )
-        ])
+        ]
+    )
     infographic.save(example_svg_file_name(__file__))
 
 
