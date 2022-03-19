@@ -1,12 +1,12 @@
 from gig import ent_types, ents
-from utils import colorx
 
-from infographics.adaptors import ColorHistogram
+from infographics.adaptors import ColorHistogram, SimpleLabel
 from infographics.core import Infographic
-from infographics.core.SVGPalette import SVGPalette
 from infographics.data import LKGeoData
 from infographics.view import LegendView, PolygonView
 from new_examples.examples import example_svg_file_name
+
+LEGEND_SIZE = 7
 
 
 def main():
@@ -30,43 +30,7 @@ def main():
         ids=lk_geodata.keys(),
         get_id_to_color_value=get_id_to_color_value,
     )
-
-    n_ids = len(lk_geodata)
-    sorted_density_list = sorted(list(map(
-        lambda id: lk_geodata[id]['population'] / lk_geodata[id]['area'],
-        lk_geodata.keys(),
-    )))
-    density_to_rank_p = dict(list(map(
-        lambda x: [x[1], x[0] / n_ids],
-        enumerate(sorted_density_list),
-    )))
-
-    palette = SVGPalette()
-
-    def get_id_to_label(id, cxy, rxy):
-        label = lk_geodata[id]['name']
-        rx, ry = rxy
-        font_size = palette.actual_width * rx / len(label) / 16
-        return palette.draw_text(
-            label,
-            cxy,
-            font_size,
-        )
-
-    color_values = []
-    LEGEND_SIZE = 7
-    for i in range(0, LEGEND_SIZE):
-        j = (int)(i * (n_ids - 1) / (LEGEND_SIZE - 1))
-        color_values.append(sorted_density_list[j])
-
-    def get_color_value_to_color(color_value):
-        rank_p = density_to_rank_p[color_value]
-        hue = (1 - rank_p) * 240
-        return colorx.random_hsl(hue=hue)
-
-    def get_color_value_to_label(color_value):
-        color_value = (int)(round(color_value, 0))
-        return f'{color_value:,}'
+    simple_label = SimpleLabel(lk_geodata.get_id_to_name)
 
     infographic = Infographic(
         title=title,
@@ -76,17 +40,18 @@ def main():
             PolygonView(
                 ids=lk_geodata.keys(),
                 get_id_to_norm_multipolygon=(
-                    lk_geodata.get_id_to_norm_multipolygon
-                ),
+                    lk_geodata.get_id_to_norm_multipolygon),
                 get_id_to_color=color_histogram.get_id_to_color,
-                get_id_to_label=get_id_to_label,
+                get_id_to_label=simple_label.get_id_to_label,
                 children=[],
             ),
             LegendView(
                 legend_title='Persons per km²',
-                color_values=color_values,
-                get_color_value_to_color=get_color_value_to_color,
-                get_color_value_to_label=get_color_value_to_label,
+                color_values=color_histogram.get_legend_color_values(LEGEND_SIZE),
+                get_color_value_to_color=(
+                    color_histogram.get_color_value_to_color),
+                get_color_value_to_label=(
+                    color_histogram.get_color_value_to_label),
             )])
     infographic.save(example_svg_file_name(__file__))
 
