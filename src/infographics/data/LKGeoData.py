@@ -34,7 +34,7 @@ class LKGeoData(AbstractData):
         multi2polygon = list(map(lambda d: d['multipolygon'], data.values()))
         return xy.get_norm_transformer(
             multi2polygon,
-            aspect_ratio=palette.size[0] / palette.size[1],
+            aspect_ratio=palette.aspect_ratio,
         )
 
     @cache

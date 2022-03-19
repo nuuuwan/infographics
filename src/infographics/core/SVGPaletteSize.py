@@ -22,6 +22,10 @@ class SVGPaletteSize(ABC):
     def actual_height(self):
         return self.height - self.padding * 2
 
+    @property
+    def aspect_ratio(self):
+        return self.width / self.height
+
     def t(self, p):
         px, py = p
         qx, qy = (px + 1) / 2, (py + 1) / 2
