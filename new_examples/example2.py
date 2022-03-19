@@ -48,7 +48,8 @@ def main():
         hue = (1 - rank_p) * 240
         return colorx.random_hsl(hue=hue)
 
-    palette = SVGPalette()        
+    palette = SVGPalette()
+
     def get_id_to_label(id, cxy, rxy):
         label = lk_geodata[id]['name']
         rx, ry = rxy
