@@ -32,6 +32,8 @@ setuptools.setup(
     python_requires='>=3.6',
     install_requires=[
         'utils-nuuuwan',
-        'matplotlib',
+        'gig-nuuuwan',
+        'geo-nuuuwan',
+
     ],
 )
