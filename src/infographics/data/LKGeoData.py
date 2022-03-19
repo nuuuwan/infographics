@@ -48,3 +48,6 @@ class LKGeoData:
 
     def __len__(self):
         return len(self.get_norm_data())
+
+    def get_id_to_name(self, id):
+        return self[id]['name']
