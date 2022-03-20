@@ -53,7 +53,6 @@ if __name__ == '__main__':
                 simple_label.get_id_to_label,
                 lk_geodata.get_id_to_population,
                 get_id_to_flag_data,
-                [],
             ),
             LegendView(
                 'Ethnicity & Religion',

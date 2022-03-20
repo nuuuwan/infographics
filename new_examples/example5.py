@@ -32,7 +32,6 @@ if __name__ == '__main__':
                 color_base.get_id_to_color,
                 simple_label.get_id_to_label,
                 lk_census_ethnicity_data.get_get_id_to_population(field_list),
-                [],
             ),
             LegendView(
                 '% of Population',

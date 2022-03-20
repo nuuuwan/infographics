@@ -8,13 +8,11 @@ class PolygonView:
         get_id_to_norm_multipolygon,
         get_id_to_color,
         get_id_to_label,
-        children,
     ):
         self.ids = ids
         self.get_id_to_norm_multipolygon = get_id_to_norm_multipolygon
         self.get_id_to_color = get_id_to_color
         self.get_id_to_label = get_id_to_label
-        self.children = children
 
     def render_polygons(self, palette):
         rendered_polygons = []
@@ -47,6 +45,5 @@ class PolygonView:
 
         return palette.draw_g(
             self.render_polygons(palette) +
-            self.render_labels(palette) +
-            self.children,
+            self.render_labels(palette)
         )

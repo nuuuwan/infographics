@@ -30,7 +30,6 @@ if __name__ == '__main__':
                 lk_geodata.get_id_to_norm_multipolygon,
                 color_base.get_id_to_color,
                 simple_label.get_id_to_label,
-                [],
             ),
             LegendView(
                 '% of Population',
