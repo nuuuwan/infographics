@@ -29,9 +29,9 @@ class LegendView:
             ),
             palette.draw_text(
                 self.get_color_value_to_label(color_value),
-                (x + CIRCLE_R_LEGEND * 3, y),
+                (x + CIRCLE_R_LEGEND * 6, y),
                 1,
-                {'text-anchor': 'start'},
+                {'text-anchor': 'end'},
             ),
         ])
 
