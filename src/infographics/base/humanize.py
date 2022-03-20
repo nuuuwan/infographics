@@ -1,11 +1,21 @@
+import math
+
+METRIC_PREFIX_LIST = ['', 'K', 'M', 'B', 'T', 'P', 'E', 'Z', 'Y']
+
+
 def number(f):
-    for m, unit in [
-        [1_000_000, 'M'],
-        [1_000, 'K'],
-    ]:
-        if f > m:
-            return number(f / m) + unit
-    return f'{f:3.3g}'
+    log10f = math.log10(f)
+    i = (int)(log10f / 3)
+    prefix = METRIC_PREFIX_LIST[i]
+
+    a = 10 ** ((int)(log10f) - 1)
+    fa = round(f / a, 0) * a
+
+    b = 10 ** (3 * i)
+    fb = fa / b
+
+    c = 0 if ((int)(log10f) % 3) else 1
+    return ('{fb:.%df}{prefix}' % (c)).format(fb=fb, prefix=prefix)
 
 
 def percent(p):
