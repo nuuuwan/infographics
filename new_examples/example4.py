@@ -22,6 +22,7 @@ if __name__ == '__main__':
     Infographic(
         gig_utils.get_full_name(region_id),
         gig_utils.get_by_name(subregion_type, 'Tamil Population'),
+        lk_census_ethnicity_data.source_text,
         Infographic.DEFAULT_FOOTER_TEXT,
         children=[
             PolygonView(

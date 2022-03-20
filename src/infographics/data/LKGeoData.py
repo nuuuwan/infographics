@@ -17,6 +17,7 @@ class LKGeoData(AbstractData):
     ):
         self.region_id = region_id
         self.subregion_type = subregion_type
+        self.source_text = 'Data Source: statistics.gov.lk'
 
     @cache
     def get_data(self):

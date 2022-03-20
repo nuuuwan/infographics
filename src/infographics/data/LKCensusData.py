@@ -11,6 +11,7 @@ DATA_GROUP = 'census'
 class LKCensusData(AbstractData):
     def __init__(self, table_id):
         self.table_id = table_id
+        self.source_text = 'Data Source: 2012 Census (statistics.gov.lk)'
 
     @cache
     def get_data(self):
