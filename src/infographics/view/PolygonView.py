@@ -14,6 +14,11 @@ class PolygonView:
         self.get_id_to_color = get_id_to_color
         self.get_id_to_label = get_id_to_label
 
+    def get_id_to_cxcyrxry(self, palette, id):
+        norm_multipolygon = self.get_id_to_norm_multipolygon(palette, id)
+        (cx, cy), (rx, ry) = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
+        return (cx, cy), (rx, ry)        
+
     def render_polygons(self, palette):
         rendered_polygons = []
         for id in self.ids:
@@ -26,11 +31,6 @@ class PolygonView:
                 )
             )
         return rendered_polygons
-
-    def get_id_to_cxcyrxry(self, palette, id):
-        norm_multipolygon = self.get_id_to_norm_multipolygon(palette, id)
-        (cx, cy), (rx, ry) = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
-        return (cx, cy), (rx, ry)
 
     def render_labels(self, palette):
         rendered_labels = []
