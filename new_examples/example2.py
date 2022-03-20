@@ -6,7 +6,7 @@ from infographics.view import LegendView, PolygonView
 
 if __name__ == '__main__':
     region_id = 'LK'
-    subregion_type = 'district'
+    subregion_type = 'dsd'
 
     lk_geodata = LKGeoData(region_id, subregion_type)
     color_histogram = ColorHistogram(
