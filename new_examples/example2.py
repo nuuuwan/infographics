@@ -13,7 +13,6 @@ if __name__ == '__main__':
         lk_geodata.keys(),
         lk_geodata.get_id_to_population_density,
     )
-    simple_label = SimpleLabel(lk_geodata.get_id_to_name)
 
     Infographic(
         gig_utils.get_full_name(region_id),
@@ -24,7 +23,7 @@ if __name__ == '__main__':
                 lk_geodata.keys(),
                 lk_geodata.get_id_to_norm_multipolygon,
                 color_histogram.get_id_to_color,
-                simple_label.get_id_to_label,
+                SimpleLabel(lk_geodata.get_id_to_name).get_id_to_label,
             ),
             LegendView(
                 'Persons per km²',

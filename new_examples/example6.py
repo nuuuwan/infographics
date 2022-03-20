@@ -40,8 +40,6 @@ if __name__ == '__main__':
             return color
         return LKCensusReligionData.get_color_value_to_color(color_value)
 
-    simple_label = SimpleLabel(lk_geodata.get_id_to_name)
-
     Infographic(
         gig_utils.get_full_name(region_id),
         gig_utils.get_by_name(subregion_type, 'Flag Cartogram'),
@@ -50,7 +48,7 @@ if __name__ == '__main__':
             FlagDorlingView(
                 lk_geodata.keys(),
                 lk_geodata.get_id_to_norm_multipolygon,
-                simple_label.get_id_to_label,
+                SimpleLabel(lk_geodata.get_id_to_name).get_id_to_label,
                 lk_geodata.get_id_to_population,
                 get_id_to_flag_data,
             ),
