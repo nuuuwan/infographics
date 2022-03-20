@@ -29,14 +29,14 @@ class LegendView:
             ),
             palette.draw_text(
                 self.get_color_value_to_label(color_value),
-                (x + CIRCLE_R_LEGEND * 6, y),
+                (x + CIRCLE_R_LEGEND * 2.5, y),
                 1,
-                {'text-anchor': 'end'},
+                {'text-anchor': 'start'},
             ),
         ])
 
     def __xml__(self, palette):
-        x0, y0 = 0.6, 0.5
+        x0, y0 = 0.5, 0.5
         inner_list = [
             palette.draw_text(
                 self.legend_title, (x0, y0), 1, {
