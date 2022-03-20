@@ -2,7 +2,7 @@ from utils import colorx
 
 
 class ColorPercentVaryLightness:
-    def __init__(self, hue=0, min_p_lightness=1, max_p_lightness=0.4):
+    def __init__(self, hue=0, min_p_lightness=1, max_p_lightness=0.2):
         self.hue = hue
         self.min_p_lightness = min_p_lightness
         self.max_p_lightness = max_p_lightness
