@@ -25,7 +25,7 @@ class LKCensusData(AbstractData):
 
     @cache
     def get_id_to_total_population(self, id):
-        return self[id]['total_population']
+        return self[id][self.get_total_field()]
 
     def get_get_id_to_population(self, field_list):
         def get_id_to_population(id):
@@ -78,6 +78,7 @@ class LKCensusData(AbstractData):
         return dict(list(map(
             lambda x: [x[1], colorx.random_hsl(
                 hue=(int)(240 * x[0] / n_fields),
+                lightness=0.5,
             )],
             enumerate(fields),
         )))
