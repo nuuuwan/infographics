@@ -6,7 +6,7 @@ DEFAULT_FILL = {
 }
 DEFAULT_STROKE = {
     'stroke': 'lightgray',
-    'stroke-width': 1,
+    'stroke-width': 0.5,
 }
 DEFAULT_BORDERED_AREA = DEFAULT_FILL | DEFAULT_STROKE
 
@@ -26,5 +26,5 @@ class SVG_STYLES:
 
     LINE = DEFAULT_STROKE
     RECT = DEFAULT_BORDERED_AREA
-    CIRCLE = DEFAULT_BORDERED_AREA
+    CIRCLE = DEFAULT_BORDERED_AREA | {'stroke': 'gray'}
     PATH = DEFAULT_BORDERED_AREA
