@@ -5,12 +5,13 @@ from infographics.core.SVGPalette import SVGPalette
 class Infographic:
     DEFAULT_SIZE = 1200, 675, 20
     DEFAULT_BASE_FONT_SIZE = 16
+    DEFAULT_FOOTER_TEXT = 'Created with https://github.com/nuuuwan/infographics'
 
     def __init__(
         self,
         title='Title',
         subtitle='Subtitle',
-        footer_text='Created with https://github.com/nuuuwan/infographics',
+        footer_text=DEFAULT_FOOTER_TEXT,
         children=[],
         size=DEFAULT_SIZE,
         base_font_size=DEFAULT_BASE_FONT_SIZE,

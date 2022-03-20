@@ -45,7 +45,7 @@ if __name__ == '__main__':
     Infographic(
         gig_utils.get_full_name(region_id),
         gig_utils.get_by_name(subregion_type, 'Flag Cartogram'),
-        'visualization by @nuuuwan',
+        Infographic.DEFAULT_FOOTER_TEXT,
         [
             FlagDorlingView(
                 lk_geodata.keys(),
