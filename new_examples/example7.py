@@ -2,11 +2,11 @@
 from infographics.adaptors import ColorBase, SimpleLabel
 from infographics.core import Infographic
 from infographics.data import LKCensusData, LKGeoData, gig_utils
-from infographics.view import LegendView, PolygonView
+from infographics.view import DorlingView, LegendView
 
 if __name__ == '__main__':
     region_id = 'LK'
-    subregion_type = 'district'
+    subregion_type = 'dsd'
 
     lk_geodata = LKGeoData(region_id, subregion_type)
     lk_census_data = LKCensusData(
@@ -25,11 +25,12 @@ if __name__ == '__main__':
         lk_census_data.source_text,
         Infographic.DEFAULT_FOOTER_TEXT,
         children=[
-            PolygonView(
+            DorlingView(
                 lk_geodata.keys(),
                 lk_geodata.get_id_to_norm_multipolygon,
                 color_base.get_id_to_color,
                 SimpleLabel(lk_geodata.get_id_to_name).get_id_to_label,
+                lk_census_data.get_id_to_total_population,
             ),
             LegendView(
                 'Most Common',
