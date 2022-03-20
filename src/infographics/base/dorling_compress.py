@@ -2,12 +2,12 @@
 
 from infographics._utils import log
 
-R_PADDING = 0.1
+R_PADDING = 0.01
 
 
 def _compress(points, bounds):
     (minx, miny, maxx, maxy) = bounds
-    dt = 0.02
+    dt = 0.01
     n_points = len(points)
 
     n_epochs = 200
