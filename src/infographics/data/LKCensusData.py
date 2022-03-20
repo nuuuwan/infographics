@@ -18,6 +18,13 @@ class LKCensusData(AbstractData):
     def table_name(self):
         return self.table_id.replace('_', ' ').title()
 
+    def get_field_name(self, field_list):
+        field_str = ', '.join(list(map(
+            lambda s: '"' + s.replace('_', ' ').title() + '"',
+            field_list,
+        )))
+        return f'{self.table_name} ({field_str})'
+
     @cache
     def get_data(self):
         log.debug('[expensive] calling ext_data._get_table_index')
@@ -87,4 +94,6 @@ class LKCensusData(AbstractData):
         return self.get_color_value_to_color_index().get(color_value)
 
     def get_color_value_to_label(self, color_value):
-        return color_value.replace('_', ' ').title()
+        if isinstance(color_value, str):
+            return color_value.replace('_', ' ').title()
+        return color_value
