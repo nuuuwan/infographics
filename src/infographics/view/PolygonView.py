@@ -17,7 +17,7 @@ class PolygonView:
     def get_id_to_cxcyrxry(self, palette, id):
         norm_multipolygon = self.get_id_to_norm_multipolygon(palette, id)
         (cx, cy), (rx, ry) = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
-        return (cx, cy), (rx, ry)        
+        return (cx, cy), (rx, ry)
 
     def render_polygons(self, palette):
         rendered_polygons = []

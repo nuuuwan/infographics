@@ -19,7 +19,7 @@ if __name__ == '__main__':
         lk_census_ethnicity_data.get_get_id_to_p_population(field_list),
         ColorPercentVaryLightness(hue=130).get_color_value_to_color,
     )
-    
+
     Infographic(
         gig_utils.get_full_name(region_id),
         gig_utils.get_by_name(subregion_type, 'Muslim/Malay Population'),
