@@ -54,24 +54,35 @@ class GIGData(AbstractData):
     @cache
     def get_fields(self):
         return sorted(list(filter(
-            lambda k: 'total' not in k and '_id' not in k,
+            lambda k: k not in [
+                'entity_id',
+                'total',
+                'electors',
+                'polled',
+                'valid',
+                'rejected',
+            ],
             self.get_first_row().keys(),
         )))
 
     @cache
     def get_total_field(self):
         return list(filter(
-            lambda k: 'total' in k,
+            lambda k: 'total' in k or 'valid' in k,
             self.get_first_row().keys(),
         ))[0]
 
     @cache
     def id_to_most_common(self, id):
-        d = self[id]
+        d = self.get_data().get(id)
+        if not d:
+            return 'none'
         max_field = None
         max_v = None
         for field in self.get_fields():
             v = d[field]
+            if not v:
+                v = 0
             if not max_v or v > max_v:
                 max_field = field
                 max_v = v
