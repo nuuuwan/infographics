@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
     lk_geodata = LKGeoData(region_id, subregion_type)
     lk_election_data = LKElectionsData(
-        'presidential_election_1982',
+        'presidential_election_2019',
     )
 
     color_base = ColorBase(

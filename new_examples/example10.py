@@ -9,11 +9,11 @@ if __name__ == '__main__':
 
     region_id = 'LK'
     subregion_type = 'pd'
-    field_list = ['JVP']
+    field_list = ['JJB']
 
     lk_geodata = LKGeoData(region_id, subregion_type)
     lk_election_data = LKElectionsData(
-        'parliamentary_election_2001',
+        'parliamentary_election_2020',
     )
 
     color_base = ColorBase(
