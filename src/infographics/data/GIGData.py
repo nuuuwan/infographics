@@ -1,11 +1,15 @@
 from functools import cache
 
 from gig import ext_data
-from utils import colorx
+from utils import colorx, dt
 
 from infographics._utils import log
 from infographics.data.AbstractData import AbstractData
 
+def valid_value(x):
+    if not x:
+        return 0
+    return dt.parse_float(str(x))
 
 class GIGData(AbstractData):
     def __init__(self, data_group, table_id):
@@ -35,7 +39,7 @@ class GIGData(AbstractData):
 
     def get_get_id_to_population(self, field_list):
         def get_id_to_population(id):
-            return sum([self[id][field] for field in field_list])
+            return sum([valid_value(self[id][field]) for field in field_list])
         return get_id_to_population
 
     def get_get_id_to_p_population(self, field_list):
