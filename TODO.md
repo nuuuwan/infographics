@@ -14,6 +14,7 @@
 * Download as PNG
 * Video?
 * Make FlagDorlingGeneric?
+* Add shaded election map example
 
 # SMALL
 
