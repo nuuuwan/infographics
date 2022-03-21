@@ -31,9 +31,9 @@ class Infographic:
             self.palette.draw_rect(),
         ] + [child.__xml__(self.palette) for child in self.children] + [
             self.palette.draw_text(self.title, (0, 0.9), 2),
-            self.palette.draw_text(self.subtitle, (0, 0.8), 1),
-            self.palette.draw_text(self.data_source_text, (0, -0.8), 1),
-            self.palette.draw_text(self.footer_text, (0, -0.9), 0.67),
+            self.palette.draw_text(self.subtitle, (0, 0.82), 1),
+            self.palette.draw_text(self.data_source_text, (0, -0.87), 1),
+            self.palette.draw_text(self.footer_text, (0, -0.93), 0.67),
         ])
 
     def save(self, svg_file):
