@@ -1,4 +1,4 @@
-DEFAULT_FONT = 'Gill Sans'
+DEFAULT_FONT = 'sans-serif'
 
 
 DEFAULT_FILL = {
