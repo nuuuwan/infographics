@@ -45,7 +45,7 @@ class LKGeoData(AbstractData):
             self[id]['multipolygon'],
         )
 
-    def get_id_to_name(self, id):
+    def get_name(self, id):
         return self[id]['name']
 
     def get_population(self, id):

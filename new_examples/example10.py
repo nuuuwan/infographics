@@ -32,7 +32,7 @@ if __name__ == '__main__':
                 lk_geodata.keys(),
                 lk_geodata.get_norm_multipolygon,
                 color_base.get_color,
-                SimpleLabel(lk_geodata.get_id_to_name).get_label,
+                SimpleLabel(lk_geodata.get_name).get_label,
                 lk_election_data.get_get_population(field_list),
             ),
             LegendView(
