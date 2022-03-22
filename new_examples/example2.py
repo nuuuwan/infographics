@@ -30,6 +30,6 @@ if __name__ == '__main__':
                 'Persons per km²',
                 color_histogram.get_color_values(),
                 color_histogram.get_color_from_color_value,
-                color_histogram.get_color_value_to_int_label,
+                color_histogram.get_int_label_from_color_value,
             )
         ]).save('/tmp/infographics.example2.svg')

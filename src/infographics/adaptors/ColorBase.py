@@ -45,7 +45,7 @@ class ColorBase:
         color_value = self.get_color_value(id)
         return self.get_color_from_color_value(color_value)
 
-    def get_color_value_to_int_label(self, color_value):
+    def get_int_label_from_color_value(self, color_value):
         return humanize.number(color_value)
 
     def get_color_value_to_percent_label(self, color_value):
