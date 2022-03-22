@@ -19,7 +19,7 @@ class ColorHistogram(ColorBase):
         )
 
     @cached_property
-    def density_to_rank_p(self):
+    def density_to_rank_p_index(self):
         n_ids = len(self.ids)
         sorted_color_values = sorted(list(map(
             lambda id: self.get_color_value(id),
@@ -31,6 +31,6 @@ class ColorHistogram(ColorBase):
         )))
 
     def get_color_from_color_value(self, color_value):
-        rank_p = self.density_to_rank_p[color_value]
+        rank_p = self.density_to_rank_p_index[color_value]
         hue = (1 - rank_p) * 240
         return colorx.random_hsl(hue=hue)
