@@ -2,7 +2,7 @@
 
 from infographics._utils import log
 
-R_PADDING = 0.01
+R_PADDING = 0.001
 D_T = 0.01
 MAX_EPOCHS = 1000
 
@@ -11,25 +11,23 @@ def move_into_bounds(points, i_a, bounds):
     [cx_a, cy_a], [rx_a, ry_a] = points[i_a]
     (minx, miny, maxx, maxy) = bounds
 
-    d_minx = (cx_a - rx_a) - minx
-    d_miny = (cy_a - ry_a) - miny
-    d_maxx = maxx - (cx_a + rx_a)
-    d_maxy = maxy - (cy_a + ry_a)
+    did_move = False
+    if (cx_a - rx_a) < minx:
+        cx_a = minx + rx_a
+        did_move = True
+    elif maxx < (cx_a + rx_a):
+        cx_a = maxx - rx_a
+        did_move = True
 
-    if any([d_minx < 0, d_miny < 0, d_maxx < 0, d_maxy < 0]):
-        if d_minx < 0:
-            cx_a = minx + rx_a
-        if d_miny < 0:
-            cy_a = miny + ry_a
+    if (cy_a - ry_a) < miny:
+        cy_a = miny + ry_a
+        did_move = True
+    elif maxy < (cy_a + ry_a):
+        cy_a = maxy - ry_a
+        did_move = True
 
-        if d_maxx < 0:
-            cx_a = maxx - rx_a
-        if d_maxy < 0:
-            cy_a = maxy - ry_a
-
-        points[i_a][0] = [cx_a, cy_a]
-        return points, True
-    return points, False
+    points[i_a][0] = [cx_a, cy_a]
+    return points, did_move
 
 
 def get_move_delta(points, i_a, i_b):
@@ -55,7 +53,7 @@ def _compress(points, bounds):
     n_points = len(points)
     for i_epochs in range(0, MAX_EPOCHS):
         if i_epochs % (MAX_EPOCHS / 10) == 0:
-            log.debug('i_epochs = {:,}'.format(i_epochs))
+            log.debug(f'i_epochs = {i_epochs:,}')
 
         no_moves = True
         for i_a in range(0, n_points):
@@ -76,5 +74,6 @@ def _compress(points, bounds):
                 no_moves = False
 
         if no_moves:
+            log.debug(f'i_epochs = {i_epochs:,} - Complete')
             break
     return points
