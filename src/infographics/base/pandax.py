@@ -5,7 +5,7 @@ from infographics.base import ds, shapely
 
 def get_shapely_polygon_list_from_shape(shape):
     if isinstance(shape, MultiPolygon):
-        return shapely.shapely_multipolygon_to_polygon_list(shape)
+        return shapely.get_shapely_polygon_list_from_multipolygon(shape)
     if isinstance(shape, Polygon):
         return [shape]
     raise Exception('Unknown shape: ', type(shape))
@@ -13,13 +13,13 @@ def get_shapely_polygon_list_from_shape(shape):
 
 def get_multipolygon_from_shapely_polygon_list(shapely_polygon_list):
     point_list_list = list(map(
-        shapely.shapely_polygon_to_point_list,
+        shapely.get_point_list_from_shapely_polygon_to,
         shapely_polygon_list,
     ))
 
     multipolygon = list(map(
         lambda point_list: list(map(
-            shapely.shapely_point_to_xy,
+            shapely.get_xy_from_shapely_point,
             point_list,
         )),
         point_list_list,
