@@ -9,13 +9,13 @@ class LegendView:
         legend_title,
         color_values,
         get_color_from_color_value,
-        get_color_value_to_label,
+        get_label_from_color_value,
 
     ):
         self.legend_title = legend_title
         self.color_values = color_values
         self.get_color_from_color_value = get_color_from_color_value
-        self.get_color_value_to_label = get_color_value_to_label
+        self.get_label_from_color_value = get_label_from_color_value
 
     def render_row(self, palette, color_value, xy):
         color = self.get_color_from_color_value(color_value)
@@ -28,7 +28,7 @@ class LegendView:
                 {'fill': color},
             ),
             palette.draw_text(
-                self.get_color_value_to_label(color_value),
+                self.get_label_from_color_value(color_value),
                 (x + CIRCLE_R_LEGEND * 2.5, y),
                 1,
                 {'text-anchor': 'start'},

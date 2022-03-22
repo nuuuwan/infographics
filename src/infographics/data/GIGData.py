@@ -36,22 +36,22 @@ class GIGData(AbstractData):
         return ext_data._get_table_index(self.data_group, self.table_id)
 
     @cache
-    def get_id_to_total_population(self, id):
+    def get_total_population(self, id):
         return self[id][self.get_total_field()]
 
-    def get_get_id_to_population(self, field_list):
-        def get_id_to_population(id):
+    def get_get_population(self, field_list):
+        def get_population(id):
             return sum([valid_value(self[id][field]) for field in field_list])
-        return get_id_to_population
+        return get_population
 
-    def get_get_id_to_p_population(self, field_list):
-        get_id_to_population = self.get_get_id_to_population(field_list)
+    def get_get_p_population(self, field_list):
+        get_population = self.get_get_population(field_list)
 
-        def get_id_to_p_population(id):
-            n_total = self.get_id_to_total_population(id)
-            n_fields = get_id_to_population(id)
+        def get_p_population(id):
+            n_total = self.get_total_population(id)
+            n_fields = get_population(id)
             return n_fields / n_total
-        return get_id_to_p_population
+        return get_p_population
 
     @cache
     def get_first_row(self):
@@ -79,7 +79,7 @@ class GIGData(AbstractData):
         ))[0]
 
     @cache
-    def id_to_most_common(self, id):
+    def get_most_common(self, id):
         d = self.get_data().get(id)
         if not d:
             return 'none'
@@ -109,7 +109,7 @@ class GIGData(AbstractData):
     def get_color_from_color_value(self, color_value):
         return self.get_color_from_color_value_index().get(color_value)
 
-    def get_color_value_to_label(self, color_value):
+    def get_label_from_color_value(self, color_value):
         if isinstance(color_value, str):
             return color_value.replace('_', ' ').title()
         return color_value

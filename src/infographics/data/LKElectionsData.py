@@ -9,7 +9,7 @@ class LKElectionsData(GIGData):
         GIGData.__init__(self, DATA_GROUP, table_id)
         self.source_text = 'Data Source: elections.gov.lk'
 
-    def get_color_value_to_label(self, color_value):
+    def get_label_from_color_value(self, color_value):
         return color_value.upper()
 
     def get_color_from_color_value(self, color_value):

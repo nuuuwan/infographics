@@ -11,7 +11,7 @@ if __name__ == '__main__':
     lk_geodata = LKGeoData(region_id, subregion_type)
     color_histogram = ColorHistogram(
         lk_geodata.keys(),
-        lk_geodata.get_id_to_population_density,
+        lk_geodata.get_population_density,
     )
 
     Infographic(

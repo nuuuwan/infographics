@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     color_base = ColorBase(
         lk_geodata.keys(),
-        lk_census_ethnicity_data.get_get_id_to_p_population(field_list),
+        lk_census_ethnicity_data.get_get_p_population(field_list),
         ColorPercentVaryLightness(hue=30).get_color_from_color_value,
     )
 

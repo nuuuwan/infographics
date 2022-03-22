@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     color_base = ColorBase(
         lk_geodata.keys(),
-        lk_election_data.get_get_id_to_p_population(field_list),
+        lk_election_data.get_get_p_population(field_list),
         ColorPercentVaryLightness(hue=0).get_color_from_color_value,
     )
 
@@ -33,7 +33,7 @@ if __name__ == '__main__':
                 lk_geodata.get_id_to_norm_multipolygon,
                 color_base.get_color,
                 SimpleLabel(lk_geodata.get_id_to_name).get_label,
-                lk_election_data.get_get_id_to_population(field_list),
+                lk_election_data.get_get_population(field_list),
             ),
             LegendView(
                 '% of Population',

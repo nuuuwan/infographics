@@ -10,7 +10,7 @@ class LKCensusEthnicityData(LKCensusData):
     def __init__(self):
         LKCensusData.__init__(self, LKCensusEthnicityData.TABLE_ID)
 
-    def id_to_most_common_ethnicity(self, id):
+    def get_most_common_ethnicity(self, id):
         d = self[id]
         n_total = d['total_population']
         for color_value, fields in [
@@ -33,7 +33,7 @@ class LKCensusEthnicityData(LKCensusData):
         }.get(color_value)
 
     @staticmethod
-    def get_color_value_to_label(color_value):
+    def get_label_from_color_value(color_value):
         if color_value == 'none':
             return 'No ethnicity with > ' \
                 + f'{LKCensusEthnicityData.MAJORITY_LIMIT:.0%}'

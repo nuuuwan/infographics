@@ -29,7 +29,7 @@ if __name__ == '__main__':
             'sinhalese': n_sinhala,
         }
 
-    def get_color_value_to_label(color_value):
+    def get_label_from_color_value(color_value):
         if color_value == 'sinhalese':
             return 'Sinhalese (Non-Buddhist)'
         return color_value.title()
@@ -50,14 +50,14 @@ if __name__ == '__main__':
                 lk_geodata.keys(),
                 lk_geodata.get_id_to_norm_multipolygon,
                 SimpleLabel(lk_geodata.get_id_to_name).get_label,
-                lk_geodata.get_id_to_population,
+                lk_geodata.get_population,
                 get_id_to_flag_data,
             ),
             LegendView(
                 'Ethnicity & Religion',
                 ['muslim', 'tamil', 'buddhist', 'sinhalese'],
                 get_color_from_color_value,
-                get_color_value_to_label,
+                get_label_from_color_value,
             )
         ],
         (800, 900, 10),

@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     color_base = ColorBase(
         lk_geodata.keys(),
-        lk_census_data.id_to_most_common,
+        lk_census_data.get_most_common,
         lk_census_data.get_color_from_color_value,
     )
 
@@ -30,13 +30,13 @@ if __name__ == '__main__':
                 lk_geodata.get_id_to_norm_multipolygon,
                 color_base.get_color,
                 SimpleLabel(lk_geodata.get_id_to_name).get_label,
-                lk_census_data.get_id_to_total_population,
+                lk_census_data.get_total_population,
             ),
             LegendView(
                 'Most Common',
                 color_base.unique_color_values,
                 lk_census_data.get_color_from_color_value,
-                lk_census_data.get_color_value_to_label,
+                lk_census_data.get_label_from_color_value,
             )
         ]
     ).save('/tmp/infographics.example7.svg')

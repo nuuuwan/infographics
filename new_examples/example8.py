@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     color_base = ColorBase(
         lk_geodata.keys(),
-        lk_census_data.get_get_id_to_p_population([field]),
+        lk_census_data.get_get_p_population([field]),
         ColorPercentVaryLightness(hue=0).get_color_from_color_value,
     )
 
@@ -36,7 +36,7 @@ if __name__ == '__main__':
                 color_base.get_color,
                 SimpleLabel(
                     lk_geodata.get_id_to_name).get_label,
-                lk_census_data.get_get_id_to_population(
+                lk_census_data.get_get_population(
                     [field]),
             ),
             LegendView(
