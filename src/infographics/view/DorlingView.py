@@ -96,3 +96,26 @@ class DorlingView(PolygonView):
             [width, height],
             {'fill': dorling_view.get_color_cartogram(id)},
         )
+
+    @staticmethod
+    def get_render_polygon_object(n):
+        def render_polygon_object_with_n(
+                dorling_view, palette, id, cxcy, rxry):
+            return DorlingView.render_polygon_object(
+                dorling_view, palette, id, cxcy, rxry, n)
+        return render_polygon_object_with_n
+
+    @staticmethod
+    def render_polygon_object(dorling_view, palette, id, cxcy, rxry, n):
+        cx, cy = cxcy
+        rx, ry = rxry
+        polygon = []
+        theta0 = -math.pi / 2
+        for i in range(0, n):
+            theta = 2 * math.pi * i / n + theta0
+            x, y = cx + rx * math.cos(theta), cy - ry * math.sin(theta)
+            polygon.append([x, y])
+        return palette.draw_polygon(
+            polygon,
+            {'fill': dorling_view.get_color_cartogram(id)},
+        )

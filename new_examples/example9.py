@@ -31,7 +31,7 @@ if __name__ == '__main__':
                 color_base.get_color,
                 SimpleLabel(lk_geodata.get_name).get_label,
                 lk_election_data.get_total_population,
-                DorlingView.render_rect_object,
+                DorlingView.get_render_polygon_object(6),
             ),
             LegendView(
                 'Most Common',
