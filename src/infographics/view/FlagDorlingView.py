@@ -11,7 +11,7 @@ class FlagDorlingView(DorlingView):
         get_norm_multipolygon,
         get_label,
         get_cartogram_value,
-        get_id_to_flag_data,
+        get_flag_data,
     ):
         def get_color(id):
             return 'gray'
@@ -25,10 +25,10 @@ class FlagDorlingView(DorlingView):
             get_cartogram_value,
 
         )
-        self.get_id_to_flag_data = get_id_to_flag_data
+        self.get_flag_data = get_flag_data
 
     def render_dorling_object(self, palette, id, cxcy, rxry):
-        flag_data = self.get_id_to_flag_data(id)
+        flag_data = self.get_flag_data(id)
         n_sinhalese = flag_data['sinhalese']
         n_tamil = flag_data['tamil']
         n_moor = flag_data['muslim']

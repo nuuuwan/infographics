@@ -13,7 +13,7 @@ if __name__ == '__main__':
     lk_census_ethnicity_data = LKCensusEthnicityData()
     lk_census_religion_data = LKCensusReligionData()
 
-    def get_id_to_flag_data(id):
+    def get_flag_data(id):
         d_eth = lk_census_ethnicity_data[id]
         d_rel = lk_census_religion_data[id]
 
@@ -51,7 +51,7 @@ if __name__ == '__main__':
                 lk_geodata.get_norm_multipolygon,
                 SimpleLabel(lk_geodata.get_name).get_label,
                 lk_geodata.get_population,
-                get_id_to_flag_data,
+                get_flag_data,
             ),
             LegendView(
                 'Ethnicity & Religion',
