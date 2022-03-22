@@ -2,8 +2,8 @@
 
 # MEDIUM
 
-* Hexagon Cartogram
 * Input Dorling Cartogram Shape as as __init__ variable?
+* Hexagon Cartogram
 * Shorten dorling_compress._compress
 * Add example with two maps
 
