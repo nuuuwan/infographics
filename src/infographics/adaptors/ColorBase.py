@@ -41,7 +41,7 @@ class ColorBase:
             legend_color_values.append(sorted_color_values[j])
         return legend_color_values
 
-    def get_id_to_color(self, id):
+    def get_color(self, id):
         color_value = self.get_color_value(id)
         return self.get_color_from_color_value(color_value)
 

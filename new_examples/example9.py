@@ -28,7 +28,7 @@ if __name__ == '__main__':
             DorlingView(
                 lk_geodata.keys(),
                 lk_geodata.get_id_to_norm_multipolygon,
-                color_base.get_id_to_color,
+                color_base.get_color,
                 SimpleLabel(lk_geodata.get_id_to_name).get_label,
                 lk_election_data.get_id_to_total_population,
             ),

@@ -11,21 +11,21 @@ class DorlingView(PolygonView):
         self,
         ids,
         get_id_to_norm_multipolygon,
-        get_id_to_color_cartogram,
+        get_color_cartogram,
         get_label,
         get_id_to_cartogram_value,
     ):
-        def get_id_to_color(id):
+        def get_color(id):
             return 'white'
 
         PolygonView.__init__(
             self,
             ids,
             get_id_to_norm_multipolygon,
-            get_id_to_color,
+            get_color,
             get_label,
         )
-        self.get_id_to_color_cartogram = get_id_to_color_cartogram
+        self.get_color_cartogram = get_color_cartogram
         self.get_id_to_cartogram_value = get_id_to_cartogram_value
 
     @cache
@@ -57,7 +57,7 @@ class DorlingView(PolygonView):
         return palette.draw_ellipse(
             cxcy,
             rxry,
-            {'fill': self.get_id_to_color_cartogram(id)},
+            {'fill': self.get_color_cartogram(id)},
         )
 
     def render_dorling_objects(self, palette):

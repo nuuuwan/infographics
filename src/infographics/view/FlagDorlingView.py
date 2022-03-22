@@ -13,14 +13,14 @@ class FlagDorlingView(DorlingView):
         get_id_to_cartogram_value,
         get_id_to_flag_data,
     ):
-        def get_id_to_color(id):
+        def get_color(id):
             return 'gray'
 
         DorlingView.__init__(
             self,
             ids,
             get_id_to_norm_multipolygon,
-            get_id_to_color,
+            get_color,
             get_label,
             get_id_to_cartogram_value,
 

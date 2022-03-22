@@ -6,12 +6,12 @@ class PolygonView:
         self,
         ids,
         get_id_to_norm_multipolygon,
-        get_id_to_color,
+        get_color,
         get_label,
     ):
         self.ids = ids
         self.get_id_to_norm_multipolygon = get_id_to_norm_multipolygon
-        self.get_id_to_color = get_id_to_color
+        self.get_color = get_color
         self.get_label = get_label
 
     def get_id_to_cxcyrxry(self, palette, id):
@@ -27,7 +27,7 @@ class PolygonView:
             rendered_polygons.append(
                 palette.draw_multipolygon(
                     norm_multipolygon,
-                    {'fill': self.get_id_to_color(id)},
+                    {'fill': self.get_color(id)},
                 )
             )
         return rendered_polygons
