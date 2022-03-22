@@ -3,8 +3,6 @@
 # MEDIUM
 
 * Add example with two maps
-
-* Download as PNG
 * Video?
 * Make FlagDorlingGeneric?
 * Add shaded election map example
