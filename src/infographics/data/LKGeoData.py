@@ -26,7 +26,7 @@ class LKGeoData(AbstractData):
             self.region_id,
             self.subregion_type,
         )
-        geodata_index = pandax.df_to_geodata_index(df)
+        geodata_index = pandax.get_geodata_index(df)
         return geodata_index
 
     @cache
