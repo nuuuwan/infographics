@@ -34,6 +34,7 @@ if __name__ == '__main__':
                 color_base.get_color,
                 SimpleLabel(lk_geodata.get_name).get_label,
                 lk_election_data.get_get_population(field_list),
+                DorlingView.render_ellipse_object,
             ),
             LegendView(
                 '% of Population',

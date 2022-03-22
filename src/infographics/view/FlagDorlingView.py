@@ -23,12 +23,14 @@ class FlagDorlingView(DorlingView):
             get_color,
             get_label,
             get_cartogram_value,
+            FlagDorlingView.render_dorling_object,
 
         )
         self.get_flag_data = get_flag_data
 
-    def render_dorling_object(self, palette, id, cxcy, rxry):
-        flag_data = self.get_flag_data(id)
+    @staticmethod
+    def render_dorling_object(dorling_view, palette, id, cxcy, rxry):
+        flag_data = dorling_view.get_flag_data(id)
         n_sinhalese = flag_data['sinhalese']
         n_tamil = flag_data['tamil']
         n_moor = flag_data['muslim']

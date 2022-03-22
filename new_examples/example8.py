@@ -38,6 +38,7 @@ if __name__ == '__main__':
                     lk_geodata.get_name).get_label,
                 lk_census_data.get_get_population(
                     [field]),
+                DorlingView.render_ellipse_object,
             ),
             LegendView(
                 'Most Common',

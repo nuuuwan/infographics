@@ -14,6 +14,7 @@ class DorlingView(PolygonView):
         get_color_cartogram,
         get_label,
         get_cartogram_value,
+        render_dorling_object,
     ):
         def get_color(id):
             return 'white'
@@ -27,6 +28,7 @@ class DorlingView(PolygonView):
         )
         self.get_color_cartogram = get_color_cartogram
         self.get_cartogram_value = get_cartogram_value
+        self.render_dorling_object = render_dorling_object
 
     @cache
     def get_id_to_cxcyrxry_index(self, palette):
@@ -53,19 +55,13 @@ class DorlingView(PolygonView):
     def get_cxcyrxry(self, palette, id):
         return self.get_id_to_cxcyrxry_index(palette).get(id)
 
-    def render_dorling_object(self, palette, id, cxcy, rxry):
-        return palette.draw_ellipse(
-            cxcy,
-            rxry,
-            {'fill': self.get_color_cartogram(id)},
-        )
-
     def render_dorling_objects(self, palette):
         rendered_dorling_objects = []
         for id in self.ids:
             [cx, cy], [rx, ry] = self.get_cxcyrxry(palette, id)
             rendered_dorling_objects.append(
                 self.render_dorling_object(
+                    self,
                     palette,
                     id,
                     (cx, cy),
@@ -79,4 +75,12 @@ class DorlingView(PolygonView):
             self.render_polygons(palette) +
             self.render_dorling_objects(palette) +
             self.render_labels(palette),
+        )
+
+    @staticmethod
+    def render_ellipse_object(dorling_view, palette, id, cxcy, rxry):
+        return palette.draw_ellipse(
+            cxcy,
+            rxry,
+            {'fill': dorling_view.get_color_cartogram(id)},
         )
