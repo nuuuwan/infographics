@@ -43,5 +43,5 @@ if __name__ == '__main__':
                 'Most Common',
                 color_base.get_color_values(),
                 color_base.get_color_from_color_value,
-                color_base.get_color_value_to_percent_label,
+                color_base.get_percent_label_from_color_value,
             )]).save('/tmp/infographics.example8.svg')
