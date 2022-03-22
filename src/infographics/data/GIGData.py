@@ -6,10 +6,12 @@ from utils import colorx, dt
 from infographics._utils import log
 from infographics.data.AbstractData import AbstractData
 
+
 def valid_value(x):
     if not x:
         return 0
     return dt.parse_float(str(x))
+
 
 class GIGData(AbstractData):
     def __init__(self, data_group, table_id):
