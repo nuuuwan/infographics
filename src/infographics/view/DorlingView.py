@@ -84,3 +84,15 @@ class DorlingView(PolygonView):
             rxry,
             {'fill': dorling_view.get_color_cartogram(id)},
         )
+
+    @staticmethod
+    def render_rect_object(dorling_view, palette, id, cxcy, rxry):
+        cx, cy = cxcy
+        rx, ry = rxry
+        left, top = cx - rx, cy + ry
+        width, height = rx * 2, ry * 2
+        return palette.draw_rect(
+            [left, top],
+            [width, height],
+            {'fill': dorling_view.get_color_cartogram(id)},
+        )
