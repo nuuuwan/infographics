@@ -12,7 +12,7 @@ class DorlingView(PolygonView):
         ids,
         get_id_to_norm_multipolygon,
         get_id_to_color_cartogram,
-        get_id_to_label,
+        get_label,
         get_id_to_cartogram_value,
     ):
         def get_id_to_color(id):
@@ -23,7 +23,7 @@ class DorlingView(PolygonView):
             ids,
             get_id_to_norm_multipolygon,
             get_id_to_color,
-            get_id_to_label,
+            get_label,
         )
         self.get_id_to_color_cartogram = get_id_to_color_cartogram
         self.get_id_to_cartogram_value = get_id_to_cartogram_value

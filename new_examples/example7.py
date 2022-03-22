@@ -29,7 +29,7 @@ if __name__ == '__main__':
                 lk_geodata.keys(),
                 lk_geodata.get_id_to_norm_multipolygon,
                 color_base.get_id_to_color,
-                SimpleLabel(lk_geodata.get_id_to_name).get_id_to_label,
+                SimpleLabel(lk_geodata.get_id_to_name).get_label,
                 lk_census_data.get_id_to_total_population,
             ),
             LegendView(
