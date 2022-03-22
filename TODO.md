@@ -1,8 +1,5 @@
 # LARGE
 
-* New Naming Convention for "get_color" type variables. Should it be something "get_color_from_id", or simply "get_color"? Prefer the latter because it is shorter.
-
-
 # MEDIUM
 
 * Hexagon Cartogram
