@@ -25,6 +25,18 @@ class TestCase(unittest.TestCase):
             actual_s = humanize.number(f)
             self.assertEqual(expected_s, actual_s)
 
+    def test_percent(self):
+        """Test."""
+        for f, expected_s in [
+            [0.1234, '12%'],
+            [0.01234, '1.2%'],
+            [0.001234, '0.12%'],
+            [0.0001234, '<0.1%'],
+
+        ]:
+            actual_s = humanize.percent(f)
+            self.assertEqual(expected_s, actual_s)
+
 
 if __name__ == '__main__':
     unittest.main()
