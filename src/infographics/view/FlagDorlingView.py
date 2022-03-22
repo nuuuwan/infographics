@@ -10,7 +10,7 @@ class FlagDorlingView(DorlingView):
         ids,
         get_norm_multipolygon,
         get_label,
-        get_id_to_cartogram_value,
+        get_cartogram_value,
         get_id_to_flag_data,
     ):
         def get_color(id):
@@ -22,7 +22,7 @@ class FlagDorlingView(DorlingView):
             get_norm_multipolygon,
             get_color,
             get_label,
-            get_id_to_cartogram_value,
+            get_cartogram_value,
 
         )
         self.get_id_to_flag_data = get_id_to_flag_data

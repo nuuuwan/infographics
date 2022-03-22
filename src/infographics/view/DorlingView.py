@@ -13,7 +13,7 @@ class DorlingView(PolygonView):
         get_norm_multipolygon,
         get_color_cartogram,
         get_label,
-        get_id_to_cartogram_value,
+        get_cartogram_value,
     ):
         def get_color(id):
             return 'white'
@@ -26,20 +26,20 @@ class DorlingView(PolygonView):
             get_label,
         )
         self.get_color_cartogram = get_color_cartogram
-        self.get_id_to_cartogram_value = get_id_to_cartogram_value
+        self.get_cartogram_value = get_cartogram_value
 
     @cache
     def get_id_to_cxcyrxry_index(self, palette):
         log.debug('[expensive] DorlingView.id_to_cxcyrxry')
         total_cartogram_value = 0
         for id in self.ids:
-            cartogram_value = self.get_id_to_cartogram_value(id)
+            cartogram_value = self.get_cartogram_value(id)
             total_cartogram_value += cartogram_value
 
         id_to_cxcyrxry = {}
         for id in self.ids:
             norm_multipolygon = self.get_norm_multipolygon(palette, id)
-            cartogram_value = self.get_id_to_cartogram_value(id)
+            cartogram_value = self.get_cartogram_value(id)
             (cx, cy), ____ = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
             pr = 0.2 * math.sqrt(cartogram_value / total_cartogram_value)
 
