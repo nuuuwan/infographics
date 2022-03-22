@@ -1,3 +1,5 @@
+from cairosvg import svg2png
+
 from infographics._utils import log
 from infographics.core.SVGPalette import SVGPalette
 
@@ -39,3 +41,7 @@ class Infographic:
     def save(self, svg_file):
         self.__xml__().store(svg_file)
         log.info(f'Saved {svg_file}')
+
+        png_file = svg_file[:-3] + 'png'
+        svg2png(url=svg_file, write_to=png_file, scale=4)
+        log.info(f'Saved {png_file}')
