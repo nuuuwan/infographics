@@ -5,7 +5,6 @@
 * Hexagon Cartogram
 * Input Dorling Cartogram Shape as as __init__ variable?
 * Shorten dorling_compress._compress
-* Unittests for humanize.percent
 * Add example with two maps
 
 * Download as PNG
