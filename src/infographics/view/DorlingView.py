@@ -29,7 +29,7 @@ class DorlingView(PolygonView):
         self.get_id_to_cartogram_value = get_id_to_cartogram_value
 
     @cache
-    def get_id_to_cxcyrxry_all(self, palette):
+    def get_id_to_cxcyrxry_index(self, palette):
         log.debug('[expensive] DorlingView.id_to_cxcyrxry')
         total_cartogram_value = 0
         for id in self.ids:
@@ -50,8 +50,8 @@ class DorlingView(PolygonView):
         id_to_cxcyrxry = dict(zip(id_to_cxcyrxry.keys(), xyrs))
         return id_to_cxcyrxry
 
-    def get_id_to_cxcyrxry(self, palette, id):
-        return self.get_id_to_cxcyrxry_all(palette).get(id)
+    def get_cxcyrxry(self, palette, id):
+        return self.get_id_to_cxcyrxry_index(palette).get(id)
 
     def render_dorling_object(self, palette, id, cxcy, rxry):
         return palette.draw_ellipse(
@@ -63,7 +63,7 @@ class DorlingView(PolygonView):
     def render_dorling_objects(self, palette):
         rendered_dorling_objects = []
         for id in self.ids:
-            [cx, cy], [rx, ry] = self.get_id_to_cxcyrxry(palette, id)
+            [cx, cy], [rx, ry] = self.get_cxcyrxry(palette, id)
             rendered_dorling_objects.append(
                 self.render_dorling_object(
                     palette,

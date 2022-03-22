@@ -14,7 +14,7 @@ class PolygonView:
         self.get_color = get_color
         self.get_label = get_label
 
-    def get_id_to_cxcyrxry(self, palette, id):
+    def get_cxcyrxry(self, palette, id):
         norm_multipolygon = self.get_norm_multipolygon(palette, id)
         (cx, cy), (rx, ry) = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
         return (cx, cy), (rx, ry)
@@ -35,7 +35,7 @@ class PolygonView:
     def render_labels(self, palette):
         rendered_labels = []
         for id in self.ids:
-            (cx, cy), (rx, ry) = self.get_id_to_cxcyrxry(palette, id)
+            (cx, cy), (rx, ry) = self.get_cxcyrxry(palette, id)
             rendered_labels.append(
                 self.get_label(palette, id, (cx, cy), (rx, ry)),
             )
