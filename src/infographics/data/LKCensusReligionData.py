@@ -10,7 +10,7 @@ class LKCensusReligionData(LKCensusData):
         LKCensusData.__init__(self, LKCensusReligionData.TABLE_ID)
 
     @staticmethod
-    def get_color_value_to_color(color_value):
+    def get_color_from_color_value(color_value):
         return {
             'buddhist': 'yellow',
             'hindu': 'orange',

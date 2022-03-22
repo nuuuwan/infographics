@@ -29,7 +29,7 @@ if __name__ == '__main__':
             LegendView(
                 'Persons per km²',
                 color_histogram.get_color_values(),
-                color_histogram.get_color_value_to_color,
+                color_histogram.get_color_from_color_value,
                 color_histogram.get_color_value_to_int_label,
             )
         ]).save('/tmp/infographics.example2.svg')

@@ -10,11 +10,11 @@ class ColorBase:
         self,
         ids,
         get_color_value,
-        get_color_value_to_color,
+        get_color_from_color_value,
     ):
         self.ids = ids
         self.get_color_value = get_color_value
-        self.get_color_value_to_color = get_color_value_to_color
+        self.get_color_from_color_value = get_color_from_color_value
 
     @cached_property
     def color_values(self):
@@ -43,7 +43,7 @@ class ColorBase:
 
     def get_id_to_color(self, id):
         color_value = self.get_color_value(id)
-        return self.get_color_value_to_color(color_value)
+        return self.get_color_from_color_value(color_value)
 
     def get_color_value_to_int_label(self, color_value):
         return humanize.number(color_value)

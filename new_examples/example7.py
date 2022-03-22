@@ -16,7 +16,7 @@ if __name__ == '__main__':
     color_base = ColorBase(
         lk_geodata.keys(),
         lk_census_data.id_to_most_common,
-        lk_census_data.get_color_value_to_color,
+        lk_census_data.get_color_from_color_value,
     )
 
     Infographic(
@@ -35,7 +35,7 @@ if __name__ == '__main__':
             LegendView(
                 'Most Common',
                 color_base.unique_color_values,
-                lk_census_data.get_color_value_to_color,
+                lk_census_data.get_color_from_color_value,
                 lk_census_data.get_color_value_to_label,
             )
         ]

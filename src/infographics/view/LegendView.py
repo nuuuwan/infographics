@@ -8,17 +8,17 @@ class LegendView:
         self,
         legend_title,
         color_values,
-        get_color_value_to_color,
+        get_color_from_color_value,
         get_color_value_to_label,
 
     ):
         self.legend_title = legend_title
         self.color_values = color_values
-        self.get_color_value_to_color = get_color_value_to_color
+        self.get_color_from_color_value = get_color_from_color_value
         self.get_color_value_to_label = get_color_value_to_label
 
     def render_row(self, palette, color_value, xy):
-        color = self.get_color_value_to_color(color_value)
+        color = self.get_color_from_color_value(color_value)
 
         x, y = xy
         return palette.draw_g([

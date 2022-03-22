@@ -93,7 +93,7 @@ class GIGData(AbstractData):
         return max_field
 
     @cache
-    def get_color_value_to_color_index(self):
+    def get_color_from_color_value_index(self):
         fields = self.get_fields()
         n_fields = len(fields)
         return dict(list(map(
@@ -104,8 +104,8 @@ class GIGData(AbstractData):
             enumerate(fields),
         )))
 
-    def get_color_value_to_color(self, color_value):
-        return self.get_color_value_to_color_index().get(color_value)
+    def get_color_from_color_value(self, color_value):
+        return self.get_color_from_color_value_index().get(color_value)
 
     def get_color_value_to_label(self, color_value):
         if isinstance(color_value, str):

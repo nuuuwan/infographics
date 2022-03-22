@@ -12,7 +12,7 @@ class LKElectionsData(GIGData):
     def get_color_value_to_label(self, color_value):
         return color_value.upper()
 
-    def get_color_value_to_color(self, color_value):
+    def get_color_from_color_value(self, color_value):
         return {
             'SLPP': 'maroon',
 

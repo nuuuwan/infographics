@@ -18,7 +18,7 @@ if __name__ == '__main__':
     color_base = ColorBase(
         lk_geodata.keys(),
         lk_census_data.get_get_id_to_p_population([field]),
-        ColorPercentVaryLightness(hue=0).get_color_value_to_color,
+        ColorPercentVaryLightness(hue=0).get_color_from_color_value,
     )
 
     Infographic(
@@ -42,6 +42,6 @@ if __name__ == '__main__':
             LegendView(
                 'Most Common',
                 color_base.get_color_values(),
-                color_base.get_color_value_to_color,
+                color_base.get_color_from_color_value,
                 color_base.get_color_value_to_percent_label,
             )]).save('/tmp/infographics.example8.svg')

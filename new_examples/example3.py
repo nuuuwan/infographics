@@ -14,7 +14,7 @@ if __name__ == '__main__':
     color_base = ColorBase(
         lk_geodata.keys(),
         lk_census_ethnicity_data.id_to_most_common_ethnicity,
-        LKCensusEthnicityData.get_color_value_to_color,
+        LKCensusEthnicityData.get_color_from_color_value,
     )
 
     Infographic(
@@ -32,7 +32,7 @@ if __name__ == '__main__':
             LegendView(
                 'Most Common Ethnicity',
                 color_base.unique_color_values,
-                LKCensusEthnicityData.get_color_value_to_color,
+                LKCensusEthnicityData.get_color_from_color_value,
                 LKCensusEthnicityData.get_color_value_to_label,
             )
         ]

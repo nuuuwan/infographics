@@ -34,11 +34,11 @@ if __name__ == '__main__':
             return 'Sinhalese (Non-Buddhist)'
         return color_value.title()
 
-    def get_color_value_to_color(color_value):
-        color = LKCensusEthnicityData.get_color_value_to_color(color_value)
+    def get_color_from_color_value(color_value):
+        color = LKCensusEthnicityData.get_color_from_color_value(color_value)
         if color:
             return color
-        return LKCensusReligionData.get_color_value_to_color(color_value)
+        return LKCensusReligionData.get_color_from_color_value(color_value)
 
     Infographic(
         gig_utils.get_full_name(region_id),
@@ -56,7 +56,7 @@ if __name__ == '__main__':
             LegendView(
                 'Ethnicity & Religion',
                 ['muslim', 'tamil', 'buddhist', 'sinhalese'],
-                get_color_value_to_color,
+                get_color_from_color_value,
                 get_color_value_to_label,
             )
         ],

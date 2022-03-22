@@ -15,7 +15,7 @@ class ColorHistogram(ColorBase):
             self,
             ids,
             get_color_value,
-            self.get_color_value_to_color,
+            self.get_color_from_color_value,
         )
 
     @cached_property
@@ -30,7 +30,7 @@ class ColorHistogram(ColorBase):
             enumerate(sorted_color_values),
         )))
 
-    def get_color_value_to_color(self, color_value):
+    def get_color_from_color_value(self, color_value):
         rank_p = self.density_to_rank_p[color_value]
         hue = (1 - rank_p) * 240
         return colorx.random_hsl(hue=hue)

@@ -11,7 +11,7 @@ class ColorPercentVaryLightness:
     def lightness_span(self):
         return self.max_p_lightness - self.min_p_lightness
 
-    def get_color_value_to_color(self, p):
+    def get_color_from_color_value(self, p):
         return colorx.random_hsl(
             hue=self.hue,
             lightness=self.min_p_lightness + self.lightness_span * p,
