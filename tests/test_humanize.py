@@ -8,7 +8,7 @@ from infographics.base import humanize
 class TestCase(unittest.TestCase):
     """Tests."""
 
-    def test_int(self):
+    def test_number(self):
         """Test."""
         for f, expected_s in [
             [1.234, '1.2'],
