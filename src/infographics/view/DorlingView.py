@@ -10,7 +10,7 @@ class DorlingView(PolygonView):
     def __init__(
         self,
         ids,
-        get_id_to_norm_multipolygon,
+        get_norm_multipolygon,
         get_color_cartogram,
         get_label,
         get_id_to_cartogram_value,
@@ -21,7 +21,7 @@ class DorlingView(PolygonView):
         PolygonView.__init__(
             self,
             ids,
-            get_id_to_norm_multipolygon,
+            get_norm_multipolygon,
             get_color,
             get_label,
         )
@@ -38,7 +38,7 @@ class DorlingView(PolygonView):
 
         id_to_cxcyrxry = {}
         for id in self.ids:
-            norm_multipolygon = self.get_id_to_norm_multipolygon(palette, id)
+            norm_multipolygon = self.get_norm_multipolygon(palette, id)
             cartogram_value = self.get_id_to_cartogram_value(id)
             (cx, cy), ____ = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
             pr = 0.2 * math.sqrt(cartogram_value / total_cartogram_value)

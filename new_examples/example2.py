@@ -22,7 +22,7 @@ if __name__ == '__main__':
         [
             PolygonView(
                 lk_geodata.keys(),
-                lk_geodata.get_id_to_norm_multipolygon,
+                lk_geodata.get_norm_multipolygon,
                 color_histogram.get_color,
                 SimpleLabel(lk_geodata.get_id_to_name).get_label,
             ),

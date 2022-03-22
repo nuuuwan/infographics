@@ -39,7 +39,7 @@ class LKGeoData(AbstractData):
         )
 
     @cache
-    def get_id_to_norm_multipolygon(self, palette, id):
+    def get_norm_multipolygon(self, palette, id):
         return xy.get_norm_multipolygon(
             self.get_norm_transformer(palette),
             self[id]['multipolygon'],

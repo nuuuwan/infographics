@@ -48,7 +48,7 @@ if __name__ == '__main__':
         [
             FlagDorlingView(
                 lk_geodata.keys(),
-                lk_geodata.get_id_to_norm_multipolygon,
+                lk_geodata.get_norm_multipolygon,
                 SimpleLabel(lk_geodata.get_id_to_name).get_label,
                 lk_geodata.get_population,
                 get_id_to_flag_data,

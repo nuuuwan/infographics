@@ -8,7 +8,7 @@ class FlagDorlingView(DorlingView):
     def __init__(
         self,
         ids,
-        get_id_to_norm_multipolygon,
+        get_norm_multipolygon,
         get_label,
         get_id_to_cartogram_value,
         get_id_to_flag_data,
@@ -19,7 +19,7 @@ class FlagDorlingView(DorlingView):
         DorlingView.__init__(
             self,
             ids,
-            get_id_to_norm_multipolygon,
+            get_norm_multipolygon,
             get_color,
             get_label,
             get_id_to_cartogram_value,
