@@ -2,7 +2,6 @@
 
 # MEDIUM
 
-* Shorten dorling_compress._compress
 * Add example with two maps
 
 * Download as PNG
