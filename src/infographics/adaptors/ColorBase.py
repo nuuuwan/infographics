@@ -9,17 +9,17 @@ class ColorBase:
     def __init__(
         self,
         ids,
-        get_id_to_color_value,
+        get_color_value,
         get_color_value_to_color,
     ):
         self.ids = ids
-        self.get_id_to_color_value = get_id_to_color_value
+        self.get_color_value = get_color_value
         self.get_color_value_to_color = get_color_value_to_color
 
     @cached_property
     def color_values(self):
         return list(map(
-            lambda id: self.get_id_to_color_value(id),
+            lambda id: self.get_color_value(id),
             self.ids,
         ))
 
@@ -42,7 +42,7 @@ class ColorBase:
         return legend_color_values
 
     def get_id_to_color(self, id):
-        color_value = self.get_id_to_color_value(id)
+        color_value = self.get_color_value(id)
         return self.get_color_value_to_color(color_value)
 
     def get_color_value_to_int_label(self, color_value):

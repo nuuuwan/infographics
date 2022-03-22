@@ -9,12 +9,12 @@ class ColorHistogram(ColorBase):
     def __init__(
         self,
         ids,
-        get_id_to_color_value,
+        get_color_value,
     ):
         ColorBase.__init__(
             self,
             ids,
-            get_id_to_color_value,
+            get_color_value,
             self.get_color_value_to_color,
         )
 
@@ -22,7 +22,7 @@ class ColorHistogram(ColorBase):
     def density_to_rank_p(self):
         n_ids = len(self.ids)
         sorted_color_values = sorted(list(map(
-            lambda id: self.get_id_to_color_value(id),
+            lambda id: self.get_color_value(id),
             self.ids,
         )))
         return dict(list(map(
