@@ -2,7 +2,7 @@
 import os
 import unittest
 
-DIR_EXAMPLES = 'new_examples'
+DIR_EXAMPLES = 'examples'
 
 
 class TestCase(unittest.TestCase):
