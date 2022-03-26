@@ -1,4 +1,4 @@
-DEFAULT_FONT = 'sans-serif'
+DEFAULT_FONT = 'Futura'
 
 
 DEFAULT_FILL = {
