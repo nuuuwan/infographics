@@ -7,7 +7,7 @@ DIST_NAME = 'infographics'
 with open('README.md', 'r') as fh:
     long_description = fh.read()
 
-MAJOR, MINOR, PATCH = 2, 0, 0
+MAJOR, MINOR, PATCH = 2, 0, 1
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
 
 setuptools.setup(

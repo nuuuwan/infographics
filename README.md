@@ -12,6 +12,8 @@ pip install infographics-nuuuwan
 
 ## Release History
 
-### 2.0.0
+### 2.0.1 (NEXT RELEASE)
+
+### 2.0.0 (CURRENT RELEASE)
 
 * Broad Re-write, mostly moving away from matplotlib to raw SVGs
