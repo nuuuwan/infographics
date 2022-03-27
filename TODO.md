@@ -6,6 +6,7 @@
 * Video?
 * Make FlagDorlingGeneric?
 * Add shaded election map example
+* Correct Data format for BarGraphBasic
 
 # SMALL
 
