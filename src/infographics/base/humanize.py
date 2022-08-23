@@ -4,7 +4,10 @@ METRIC_PREFIX_LIST = ['', 'K', 'M', 'B', 'T', 'P', 'E', 'Z', 'Y']
 
 
 def number(f):
-    log10f = math.log10(f)
+    try:
+        log10f = math.log10(f)
+    except BaseException:
+        return '0'
     i = (int)(log10f / 3)
     prefix = METRIC_PREFIX_LIST[i]
 
