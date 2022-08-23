@@ -41,6 +41,13 @@ class FlagDorlingView(DorlingView):
 
         p_buddhist = n_buddhist / n_sinhalese
 
+        color_to_p = {
+            'green': p_moor,
+            'orange': p_tamil,
+            'yellow': p_sinhalese * p_buddhist,
+            'maroon': p_sinhalese * (1 - p_buddhist),
+        }
+
         cx, cy = cxcy
         rx, ry = rxry
         ry /= 2
@@ -48,12 +55,10 @@ class FlagDorlingView(DorlingView):
         x0 = cx - rx
         y0 = cy + ry
         inner_list = []
-        for [color, p] in [
-            ['green', p_moor],
-            ['orange', p_tamil],
-            ['yellow', p_sinhalese * p_buddhist],
-            ['maroon', p_sinhalese * (1 - p_buddhist)],
-        ]:
+        for [color, p] in sorted(
+            color_to_p.items(),
+            key=lambda x: -x[1],
+        ):
             rx0 = rx * p
             inner_list.append(
                 palette.draw_rect(
