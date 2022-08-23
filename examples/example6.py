@@ -31,6 +31,8 @@ if __name__ == '__main__':
     def get_label_from_color_value(color_value):
         if color_value == 'sinhalese':
             return 'Sinhalese (Non-Buddhist)'
+        if color_value == 'buddhist':
+            return 'Sinhalese (Buddhist)'
         return color_value.title()
 
     def get_color_from_color_value(color_value):
