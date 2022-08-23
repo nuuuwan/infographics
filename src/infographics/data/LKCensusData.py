@@ -1,4 +1,3 @@
-
 from infographics.data.GIGData import GIGData
 
 DATA_GROUP = 'census'

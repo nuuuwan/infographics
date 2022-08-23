@@ -16,7 +16,9 @@ class PolygonView:
 
     def get_cxcyrxry(self, palette, id):
         norm_multipolygon = self.get_norm_multipolygon(palette, id)
-        (cx, cy), (rx, ry) = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
+        (cx, cy), (rx, ry) = xy.get_cxcyrxry_for_multipolygon(
+            norm_multipolygon
+        )
         return (cx, cy), (rx, ry)
 
     def render_polygons(self, palette):
@@ -44,6 +46,5 @@ class PolygonView:
     def __xml__(self, palette):
 
         return palette.draw_g(
-            self.render_polygons(palette) +
-            self.render_labels(palette)
+            self.render_polygons(palette) + self.render_labels(palette)
         )

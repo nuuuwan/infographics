@@ -1,5 +1,3 @@
-
-
 class SimpleLabel:
     def __init__(self, get_label_label):
         self.get_label_label = get_label_label

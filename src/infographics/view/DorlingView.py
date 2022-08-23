@@ -42,7 +42,9 @@ class DorlingView(PolygonView):
         for id in self.ids:
             norm_multipolygon = self.get_norm_multipolygon(palette, id)
             cartogram_value = self.get_cartogram_value(id)
-            (cx, cy), ____ = xy.get_cxcyrxry_for_multipolygon(norm_multipolygon)
+            (cx, cy), ____ = xy.get_cxcyrxry_for_multipolygon(
+                norm_multipolygon
+            )
             pr = 0.2 * math.sqrt(cartogram_value / total_cartogram_value)
 
             id_to_cxcyrxry[id] = [[cx, cy], [pr, pr]]
@@ -72,9 +74,9 @@ class DorlingView(PolygonView):
 
     def __xml__(self, palette):
         return palette.draw_g(
-            self.render_polygons(palette) +
-            self.render_dorling_objects(palette) +
-            self.render_labels(palette),
+            self.render_polygons(palette)
+            + self.render_dorling_objects(palette)
+            + self.render_labels(palette),
         )
 
     @staticmethod
@@ -100,9 +102,12 @@ class DorlingView(PolygonView):
     @staticmethod
     def get_render_polygon_object(n):
         def render_polygon_object_with_n(
-                dorling_view, palette, id, cxcy, rxry):
+            dorling_view, palette, id, cxcy, rxry
+        ):
             return DorlingView.render_polygon_object(
-                dorling_view, palette, id, cxcy, rxry, n)
+                dorling_view, palette, id, cxcy, rxry, n
+            )
+
         return render_polygon_object_with_n
 
     @staticmethod

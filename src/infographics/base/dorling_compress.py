@@ -38,8 +38,9 @@ def get_move_delta(points, i_a, i_b):
     [cx_b, cy_b], [rx_b, ry_b] = points[i_b]
 
     dx, dy = cx_b - cx_a, cy_b - cy_a
-    if (abs(dx) > (rx_a + rx_b) * (1 + R_PADDING)) \
-            or (abs(dy) > (ry_a + ry_b) * (1 + R_PADDING)):
+    if (abs(dx) > (rx_a + rx_b) * (1 + R_PADDING)) or (
+        abs(dy) > (ry_a + ry_b) * (1 + R_PADDING)
+    ):
         return 0, 0
 
     rb2 = ry_a ** 2 + ry_b ** 2

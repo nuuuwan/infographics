@@ -1,4 +1,3 @@
-
 from infographics.view.DorlingView import DorlingView
 
 CIRLCE_RADIUS_MAX_LABEL_VALUE = 0.2
@@ -24,7 +23,6 @@ class FlagDorlingView(DorlingView):
             get_label,
             get_cartogram_value,
             FlagDorlingView.render_dorling_object,
-
         )
         self.get_flag_data = get_flag_data
 

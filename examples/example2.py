@@ -1,4 +1,3 @@
-
 from infographics.adaptors import ColorHistogram, SimpleLabel
 from infographics.core import Infographic
 from infographics.data import LKGeoData, gig_utils
@@ -31,5 +30,6 @@ if __name__ == '__main__':
                 color_histogram.get_color_values(),
                 color_histogram.get_color_from_color_value,
                 color_histogram.get_int_label_from_color_value,
-            )
-        ]).save('/tmp/infographics.example2.svg')
+            ),
+        ],
+    ).save('/tmp/infographics.example2.svg')

@@ -1,4 +1,3 @@
-
 from utils.xmlx import _
 
 from infographics.core.SVG_STYLES import SVG_STYLES
@@ -10,10 +9,12 @@ DEFAULT_BASE_FONT_SIZE = 16
 class SVGPalettePolygon:
     def draw_multipolygon(self, multipolygon, attribs={}):
         return self.draw_g(
-            list(map(
-                lambda polygon: self.draw_polygon(polygon, attribs),
-                multipolygon,
-            )),
+            list(
+                map(
+                    lambda polygon: self.draw_polygon(polygon, attribs),
+                    multipolygon,
+                )
+            ),
         )
 
     def draw_polygon(self, polygon, attribs={}):

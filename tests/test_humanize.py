@@ -32,7 +32,6 @@ class TestCase(unittest.TestCase):
             [0.01234, '1.2%'],
             [0.001234, '0.12%'],
             [0.0001234, '<0.1%'],
-
         ]:
             actual_s = humanize.percent(f)
             self.assertEqual(expected_s, actual_s)

@@ -1,5 +1,3 @@
-
-
 from infographics.data.LKCensusData import LKCensusData
 
 

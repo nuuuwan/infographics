@@ -1,5 +1,3 @@
-
-
 from infographics.data.LKCensusData import LKCensusData
 
 
@@ -35,6 +33,8 @@ class LKCensusEthnicityData(LKCensusData):
     @staticmethod
     def get_label_from_color_value(color_value):
         if color_value == 'none':
-            return 'No ethnicity with > ' \
+            return (
+                'No ethnicity with > '
                 + f'{LKCensusEthnicityData.MAJORITY_LIMIT:.0%}'
+            )
         return color_value.title()

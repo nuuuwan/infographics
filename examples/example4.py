@@ -1,4 +1,3 @@
-
 from infographics.adaptors import (ColorBase, ColorPercentVaryLightness,
                                    SimpleLabel)
 from infographics.core import Infographic
@@ -36,6 +35,6 @@ if __name__ == '__main__':
                 color_base.get_color_values(),
                 color_base.get_color_from_color_value,
                 color_base.get_percent_label_from_color_value,
-            )
-        ]
+            ),
+        ],
     ).save('/tmp/infographics.example4.svg')

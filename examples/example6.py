@@ -1,4 +1,3 @@
-
 from infographics.adaptors import SimpleLabel
 from infographics.core import Infographic
 from infographics.data import (LKCensusEthnicityData, LKCensusReligionData,
@@ -58,7 +57,7 @@ if __name__ == '__main__':
                 ['muslim', 'tamil', 'buddhist', 'sinhalese'],
                 get_color_from_color_value,
                 get_label_from_color_value,
-            )
+            ),
         ],
         (800, 900, 10),
         15,

@@ -18,10 +18,12 @@ class ColorBase:
 
     @cached_property
     def color_values(self):
-        return list(map(
-            lambda id: self.get_color_value(id),
-            self.ids,
-        ))
+        return list(
+            map(
+                lambda id: self.get_color_value(id),
+                self.ids,
+            )
+        )
 
     @cached_property
     def sorted_color_values(self):

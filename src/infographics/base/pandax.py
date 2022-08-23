@@ -7,7 +7,8 @@ def get_geodata_index(df):
         d = dict(row._asdict())
 
         shapely_polygon_list = shapely.get_shapely_polygon_list_from_shape(
-            d['geometry'])
+            d['geometry']
+        )
         multipolygon = shapely.get_multipolygon_from_shapely_polygon_list(
             shapely_polygon_list,
         )

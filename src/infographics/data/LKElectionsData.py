@@ -1,4 +1,3 @@
-
 from infographics.data.GIGData import GIGData
 
 DATA_GROUP = 'elections'
@@ -16,22 +15,16 @@ class LKElectionsData(GIGData):
     def get_color_from_color_value(self, color_value):
         return {
             'SLPP': 'maroon',
-
             'UNP': 'green',
             'SJB': 'lightgreen',
             'NDF': 'green',
-
             'SLFP': 'blue',
             'UPFA': 'blue',
             'PA': 'blue',
-
             'EPDP': 'red',
             'TMVP': 'red',
             'ITAK': 'yellow',
             'ACTC': 'yellow',
-
             'MNA': 'darkgreen',
-
             'SLMP': 'purple',
-
         }.get(color_value, 'gray')

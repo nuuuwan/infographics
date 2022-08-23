@@ -24,10 +24,14 @@ class GIGData(AbstractData):
         return self.table_id.replace('_', ' ').title()
 
     def get_field_name(self, field_list):
-        field_str = ', '.join(list(map(
-            lambda s: '"' + s.replace('_', ' ').title() + '"',
-            field_list,
-        )))
+        field_str = ', '.join(
+            list(
+                map(
+                    lambda s: '"' + s.replace('_', ' ').title() + '"',
+                    field_list,
+                )
+            )
+        )
         return f'{self.table_name} ({field_str})'
 
     @cache
@@ -42,6 +46,7 @@ class GIGData(AbstractData):
     def get_get_population(self, field_list):
         def get_population(id):
             return sum([valid_value(self[id][field]) for field in field_list])
+
         return get_population
 
     def get_get_p_population(self, field_list):
@@ -51,6 +56,7 @@ class GIGData(AbstractData):
             n_total = self.get_total_population(id)
             n_fields = get_population(id)
             return n_fields / n_total
+
         return get_p_population
 
     @cache
@@ -59,24 +65,31 @@ class GIGData(AbstractData):
 
     @cache
     def get_fields(self):
-        return sorted(list(filter(
-            lambda k: k not in [
-                'entity_id',
-                'total',
-                'electors',
-                'polled',
-                'valid',
-                'rejected',
-            ],
-            self.get_first_row().keys(),
-        )))
+        return sorted(
+            list(
+                filter(
+                    lambda k: k
+                    not in [
+                        'entity_id',
+                        'total',
+                        'electors',
+                        'polled',
+                        'valid',
+                        'rejected',
+                    ],
+                    self.get_first_row().keys(),
+                )
+            )
+        )
 
     @cache
     def get_total_field(self):
-        return list(filter(
-            lambda k: 'total' in k or 'valid' in k,
-            self.get_first_row().keys(),
-        ))[0]
+        return list(
+            filter(
+                lambda k: 'total' in k or 'valid' in k,
+                self.get_first_row().keys(),
+            )
+        )[0]
 
     @cache
     def get_most_common(self, id):
@@ -98,13 +111,20 @@ class GIGData(AbstractData):
     def get_color_from_color_value_index(self):
         fields = self.get_fields()
         n_fields = len(fields)
-        return dict(list(map(
-            lambda x: [x[1], colorx.random_hsl(
-                hue=(int)(240 * x[0] / n_fields),
-                lightness=0.5,
-            )],
-            enumerate(fields),
-        )))
+        return dict(
+            list(
+                map(
+                    lambda x: [
+                        x[1],
+                        colorx.random_hsl(
+                            hue=(int)(240 * x[0] / n_fields),
+                            lightness=0.5,
+                        ),
+                    ],
+                    enumerate(fields),
+                )
+            )
+        )
 
     def get_color_from_color_value(self, color_value):
         return self.get_color_from_color_value_index().get(color_value)

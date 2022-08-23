@@ -1,4 +1,3 @@
-
 from infographics.adaptors import ColorBase, SimpleLabel
 from infographics.core import Infographic
 from infographics.data import LKCensusEthnicityData, LKGeoData, gig_utils
@@ -34,6 +33,6 @@ if __name__ == '__main__':
                 color_base.unique_color_values,
                 LKCensusEthnicityData.get_color_from_color_value,
                 LKCensusEthnicityData.get_label_from_color_value,
-            )
-        ]
+            ),
+        ],
     ).save('/tmp/infographics.example3.svg')

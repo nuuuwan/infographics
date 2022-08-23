@@ -22,17 +22,23 @@ def get_shapely_polygon_list_from_shape(shape):
 
 
 def get_multipolygon_from_shapely_polygon_list(shapely_polygon_list):
-    point_list_list = list(map(
-        get_shapely_point_list_from_polygon,
-        shapely_polygon_list,
-    ))
+    point_list_list = list(
+        map(
+            get_shapely_point_list_from_polygon,
+            shapely_polygon_list,
+        )
+    )
 
-    multipolygon = list(map(
-        lambda point_list: list(map(
-            get_xy_from_shapely_point,
-            point_list,
-        )),
-        point_list_list,
-    ))
+    multipolygon = list(
+        map(
+            lambda point_list: list(
+                map(
+                    get_xy_from_shapely_point,
+                    point_list,
+                )
+            ),
+            point_list_list,
+        )
+    )
 
     return multipolygon

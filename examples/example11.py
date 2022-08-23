@@ -19,5 +19,5 @@ if __name__ == '__main__':
         Infographic.DEFAULT_FOOTER_TEXT,
         children=[
             BarGraphBasic(data),
-        ]
+        ],
     ).save('/tmp/infographics.example11.svg')

@@ -35,6 +35,5 @@ setuptools.setup(
         'gig-nuuuwan',
         'geo-nuuuwan',
         'cairosvg',
-
     ],
 )

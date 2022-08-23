@@ -71,24 +71,36 @@ def get_norm_multi2polygon(
     padding_p=0.75,
 ):
     t = get_norm_transformer(multi2polygon, aspect_ratio, padding_p)
-    return list(map(
-        lambda multipolygon: list(map(
-            lambda polygon: list(map(
-                t,
-                polygon,
-            )), multipolygon
-        )),
-        multi2polygon,
-    ))
+    return list(
+        map(
+            lambda multipolygon: list(
+                map(
+                    lambda polygon: list(
+                        map(
+                            t,
+                            polygon,
+                        )
+                    ),
+                    multipolygon,
+                )
+            ),
+            multi2polygon,
+        )
+    )
 
 
 def get_norm_multipolygon(
     t,
     multipolygon,
 ):
-    return list(map(
-        lambda polygon: list(map(
-            t,
-            polygon,
-        )), multipolygon
-    ))
+    return list(
+        map(
+            lambda polygon: list(
+                map(
+                    t,
+                    polygon,
+                )
+            ),
+            multipolygon,
+        )
+    )
