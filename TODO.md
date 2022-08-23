@@ -20,3 +20,4 @@
 * Replace __xml__ with render
 * Changed fore color based on back color
 * Add more information (e.g. percentages) to labels
+* PNG Colors don't work  (see example 2)
