@@ -1,4 +1,4 @@
-DEFAULT_FONT = 'Futura'
+DEFAULT_FONT = 'Gill Sans'
 
 
 DEFAULT_FILL = {
