@@ -43,8 +43,8 @@ def get_move_delta(points, i_a, i_b):
     ):
         return 0, 0
 
-    rb2 = ry_a ** 2 + ry_b ** 2
-    d2 = dx ** 2 + dy ** 2
+    rb2 = ry_a**2 + ry_b**2
+    d2 = dx**2 + dy**2
     f_b_a = -D_T * (rb2) / d2
 
     return dx * f_b_a, dy * f_b_a
