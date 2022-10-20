@@ -1,7 +1,5 @@
 import os
 
-from cairosvg import svg2png
-
 from infographics._utils import log
 from infographics.core.SVGPalette import SVGPalette
 
@@ -50,7 +48,3 @@ class Infographic:
         log.info(f'Saved {svg_file}')
 
         os.system(f'open -a firefox "{svg_file}"')
-
-        png_file = svg_file[:-3] + 'png'
-        svg2png(url=svg_file, write_to=png_file, scale=4)
-        log.info(f'Saved {png_file}')
