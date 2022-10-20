@@ -2,18 +2,11 @@
 
 Draw infographics with MatPlotLib and GeoPandas
 
-## Setup and Install
+## Version 1.x.x
 
-```
-pip install infographics-nuuuwan
-```
+See [READMEv2.md](READMEv1.md).
 
-*The source code for this library can be found at https://github.com/nuuuwan/infographics.*
 
-## Release History
+## Version 2.x.x (UNDER DEVELOPMENT)
 
-### 2.0.1 (NEXT RELEASE)
-
-### 2.0.0 (CURRENT RELEASE)
-
-* Broad Re-write, mostly moving away from matplotlib to raw SVGs
+See [READMEv2.md](READMEv2.md) for details.
